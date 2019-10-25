@@ -3,23 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_teams">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="pt.cosmik.boostctrl.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_teams"
+        android:name="pt.cosmik.boostctrl.ui.teams.TeamsFragment"
+        android:label="@string/teams"
+        tools:layout="@layout/fragment_teams"/>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="pt.cosmik.boostctrl.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_matches"
+        android:name="pt.cosmik.boostctrl.ui.matches.MatchesFragment"
+        android:label="@string/matches"
+        tools:layout="@layout/fragment_matches" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="pt.cosmik.boostctrl.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_news"
+        android:name="pt.cosmik.boostctrl.ui.news.NewsFragment"
+        android:label="@string/news"
+        tools:layout="@layout/fragment_news" />
+
+    <fragment
+        android:id="@+id/navigation_standings"
+        android:name="pt.cosmik.boostctrl.ui.standings.StandingsFragment"
+        android:label="@string/standings"
+        tools:layout="@layout/fragment_standings" />
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="pt.cosmik.boostctrl.ui.info.InfoFragment"
+        android:label="@string/info"
+        tools:layout="@layout/fragment_info" />
+
 </navigation>
