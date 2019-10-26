@@ -2,11 +2,12 @@ package pt.cosmik.boostctrl.ui.news
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.repositories.OctaneggRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
-class NewsViewModel(val octaneggRepository: OctaneggRepository) : ViewModel() {
+class NewsViewModel(private val octaneggRepository: OctaneggRepository) : ViewModel() {
 
     val viewState = MutableLiveData(NewsFragmentViewState())
     val viewEffect = SingleLiveEvent<NewsFragmentViewEffect>()
@@ -31,7 +32,7 @@ class NewsViewModel(val octaneggRepository: OctaneggRepository) : ViewModel() {
             viewState.value = viewState.value?.copy(isLoading = false)
             // TODO: add items to the view
         }, {
-            // TODO: analytics
+            Crashlytics.logException(it)
             viewState.value = viewState.value?.copy(isLoading = false)
             viewEffect.value = NewsFragmentViewEffect.ShowError("Something went wrong trying to obtain the latest news.")
         }))
