@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.cosmik.boostctrl">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BoostCtrlApplication"
         android:allowBackup="true"

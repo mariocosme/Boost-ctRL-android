@@ -1,7 +1,6 @@
 package pt.cosmik.boostctrl
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
@@ -13,7 +12,6 @@ import pt.cosmik.boostctrl.ui.matches.MatchesFragment
 import pt.cosmik.boostctrl.ui.news.NewsFragment
 import pt.cosmik.boostctrl.ui.standings.StandingsFragment
 import pt.cosmik.boostctrl.ui.teams.TeamsFragment
-import pt.cosmik.boostctrl.utils.Constants
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController, null)
         navController.addOnDestinationChangedListener { _, destination, arguments ->
-            // TODO: hide show supportActionBar based on the destination?s
-            Log.d(Constants.LOG_TAG, "$destination - $arguments")
+            // TODO: hide show supportActionBar based on the destination?
         }
 
         findViewById<BottomNavigationView>(R.id.nav_view)?.apply {

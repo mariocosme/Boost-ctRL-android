@@ -11,5 +11,5 @@ var teamsModule = module {
     // Simple Presenter Factory
 //    factory { MySimplePresenter(get()) }
 
-    viewModel { TeamsViewModel() }
+    viewModel { TeamsViewModel(get()) }
 }
