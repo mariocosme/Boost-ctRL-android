@@ -1,12 +1,16 @@
 package pt.cosmik.boostctrl
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import pt.cosmik.boostctrl.ui.info.InfoFragment
 import pt.cosmik.boostctrl.ui.matches.MatchesFragment
 import pt.cosmik.boostctrl.ui.news.NewsFragment
@@ -14,6 +18,9 @@ import pt.cosmik.boostctrl.ui.standings.StandingsFragment
 import pt.cosmik.boostctrl.ui.teams.TeamsFragment
 
 class MainActivity : AppCompatActivity() {
+
+    private var appActionBar: Toolbar? = null
+    private var coordinatorLayout: CoordinatorLayout? = null
 
     private val mainFragments = hashMapOf(
         R.id.navigation_teams to TeamsFragment(),
@@ -26,9 +33,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        coordinatorLayout = findViewById(R.id.coordinator_layout)
 
-        supportActionBar?.hide()
-        supportActionBar?.setShowHideAnimationEnabled(true)
+        appActionBar = findViewById<Toolbar>(R.id.action_bar)?.apply {
+            setSupportActionBar(this)
+        }
 
         val navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController, null)
@@ -48,5 +57,17 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+    }
+
+    fun setActionBarTitle(title: String) {
+        appActionBar?.title = title
+    }
+
+    fun setActionBarVisible(visible: Boolean) {
+        appActionBar?.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    fun showMessageInSnackBar(message: String) {
+        coordinatorLayout?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG).show() }
     }
 }

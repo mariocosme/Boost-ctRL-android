@@ -12,14 +12,13 @@ class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
 
     val viewState = MutableLiveData(TeamsFragmentViewState())
     val viewEffect = SingleLiveEvent<TeamsFragmentViewEffect>()
-
     val disposables = CompositeDisposable()
 
     init {
         viewState.value = viewState.value?.copy(isLoading = false)
 
         disposables.add(octaneggRepository.getLatestNews().subscribe ({
-            Log.d(Constants.LOG_TAG, "News items: $it")
+//            Log.d(Constants.LOG_TAG, "News items: $it")
         }, {
             Log.e(Constants.LOG_TAG, "Error: $it")
         }))
@@ -29,6 +28,11 @@ class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
         when (event) {
             TeamsFragmentEvent.CreatedView -> {}
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
     }
 
     data class TeamsFragmentViewState(
@@ -43,8 +47,4 @@ class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
         object CreatedView: TeamsFragmentEvent()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposables.clear()
-    }
 }

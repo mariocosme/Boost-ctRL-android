@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import pt.cosmik.boostctrl.modules.newsModule
 import pt.cosmik.boostctrl.modules.repositoryModule
 import pt.cosmik.boostctrl.modules.restModule
 import pt.cosmik.boostctrl.modules.teamsModule
@@ -22,7 +23,8 @@ class BoostCtrlApplication : Application() {
             modules(listOf(
                 restModule,
                 repositoryModule,
-                teamsModule
+                teamsModule,
+                newsModule
             ))
         }
     }
