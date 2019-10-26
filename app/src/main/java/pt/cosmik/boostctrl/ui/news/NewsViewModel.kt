@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
+import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.repositories.OctaneggRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
@@ -29,8 +30,7 @@ class NewsViewModel(private val octaneggRepository: OctaneggRepository) : ViewMo
         viewState.value = viewState.value?.copy(isLoading = true)
 
         disposables.add(octaneggRepository.getLatestNews().subscribe({
-            viewState.value = viewState.value?.copy(isLoading = false)
-            // TODO: add items to the view
+            viewState.value = viewState.value?.copy(isLoading = false, newsItems = it)
         }, {
             Crashlytics.logException(it)
             viewState.value = viewState.value?.copy(isLoading = false)
@@ -44,7 +44,8 @@ class NewsViewModel(private val octaneggRepository: OctaneggRepository) : ViewMo
     }
 
     data class NewsFragmentViewState(
-        val isLoading: Boolean = false
+        val isLoading: Boolean = false,
+        val newsItems: List<NewsItem> = listOf()
     )
 
     sealed class NewsFragmentViewEffect {

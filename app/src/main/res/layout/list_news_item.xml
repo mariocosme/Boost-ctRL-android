@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:paddingStart="@dimen/space_between_m"
+    android:paddingEnd="@dimen/space_between_m"
+    android:paddingTop="@dimen/space_between_s"
+    android:paddingBottom="@dimen/space_between_s"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    tools:background="@color/colorPickledBluewood">
+
+    <TextView
+        android:id="@+id/source_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:background="@drawable/bg_news_item_source"
+        android:textColor="@color/colorRadicalRed"
+        android:paddingStart="@dimen/space_between_xs"
+        android:paddingEnd="@dimen/space_between_xs"
+        android:textSize="@dimen/text_size_10_pt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="This will be an example title"/>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_between_l"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_14_pt"
+        app:layout_constraintTop_toBottomOf="@id/source_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="This will be an example text"/>
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_08_pt"
+        android:textColor="@color/colorCloudWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="A date..."/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

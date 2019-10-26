@@ -21,7 +21,15 @@
         android:id="@+id/navigation_news"
         android:name="pt.cosmik.boostctrl.ui.news.NewsFragment"
         android:label="@string/news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_navigation_news_to_news_item_detail_fragment"
+            app:destination="@id/news_item_detail_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_standings"
@@ -34,5 +42,15 @@
         android:name="pt.cosmik.boostctrl.ui.info.InfoFragment"
         android:label="@string/info"
         tools:layout="@layout/fragment_info" />
+
+    <fragment
+        android:id="@+id/news_item_detail_fragment"
+        android:name="pt.cosmik.boostctrl.ui.news.detail.NewsDetailFragment"
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_news_detail" >
+        <argument
+            android:name="newsItem"
+            app:argType="pt.cosmik.boostctrl.models.NewsItem" />
+    </fragment>
 
 </navigation>

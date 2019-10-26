@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#283149</color>
     <color name="colorAccent">#F73859</color>
     <color name="colorCloudWhite">#DBEDF3</color>
+
+    <color name="colorFiord">#404B69</color>
+    <color name="colorPickledBluewood">#283149</color>
+    <color name="colorRadicalRed">#F73859</color>
+    <color name="colorIceberg">#DBEDF3</color>
+    <color name="colorVenetianRed">#670415</color>
+
 </resources>

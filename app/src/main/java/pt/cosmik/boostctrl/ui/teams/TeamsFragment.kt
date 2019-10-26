@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import org.koin.android.viewmodel.ext.android.viewModel
+import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 
@@ -28,6 +29,13 @@ class TeamsFragment : BaseFragment() {
 
     override fun showErrorMessage(message: String) {
         // TODO
+    }
+
+    override fun getActionBarTitle(): String = context?.getString(R.string.teams) ?: ""
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 
 }

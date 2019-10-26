@@ -1,35 +1,23 @@
 package pt.cosmik.boostctrl
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import pt.cosmik.boostctrl.ui.info.InfoFragment
-import pt.cosmik.boostctrl.ui.matches.MatchesFragment
-import pt.cosmik.boostctrl.ui.news.NewsFragment
-import pt.cosmik.boostctrl.ui.standings.StandingsFragment
-import pt.cosmik.boostctrl.ui.teams.TeamsFragment
 
 class MainActivity : AppCompatActivity() {
 
     private var appActionBar: Toolbar? = null
     private var coordinatorLayout: CoordinatorLayout? = null
-
-    private val mainFragments = hashMapOf(
-        R.id.navigation_teams to TeamsFragment(),
-        R.id.navigation_matches to MatchesFragment(),
-        R.id.navigation_news to NewsFragment(),
-        R.id.navigation_standings to StandingsFragment(),
-        R.id.navigation_info to InfoFragment()
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,23 +28,20 @@ class MainActivity : AppCompatActivity() {
             setSupportActionBar(this)
         }
 
+        val appBarConfiguration = AppBarConfiguration.Builder(setOf(
+            R.id.navigation_teams,
+            R.id.navigation_matches,
+            R.id.navigation_news,
+            R.id.navigation_standings,
+            R.id.navigation_info
+        )).build()
+
         val navController = findNavController(R.id.nav_host_fragment)
-        setupActionBarWithNavController(navController, null)
-        navController.addOnDestinationChangedListener { _, destination, arguments ->
-            // TODO: hide show supportActionBar based on the destination?
-        }
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         findViewById<BottomNavigationView>(R.id.nav_view)?.apply {
+            NavigationUI.setupWithNavController(this, navController)
             setupWithNavController(navController)
-            setOnNavigationItemSelectedListener {
-                mainFragments[it.itemId]?.let { fragment ->
-                    val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.nav_host_fragment, fragment)
-                    transaction.disallowAddToBackStack()
-                    transaction.commit()
-                }
-                true
-            }
         }
     }
 
@@ -70,5 +55,10 @@ class MainActivity : AppCompatActivity() {
 
     fun showMessageInSnackBar(message: String) {
         coordinatorLayout?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG).show() }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }
