@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             NavigationUI.setupWithNavController(this, navController)
             setupWithNavController(navController)
         }
+
+        val graph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+        graph.startDestination = R.id.navigation_news
+        navController.graph = graph
     }
 
     fun setActionBarTitle(title: String) {
