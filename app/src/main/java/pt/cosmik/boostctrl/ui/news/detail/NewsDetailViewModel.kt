@@ -3,6 +3,7 @@ package pt.cosmik.boostctrl.ui.news.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import pt.cosmik.boostctrl.models.NewsItem
+import pt.cosmik.boostctrl.utils.DateUtils
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
 
@@ -28,7 +29,9 @@ class NewsDetailViewModel: ViewModel() {
             viewState.value = viewState.value?.copy(
                 actionBarTitle = it.title,
                 articleTitle = it.description,
-                articleContent = it.secondArticle ?: ""
+                articleContent = it.secondArticle ?: "",
+                articleImage = it.image,
+                articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateUtils.getDateFormatter().format(date) }}"
             )
         }
     }
@@ -38,7 +41,9 @@ class NewsDetailViewModel: ViewModel() {
 data class NewsDetailFragmentViewState(
     val actionBarTitle: String? = null,
     val articleTitle: String? = null,
-    val articleContent: String? = null
+    val articleContent: String? = null,
+    val articleImage: String? = null,
+    val articleAuthorDate: String? = null
 )
 
 sealed class NewsDetailFragmentViewEffect {
