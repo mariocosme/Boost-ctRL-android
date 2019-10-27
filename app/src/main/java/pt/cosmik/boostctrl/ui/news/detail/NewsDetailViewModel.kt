@@ -19,6 +19,7 @@ class NewsDetailViewModel: ViewModel() {
                 newsItem = event.newsItem
                 initNewsItem()
             }
+            NewsDetailFragmentEvent.DitPressShareMenuItem -> viewEffect.value = NewsDetailFragmentViewEffect.PresentSharesheet("https://octane.gg/news/${newsItem?.hyphenated}")
         }
     }
 
@@ -32,17 +33,20 @@ class NewsDetailViewModel: ViewModel() {
         }
     }
 
-    data class NewsDetailFragmentViewState(
-        val actionBarTitle: String? = null,
-        val articleTitle: String? = null,
-        val articleContent: String? = null
-    )
+}
 
-    sealed class NewsDetailFragmentViewEffect {
-        data class ShowError(val message: String): NewsDetailFragmentViewEffect()
-    }
+data class NewsDetailFragmentViewState(
+    val actionBarTitle: String? = null,
+    val articleTitle: String? = null,
+    val articleContent: String? = null
+)
 
-    sealed class NewsDetailFragmentEvent {
-        data class DidCreateWithNewsItem(val newsItem: NewsItem): NewsDetailFragmentEvent()
-    }
+sealed class NewsDetailFragmentViewEffect {
+    data class ShowError(val message: String): NewsDetailFragmentViewEffect()
+    data class PresentSharesheet(val extra: String): NewsDetailFragmentViewEffect()
+}
+
+sealed class NewsDetailFragmentEvent {
+    data class DidCreateWithNewsItem(val newsItem: NewsItem): NewsDetailFragmentEvent()
+    object DitPressShareMenuItem: NewsDetailFragmentEvent()
 }

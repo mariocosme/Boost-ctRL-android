@@ -1,11 +1,13 @@
 package pt.cosmik.boostctrl.ui.news.detail
 
+import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -24,13 +26,35 @@ class NewsDetailFragment : BaseFragment() {
     private var webview: BoostCtrlWebView? = null
     private var progressBar: ProgressBar? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_news_detail, container, false)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.get("newsItem")?.let { vm.processEvent(NewsDetailViewModel.NewsDetailFragmentEvent.DidCreateWithNewsItem(it as NewsItem)) }
+        setHasOptionsMenu(true)
+        arguments?.get("newsItem")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItem(it as NewsItem)) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.news_detail_menu, menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        context?.let { context ->
+            for (i in 0 until menu.size()) {
+                val iconDrawable = menu.getItem(i).icon.mutate()
+                iconDrawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, R.color.colorIceberg), PorterDuff.Mode.SRC_ATOP)
+            }
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.share_item) {
+            vm.processEvent(NewsDetailFragmentEvent.DitPressShareMenuItem)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_news_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +79,15 @@ class NewsDetailFragment : BaseFragment() {
 
         vm.viewEffect.observe(this, Observer {
             when (it) {
-//                is NewsViewModel.NewsFragmentViewEffect.ShowError -> showErrorMessage(it.message)
+                is NewsDetailFragmentViewEffect.ShowError -> showErrorMessage(it.message)
+                is NewsDetailFragmentViewEffect.PresentSharesheet -> {
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, it.extra)
+                        type = "text/plain"
+                    }
+                    activity?.startActivity(intent)
+                }
             }
         })
     }

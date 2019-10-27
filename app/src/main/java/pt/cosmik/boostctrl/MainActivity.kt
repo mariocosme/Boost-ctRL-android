@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         appActionBar = findViewById<Toolbar>(R.id.action_bar)?.apply {
             setSupportActionBar(this)
+            setTitleTextColor(ContextCompat.getColor(context, R.color.colorCloudWhite))
         }
 
         val appBarConfiguration = AppBarConfiguration.Builder(setOf(
