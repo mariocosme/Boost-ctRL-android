@@ -20,6 +20,7 @@ class BoostCtrlWebView @JvmOverloads constructor(
 ) : WebView(context, attrs, defStyleAttr) {
 
     val onErrorSubject = PublishSubject.create<Any>()
+    val onArticleLinkTappedSubject = PublishSubject.create<String>()
 
     private var disposables = CompositeDisposable()
     private var webviewClient = BoostCtrlWebviewClient()
@@ -56,7 +57,7 @@ class BoostCtrlWebView @JvmOverloads constructor(
                 parentActivity?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
             },
             webviewClient.didTapArticleLink.subscribe {
-                // TODO: pass onto the fragment -> viewModel -> make API request -> navigate to global player/team direction
+                onArticleLinkTappedSubject.onNext(it)
             }
         )
     }

@@ -62,21 +62,22 @@ class NewsDetailFragment : BaseFragment() {
             disposables.add(onErrorSubject.subscribe {
                 (activity as MainActivity).showMessageInSnackBar("Something went wrong loading the content of this article.")
             })
+            onArticleLinkTappedSubject.subscribe { vm.processEvent(NewsDetailFragmentEvent.DidTapArticleLink(it)) }
         }
 
         vm.viewState.observe(this, Observer {
             titleText?.text = it.articleTitle
             authorDateText?.text = it.articleAuthorDate
+            progressBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             webview?.loadTwitterContent(it.articleContent)
-            it.articleImage?.let {
-                    imageLink -> Glide.with(this).load(imageLink).into(imageView!!)
-            }
+            it.articleImage?.let { imageLink -> Glide.with(this).load(imageLink).into(imageView!!) }
         })
 
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is NewsDetailFragmentViewEffect.ShowError -> showErrorMessage(it.message)
                 is NewsDetailFragmentViewEffect.PresentSharesheet -> presentSharesheet(it.extra)
+                is NewsDetailFragmentViewEffect.PresentPersonFragment -> {} // TODO: navigate to global person detail fragment
             }
         })
     }
@@ -90,7 +91,7 @@ class NewsDetailFragment : BaseFragment() {
         activity?.startActivity(intent)
     }
 
-    override fun getActionBarTitle(): String = "Octage.gg"
+    override fun getActionBarTitle(): String = "Octane.gg"
 
     override fun onResume() {
         super.onResume()

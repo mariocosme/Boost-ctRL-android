@@ -7,5 +7,5 @@ import pt.cosmik.boostctrl.ui.news.detail.NewsDetailViewModel
 
 var newsModule = module {
     viewModel { NewsViewModel(get()) }
-    viewModel { NewsDetailViewModel() }
+    viewModel { NewsDetailViewModel(get()) }
 }

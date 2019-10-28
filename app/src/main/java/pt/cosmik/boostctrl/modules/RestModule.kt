@@ -4,9 +4,9 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import pt.cosmik.boostctrl.services.BoostCtrlService
 import pt.cosmik.boostctrl.services.OctaneggService
 import pt.cosmik.boostctrl.utils.BoostCtrlInterceptor
-import pt.cosmik.boostctrl.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,14 +15,8 @@ import java.util.concurrent.TimeUnit
 var restModule = module {
 
     single { Gson() }
-
-    single {
-        HttpLoggingInterceptor()
-    }
-
-    single {
-        BoostCtrlInterceptor()
-    }
+    single { HttpLoggingInterceptor() }
+    single { BoostCtrlInterceptor() }
 
     single {
         OkHttpClient.Builder()
@@ -35,15 +29,16 @@ var restModule = module {
     }
 
     single<Retrofit> {
-        val gson = get<Gson>()
         Retrofit.Builder()
-            .baseUrl(Constants.OCTANE_GG_API)
+            .baseUrl("https://api/") // We use the @Url param because we use more than one base URL
             .client(get<OkHttpClient>())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(get<Gson>()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
     single<OctaneggService> { get<Retrofit>().create(OctaneggService::class.java) }
+
+    single<BoostCtrlService> { get<Retrofit>().create(BoostCtrlService::class.java) }
 
 }
