@@ -13,4 +13,10 @@
         <item name="colorControlHighlight">@android:color/white</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="@style/ThemeOverlay.AppCompat.Dialog">
+        <item name="android:background">@color/colorPickledBluewood</item>
+        <item name="android:textColor">@color/colorIceberg</item>
+        <item name="android:textColorPrimary">@color/colorIceberg</item>
+    </style>
+
 </resources>

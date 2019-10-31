@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPickledBluewood">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,31 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/last_updated_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorIceberg"
-                android:textAlignment="textEnd"
-                android:layout_marginTop="@dimen/space_between_s"
-                android:layout_marginEnd="@dimen/space_between_m"
-                android:textSize="@dimen/text_size_08_pt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Last updated at ..."/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
+            android:paddingTop="@dimen/space_between_m"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

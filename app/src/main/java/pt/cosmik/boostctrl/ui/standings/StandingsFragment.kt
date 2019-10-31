@@ -1,11 +1,9 @@
 package pt.cosmik.boostctrl.ui.standings
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +21,33 @@ class StandingsFragment : BaseFragment() {
 
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null
-    private var lastUpdatedText: TextView? = null
 
     private var recyclerView: RecyclerView? = null
     private val listAdapter = StandingsListAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.standings_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.info_item) {
+            context?.let {
+                AlertDialog.Builder(it, R.style.AlertDialogTheme)
+                    .setIcon(R.mipmap.ic_launcher_round)
+                    .setTitle(R.string.rankings_info_dialog_title)
+                    .setMessage(vm.viewState.value?.lastUpdatedAt)
+                    .create()
+                    .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_standings, container, false)
@@ -36,7 +57,6 @@ class StandingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loadingBar = view.findViewById(R.id.loading_bar)
-        lastUpdatedText = view.findViewById(R.id.last_updated_text)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
             setHasFixedSize(true)
@@ -60,7 +80,7 @@ class StandingsFragment : BaseFragment() {
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             listAdapter.setRankingItems(it.rankingItems)
-            lastUpdatedText?.text = it.lastUpdatedAt
+            // TODO: move into action bar info button? it.lastUpdatedAt
         })
 
         vm.viewEffect.observe(this, Observer {

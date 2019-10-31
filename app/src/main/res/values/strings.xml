@@ -10,7 +10,7 @@
     <string name="detail">Detail</string>
     <string name="share">Share</string>
     <string name="article_image">Article image</string>
-    <string name="favorite">Favorite</string>
     <string name="team_image">Team image</string>
-    <string name="last_updated_at">Last updated today @\n%s</string>
+    <string name="last_updated_at">Last updated: %s</string>
+    <string name="rankings_info_dialog_title">Rankings</string>
 </resources>

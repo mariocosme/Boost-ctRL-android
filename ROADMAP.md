@@ -5,7 +5,6 @@ This roadmap isn't final and always susceptible to changes depending on current 
 The basics so that the app can be released in the Google Play Store so that it can be useful for the RL esport fans without any neat features
 - Add an internet connection listener which shows a small informative view if the user doesn't have an active connection
 - Add images for the news items supported with [Glide](https://github.com/bumptech/glide)
-- Add favorite support to rankings so the favorites appear on the top
 - Add global PlayerFragment
 - Add global TeamFragment
 - Implement analytics throughout the app
@@ -18,6 +17,7 @@ The basics so that the app can be released in the Google Play Store so that it c
 - Add select default main screen when app is started
 
 ## Version 1.0.2
+- Add favorite support to rankings so the favorites appear on the top
 - Texts localization (depending on help)
 - Add more news providers (like [rocketeers.gg](https://rocketeers.gg/))
 
