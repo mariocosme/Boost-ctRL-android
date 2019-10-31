@@ -29,7 +29,7 @@ class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
         holder.sourceText.text = "Octane.gg" // TODO: there is only one news source so far
 
         item.date?.let {
-            holder.dateText.text = DateUtils.getDateFormatter().format(it)
+            holder.dateText.text = DateUtils.getDateFormatter(DateUtils.patternCommon).format(it)
         }
     }
 

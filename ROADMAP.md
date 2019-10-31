@@ -4,8 +4,12 @@ This roadmap isn't final and always susceptible to changes depending on current 
 ## Version 1.0.0
 The basics so that the app can be released in the Google Play Store so that it can be useful for the RL esport fans without any neat features
 - Add an internet connection listener which shows a small informative view if the user doesn't have an active connection
-- Add share action to the news detail item action bar
 - Add images for the news items supported with [Glide](https://github.com/bumptech/glide)
+- Add favorite support to rankings so the favorites appear on the top
+- Add global PlayerFragment
+- Add global TeamFragment
+- Implement analytics throughout the app
+
 
 ## Version 1.0.1
 - Add Realm support to cache data so that it's possible to present something even offline

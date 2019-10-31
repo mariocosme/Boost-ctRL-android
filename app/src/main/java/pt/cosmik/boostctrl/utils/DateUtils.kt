@@ -7,10 +7,11 @@ import java.util.*
 class DateUtils {
 
     companion object {
-        private const val datePattern = "dd/MM/yyyy"
+        const val patternCommon = "dd/MM/yyyy"
+        const val patternWithHourMinuteSeconds = "dd/MM/yyyy HH:mm:ss"
 
-        fun getDateFormatter(): DateFormat {
-            return SimpleDateFormat(datePattern, Locale.getDefault())
+        fun getDateFormatter(pattern: String): DateFormat {
+            return SimpleDateFormat(pattern, Locale.getDefault())
         }
     }
 }

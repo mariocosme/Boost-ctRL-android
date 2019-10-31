@@ -7,6 +7,7 @@ import org.koin.dsl.module
 import pt.cosmik.boostctrl.services.BoostCtrlService
 import pt.cosmik.boostctrl.services.OctaneggService
 import pt.cosmik.boostctrl.utils.BoostCtrlInterceptor
+import pt.cosmik.boostctrl.utils.BoostCtrlLogInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit
 var restModule = module {
 
     single { Gson() }
-    single { HttpLoggingInterceptor() }
+    single { BoostCtrlLogInterceptor.getLoggerInterceptor() }
     single { BoostCtrlInterceptor() }
 
     single {

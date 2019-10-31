@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class StandingsFragment : BaseFragment() {
 
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null
+    private var lastUpdatedText: TextView? = null
 
     private var recyclerView: RecyclerView? = null
     private val listAdapter = StandingsListAdapter()
@@ -34,6 +36,7 @@ class StandingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loadingBar = view.findViewById(R.id.loading_bar)
+        lastUpdatedText = view.findViewById(R.id.last_updated_text)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
             setHasFixedSize(true)
@@ -57,6 +60,7 @@ class StandingsFragment : BaseFragment() {
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             listAdapter.setRankingItems(it.rankingItems)
+            lastUpdatedText?.text = it.lastUpdatedAt
         })
 
         vm.viewEffect.observe(this, Observer {
@@ -65,7 +69,7 @@ class StandingsFragment : BaseFragment() {
             }
         })
 
-        vm.processEvent(StandingsViewModel.StandingsFragmentEvent.ViewCreated)
+        vm.processEvent(StandingsViewModel.StandingsFragmentEvent.ViewCreated(context))
     }
 
     override fun showErrorMessage(message: String) {

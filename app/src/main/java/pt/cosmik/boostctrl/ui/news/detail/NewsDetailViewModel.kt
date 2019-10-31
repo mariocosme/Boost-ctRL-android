@@ -42,7 +42,7 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
                 articleTitle = it.description,
                 articleContent = it.secondArticle ?: "",
                 articleImage = it.image,
-                articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateUtils.getDateFormatter().format(date) }}"
+                articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateUtils.getDateFormatter(DateUtils.patternCommon).format(date) }}"
             )
         }
     }

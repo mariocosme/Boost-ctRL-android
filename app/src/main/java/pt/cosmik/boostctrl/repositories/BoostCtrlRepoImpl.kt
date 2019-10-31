@@ -32,7 +32,7 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
 
     override fun getUpdatedTime(kind: UpdateTimeKind): Observable<UpdatedTime> {
         val hash = HashUtils.sha1("GET/updated-time${BuildConfig.BOOST_CTRL_API_SECRET}")
-        val url = "${Constants.BOOST_CTRL_API}/updated-time?hash=$hash"
+        val url = "${Constants.BOOST_CTRL_API}/updated-time?kind=${kind.ordinal}&hash=$hash"
         return boostCtrlService.getUpdatedTime(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
