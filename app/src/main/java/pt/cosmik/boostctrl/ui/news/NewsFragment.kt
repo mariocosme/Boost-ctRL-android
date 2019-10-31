@@ -21,7 +21,7 @@ import pt.cosmik.boostctrl.ui.common.BaseFragment
 class NewsFragment : BaseFragment() {
 
     private val vm: NewsViewModel by viewModel()
-    private var uiDisposables = CompositeDisposable()
+    private var disposables = CompositeDisposable()
 
     private var recyclerView: RecyclerView? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
@@ -60,7 +60,7 @@ class NewsFragment : BaseFragment() {
             }
         }
 
-        uiDisposables.add(listAdapter.onItemClickEvent().subscribe {
+        disposables.add(listAdapter.onItemClickEvent().subscribe {
             findNavController().navigate(NewsFragmentDirections.actionNavigationNewsToNewsItemDetailFragment(it))
         })
 
@@ -89,7 +89,7 @@ class NewsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        uiDisposables.clear()
+        disposables.clear()
     }
 
 }

@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.ui.common
+package pt.cosmik.boostctrl.ui.common.views
 
 import android.annotation.SuppressLint
 import android.app.Activity

@@ -36,7 +36,7 @@
                 android:layout_marginTop="@dimen/space_between_m"
                 tools:text="This is a title"/>
 
-            <pt.cosmik.boostctrl.ui.common.BoostCtrlWebView
+            <pt.cosmik.boostctrl.ui.common.views.BoostCtrlWebView
                 android:id="@+id/webview"
                 android:layout_marginTop="@dimen/space_between_m"
                 android:layout_width="match_parent"

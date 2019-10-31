@@ -14,7 +14,7 @@ import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.ui.common.BaseFragment
-import pt.cosmik.boostctrl.ui.common.BoostCtrlWebView
+import pt.cosmik.boostctrl.ui.common.views.BoostCtrlWebView
 
 class NewsDetailFragment : BaseFragment() {
 
