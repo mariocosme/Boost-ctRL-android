@@ -1,33 +1,35 @@
 package pt.cosmik.boostctrl.ui.teams
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
-import pt.cosmik.boostctrl.repositories.OctaneggRepository
-import pt.cosmik.boostctrl.utils.Constants
+import pt.cosmik.boostctrl.models.Team
+import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
-class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
+class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : ViewModel() {
 
     val viewState = MutableLiveData(TeamsFragmentViewState())
     val viewEffect = SingleLiveEvent<TeamsFragmentViewEffect>()
     val disposables = CompositeDisposable()
 
-    init {
-        viewState.value = viewState.value?.copy(isLoading = false)
-
-        disposables.add(octaneggRepository.getLatestNews().subscribe ({
-//            Log.d(Constants.LOG_TAG, "News items: $it")
-        }, {
-            Log.e(Constants.LOG_TAG, "Error: $it")
-        }))
-    }
-
     fun processEvent(event: TeamsFragmentEvent) {
         when (event) {
-            TeamsFragmentEvent.CreatedView -> {}
+            TeamsFragmentEvent.ViewCreated -> loadActiveTeams()
         }
+    }
+
+    private fun loadActiveTeams() {
+        viewState.value = viewState.value?.copy(isLoading = false)
+
+        disposables.add(boostCtrlRepository.getActiveTeams().subscribe ({
+            viewState.value = viewState.value?.copy(isLoading = false, teams = it)
+        }, {
+            Crashlytics.logException(it)
+            viewState.value = viewState.value?.copy(isLoading = false)
+            viewEffect.value = TeamsFragmentViewEffect.ShowError("Something went wrong trying to obtain the list of active teams.")
+        }))
     }
 
     override fun onCleared() {
@@ -36,7 +38,8 @@ class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
     }
 
     data class TeamsFragmentViewState(
-        val isLoading: Boolean = false
+        val isLoading: Boolean = false,
+        val teams: List<Team> = listOf()
     )
 
     sealed class TeamsFragmentViewEffect {
@@ -44,7 +47,7 @@ class TeamsViewModel(octaneggRepository: OctaneggRepository) : ViewModel() {
     }
 
     sealed class TeamsFragmentEvent {
-        object CreatedView: TeamsFragmentEvent()
+        object ViewCreated: TeamsFragmentEvent()
     }
 
 }

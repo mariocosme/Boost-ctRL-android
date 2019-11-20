@@ -17,4 +17,5 @@
     <string name="home_team_logo">Home team logo</string>
     <string name="away_team_logo">Away team logo</string>
     <string name="tournament_logo">Tournament logo</string>
+    <string name="team_logo">Team logo</string>
 </resources>
