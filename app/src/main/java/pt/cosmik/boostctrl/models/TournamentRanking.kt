@@ -23,5 +23,6 @@ data class Ranking(
     @SerializedName("winLoss") val winLoss: List<String>?,
     @SerializedName("gamesWinLoss") val gamesWinLoss: List<String>?,
     @SerializedName("gamesDifference") val gamesDifference: List<String>?,
-    @SerializedName("teamImages") val teamImages: List<String>?
+    @SerializedName("teamImages") val teamImages: List<String>?,
+    @SerializedName("colors") val colors: List<String>?
 ): Serializable

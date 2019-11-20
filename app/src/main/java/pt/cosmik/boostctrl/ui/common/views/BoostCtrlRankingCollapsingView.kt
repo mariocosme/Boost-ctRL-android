@@ -62,6 +62,7 @@ class BoostCtrlRankingCollapsingView @JvmOverloads constructor(
             item.seriesWL = ranking.rankings.winLoss?.get(index)
             item.gamesDifference = ranking.rankings.gamesDifference?.get(index)
             item.gamesWL = ranking.rankings.gamesWinLoss?.get(index)
+            item.teamColor = ranking.rankings.colors?.get(index)
             items.add(item)
         }
         return items

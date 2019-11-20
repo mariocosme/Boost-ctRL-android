@@ -38,12 +38,21 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9"/>
 
+    <View
+        android:id="@+id/ranking_color"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/index_text"/>
+
     <TextView
         android:id="@+id/index_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:textSize="@dimen/text_size_14_pt"
-        android:textColor="@color/colorIceberg"
+        android:textColor="@android:color/black"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

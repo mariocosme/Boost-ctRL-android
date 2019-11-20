@@ -1,6 +1,7 @@
 package pt.cosmik.boostctrl.ui.common.views
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class BoostCtrlRankingCollapsingListAdapter(var context: Context?): RecyclerView
         holder.seriesText.text = item.seriesWL
         holder.gamesText.text = item.gamesWL
         holder.gamesDifferenceText.text = item.gamesDifference
+        holder.viewColor.setBackgroundColor(Color.parseColor(item.teamColor))
     }
 
     override fun getItemCount() = items.size
@@ -45,6 +47,7 @@ class BoostCtrlRankingCollapsingListAdapter(var context: Context?): RecyclerView
         val seriesText: TextView = itemView.findViewById(R.id.series_text)
         val gamesText: TextView = itemView.findViewById(R.id.games_text)
         val gamesDifferenceText: TextView = itemView.findViewById(R.id.games_difference_text)
+        val viewColor: View = itemView.findViewById(R.id.ranking_color)
     }
 }
 
@@ -55,4 +58,5 @@ class RankingItemDescriptor {
     var seriesWL: String? = null
     var gamesWL: String? = null
     var gamesDifference: String? = null
+    var teamColor: String? = null
 }
