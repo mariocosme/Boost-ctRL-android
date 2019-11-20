@@ -80,7 +80,6 @@ class StandingsFragment : BaseFragment() {
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             listAdapter.setRankingItems(it.rankingItems)
-            // TODO: move into action bar info button? it.lastUpdatedAt
         })
 
         vm.viewEffect.observe(this, Observer {

@@ -13,4 +13,8 @@
     <string name="team_image">Team image</string>
     <string name="last_updated_at">Last updated: %s</string>
     <string name="rankings_info_dialog_title">Rankings</string>
+    <string name="versus">vs.</string>
+    <string name="home_team_logo">Home team logo</string>
+    <string name="away_team_logo">Away team logo</string>
+    <string name="tournament_logo">Tournament logo</string>
 </resources>

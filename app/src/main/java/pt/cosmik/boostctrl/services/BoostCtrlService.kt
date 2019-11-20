@@ -1,9 +1,7 @@
 package pt.cosmik.boostctrl.services
 
 import io.reactivex.Observable
-import pt.cosmik.boostctrl.models.Person
-import pt.cosmik.boostctrl.models.TournamentRanking
-import pt.cosmik.boostctrl.models.UpdatedTime
+import pt.cosmik.boostctrl.models.*
 import retrofit2.http.GET
 import retrofit2.http.Url
 
@@ -17,5 +15,14 @@ interface BoostCtrlService {
 
     @GET
     fun getUpdatedTime(@Url url: String): Observable<UpdatedTime>
+
+    @GET
+    fun getUpcomingAndOngoingMatches(@Url url: String): Observable<List<UpcomingMatch>>
+
+    @GET
+    fun getActiveTeams(@Url url: String): Observable<List<Team>>
+
+    @GET
+    fun getTeam(@Url url: String): Observable<Team>
 
 }

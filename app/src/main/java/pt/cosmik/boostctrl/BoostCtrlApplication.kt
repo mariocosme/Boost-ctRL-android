@@ -22,7 +22,8 @@ class BoostCtrlApplication : MultiDexApplication() {
                 repositoryModule,
                 teamsModule,
                 newsModule,
-                standingsModule
+                standingsModule,
+                matchesModule
             ))
         }
     }
