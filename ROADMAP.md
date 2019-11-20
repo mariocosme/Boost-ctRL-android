@@ -4,13 +4,15 @@ This roadmap isn't final and always susceptible to changes depending on current 
 ## Version 1.0.0
 The basics so that the app can be released in the Google Play Store so that it can be useful for the RL esport fans without any neat features
 - Add an internet connection listener which shows a small informative view if the user doesn't have an active connection
-- Add images for the news items supported with [Glide](https://github.com/bumptech/glide)
-- Add global PlayerFragment
+- Add global PersonFragment
 - Add global TeamFragment
 - Implement analytics throughout the app
+- Implement Info fragment
+- Add in-app-purchases as tips for the developer
 
 
 ## Version 1.0.1
+- Add more news providers (like [rocketeers.gg](https://rocketeers.gg/))
 - Add Realm support to cache data so that it's possible to present something even offline
 - Add desktop icon actions in order to open directly one of the main fragments
 - Add left/right swipe support for recycler view items
@@ -19,7 +21,6 @@ The basics so that the app can be released in the Google Play Store so that it c
 ## Version 1.0.2
 - Add favorite support to rankings so the favorites appear on the top
 - Texts localization (depending on help)
-- Add more news providers (like [rocketeers.gg](https://rocketeers.gg/))
 
 ## For the future aka _great to have_
 - Overall update to the UI/UX (depending on extra help)
