@@ -27,6 +27,8 @@ class BoostCtrlWebView @JvmOverloads constructor(
     private var progressBar: ProgressBar? = null
     private var parentActivity: Activity? = null
 
+    private var currentLoadedContent: String? = null
+
     init {
         alpha = 0.0f
         settings.javaScriptEnabled = true
@@ -78,7 +80,12 @@ class BoostCtrlWebView @JvmOverloads constructor(
     }
 
     fun loadTwitterContent(html: String?) {
-        loadDataWithBaseURL("https://twitter.com", addCSS(html), "text/html; charset=utf-8", "utf-8", null)
+        html?.let {
+            if (currentLoadedContent != it) {
+                currentLoadedContent = it
+                loadDataWithBaseURL("https://twitter.com", addCSS(html), "text/html; charset=utf-8", "utf-8", null)
+            }
+        }
     }
 
 }

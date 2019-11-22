@@ -6,6 +6,7 @@
     <string name="news">News</string>
     <string name="standings">Standings</string>
     <string name="info">Info</string>
+    <string name="person">Person</string>
 
     <string name="detail">Detail</string>
     <string name="share">Share</string>
@@ -18,4 +19,13 @@
     <string name="away_team_logo">Away team logo</string>
     <string name="tournament_logo">Tournament logo</string>
     <string name="team_logo">Team logo</string>
+
+    <string name="birthdate">Birthdate</string>
+    <string name="country">Country</string>
+    <string name="current_team">Current Team</string>
+    <string name="role">Role</string>
+    <string name="socials">Socials</string>
+    <string name="name">Name</string>
+    <string name="status">Status</string>
+    <string name="nickname">Nickname</string>
 </resources>

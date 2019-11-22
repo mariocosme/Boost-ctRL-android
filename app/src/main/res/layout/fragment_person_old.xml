@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPickledBluewood">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/black"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.viewpagerindicator.LinePageIndicator
+                android:id="@+id/page_indicator"
+                android:layout_height="2dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/space_between_xs"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/view_pager"
+                app:strokeWidth="8dp"
+                app:lineWidth="16dp"
+                app:unselectedColor="@color/colorIceberg"
+                app:selectedColor="@color/colorRadicalRed"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_person_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_between_m"
+            android:layout_marginEnd="@dimen/space_between_m"
+            android:layout_marginTop="@dimen/space_between_m"
+            android:textSize="@dimen/text_size_14_pt"
+            android:textColor="@color/colorIceberg"
+            tools:text="Emil fruity Moselund (born February 22, 1996) is a Danish Rocket League player."/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_ranking_collapsing_view"
+            android:layout_marginTop="@dimen/space_between_m"
+            android:layout_marginStart="@dimen/space_between_m"
+            android:layout_marginEnd="@dimen/space_between_m"/>
+
+    </LinearLayout>
+
+</ScrollView>

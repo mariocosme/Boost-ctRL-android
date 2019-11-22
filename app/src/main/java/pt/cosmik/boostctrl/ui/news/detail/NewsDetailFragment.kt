@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -15,6 +16,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.views.BoostCtrlWebView
+import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 
 class NewsDetailFragment : BaseFragment() {
 
@@ -77,7 +79,7 @@ class NewsDetailFragment : BaseFragment() {
             when (it) {
                 is NewsDetailFragmentViewEffect.ShowError -> showErrorMessage(it.message)
                 is NewsDetailFragmentViewEffect.PresentSharesheet -> presentSharesheet(it.extra)
-                is NewsDetailFragmentViewEffect.PresentPersonFragment -> {} // TODO: navigate to global person detail fragment
+                is NewsDetailFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(PersonFragmentDirections.actionGlobalPersonFragment(it.person))
             }
         })
     }
