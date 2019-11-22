@@ -1,5 +1,6 @@
 package pt.cosmik.boostctrl.ui.common.views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
@@ -48,7 +49,7 @@ class BoostCtrlRankingCollapsingView @JvmOverloads constructor(
     }
 
     fun setTournamentRanking(ranking: TournamentRanking) {
-        titleText?.text = "${ranking?.tournamentName} (${ranking?.region?.getRegionAbbreviation()})"
+        titleText?.text = "${ranking.tournamentName} (${ranking.region.getRegionAbbreviation()})"
         listAdapter.setRankingItemDescriptors(generateRankingItemDescriptors(ranking))
     }
 

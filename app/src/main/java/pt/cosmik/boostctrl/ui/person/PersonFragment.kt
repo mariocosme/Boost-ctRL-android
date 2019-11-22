@@ -73,7 +73,7 @@ class PersonFragment : BaseFragment() {
         })
 
         vm.viewEffect.observe(this, Observer {
-            when (it) {}
+//            when (it) {}
         })
 
         vm.processEvent(PersonViewModel.PersonFragmentEvent.ViewCreated(arguments?.get("person") as? Person, context))
