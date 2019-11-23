@@ -14,9 +14,13 @@ class MatchesViewModel(private val boostCtrlRepository: BoostCtrlRepository) : V
     val viewEffect = SingleLiveEvent<MatchesFragmentViewEffect>()
     private val disposables = CompositeDisposable()
 
+    init {
+        loadUpcomingAndOngoingMatches()
+    }
+
     fun processEvent(event: MatchesFragmentEvent) {
         when (event) {
-            MatchesFragmentEvent.ViewCreated, MatchesFragmentEvent.DidTriggerRefresh -> loadUpcomingAndOngoingMatches()
+            MatchesFragmentEvent.DidTriggerRefresh -> loadUpcomingAndOngoingMatches()
         }
     }
 

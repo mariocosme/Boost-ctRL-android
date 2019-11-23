@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             setupWithNavController(navController)
         }
 
-        val graph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
         graph.startDestination = R.id.navigation_news
         navController.graph = graph
     }
