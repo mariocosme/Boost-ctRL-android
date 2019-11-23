@@ -17,6 +17,22 @@ class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : Vie
     fun processEvent(event: TeamsFragmentEvent) {
         when (event) {
             TeamsFragmentEvent.ViewCreated -> loadActiveTeams()
+            is TeamsFragmentEvent.DidSelectTeam -> {
+                viewState.value = viewState.value?.copy(isLoading = true)
+                disposables.add(boostCtrlRepository.getTeam(event.team.name).subscribe ({
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    if (it == null) {
+                        viewEffect.value = TeamsFragmentViewEffect.ShowError("Cannot obtain the selected team.")
+                    }
+                    else {
+                        viewEffect.value = TeamsFragmentViewEffect.PresentTeamFragment(it)
+                    }
+                }, {
+                    Crashlytics.logException(it)
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    viewEffect.value = TeamsFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected team.")
+                }))
+            }
         }
     }
 
@@ -44,10 +60,12 @@ class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : Vie
 
     sealed class TeamsFragmentViewEffect {
         data class ShowError(val error: String): TeamsFragmentViewEffect()
+        data class PresentTeamFragment(val team: Team): TeamsFragmentViewEffect()
     }
 
     sealed class TeamsFragmentEvent {
         object ViewCreated: TeamsFragmentEvent()
+        data class DidSelectTeam(val team: Team): TeamsFragmentEvent()
     }
 
 }

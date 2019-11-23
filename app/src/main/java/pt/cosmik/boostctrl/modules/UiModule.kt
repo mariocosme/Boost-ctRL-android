@@ -8,9 +8,11 @@ import pt.cosmik.boostctrl.ui.news.detail.NewsDetailViewModel
 import pt.cosmik.boostctrl.ui.person.PersonViewModel
 import pt.cosmik.boostctrl.ui.standings.StandingsViewModel
 import pt.cosmik.boostctrl.ui.teams.TeamsViewModel
+import pt.cosmik.boostctrl.ui.teams.detail.TeamViewModel
 
 var uiModule = module {
     viewModel { TeamsViewModel(get()) }
+    viewModel { TeamViewModel() }
 
     viewModel { NewsViewModel(get()) }
     viewModel { NewsDetailViewModel(get()) }

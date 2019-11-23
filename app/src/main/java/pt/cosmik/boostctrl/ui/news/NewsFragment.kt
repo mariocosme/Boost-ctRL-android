@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
@@ -21,7 +20,6 @@ import pt.cosmik.boostctrl.ui.common.BaseFragment
 class NewsFragment : BaseFragment() {
 
     private val vm: NewsViewModel by viewModel()
-    private var disposables = CompositeDisposable()
 
     private var recyclerView: RecyclerView? = null
     private var swipeRefresh: SwipeRefreshLayout? = null

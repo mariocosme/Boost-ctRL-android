@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
@@ -17,11 +16,11 @@ import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.views.BoostCtrlWebView
 import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
+import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 
 class NewsDetailFragment : BaseFragment() {
 
     private val vm: NewsDetailViewModel by viewModel()
-    private var disposables = CompositeDisposable()
 
     private var titleText: TextView? = null
     private var authorDateText: TextView? = null
@@ -80,6 +79,7 @@ class NewsDetailFragment : BaseFragment() {
                 is NewsDetailFragmentViewEffect.ShowError -> showErrorMessage(it.message)
                 is NewsDetailFragmentViewEffect.PresentSharesheet -> presentSharesheet(it.extra)
                 is NewsDetailFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(PersonFragmentDirections.actionGlobalPersonFragment(it.person))
+                is NewsDetailFragmentViewEffect.PresentTeamFragment -> findNavController().navigate(TeamFragmentDirections.actionGlobalTeamDetailFragment(it.team))
             }
         })
     }

@@ -1,6 +1,5 @@
 package pt.cosmik.boostctrl.ui.common.views
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
@@ -9,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.TournamentRanking
 
@@ -24,7 +22,7 @@ class BoostCtrlRankingCollapsingView @JvmOverloads constructor(
 
     private var recyclerView: RecyclerView? = null
     private val listAdapter = BoostCtrlRankingCollapsingListAdapter(null)
-    val itemClickSubject = PublishSubject.create<RankingItemDescriptor>()
+    var didSelectItemDescriptor: ((descriptor: RankingItemDescriptor) -> Unit)? = null
 
     init {
         inflate(context, R.layout.view_ranking_collapsing, this)
@@ -44,7 +42,7 @@ class BoostCtrlRankingCollapsingView @JvmOverloads constructor(
         }
 
         disposables.add(listAdapter.itemClickSubject.subscribe {
-            itemClickSubject.onNext(it)
+            didSelectItemDescriptor?.invoke(it)
         })
     }
 

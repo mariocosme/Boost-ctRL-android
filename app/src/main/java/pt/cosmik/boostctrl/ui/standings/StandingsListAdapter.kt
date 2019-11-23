@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.TournamentRanking
@@ -15,7 +14,6 @@ class StandingsListAdapter: RecyclerView.Adapter<StandingsListAdapter.ViewHolder
 
     private var items: List<TournamentRanking> = listOf()
     val itemClickSubject = PublishSubject.create<RankingItemDescriptor>()
-    private var disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_rankings_item, parent, false))
@@ -24,9 +22,9 @@ class StandingsListAdapter: RecyclerView.Adapter<StandingsListAdapter.ViewHolder
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.rankingCollapsingView.setTournamentRanking(item)
-        disposables.add(holder.rankingCollapsingView.itemClickSubject.subscribe {
+        holder.rankingCollapsingView.didSelectItemDescriptor = {
             itemClickSubject.onNext(it)
-        })
+        }
     }
 
     override fun getItemCount() = items.size

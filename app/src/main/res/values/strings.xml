@@ -7,6 +7,7 @@
     <string name="standings">Standings</string>
     <string name="info">Info</string>
     <string name="person">Person</string>
+    <string name="team_detail">Team Detail</string>
 
     <string name="detail">Detail</string>
     <string name="share">Share</string>
@@ -28,4 +29,12 @@
     <string name="name">Name</string>
     <string name="status">Status</string>
     <string name="nickname">Nickname</string>
+
+    <string name="sponsors">Sponsors</string>
+    <string name="created_at">Created at</string>
+    <string name="region">Region</string>
+    <string name="manager">Manager</string>
+    <string name="location">Location</string>
+    <string name="roster">Roster</string>
+
 </resources>

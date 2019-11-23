@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.ui.person
+package pt.cosmik.boostctrl.ui.teams.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,25 +15,25 @@ import com.viewpagerindicator.LinePageIndicator
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.models.Person
+import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
 
 
-class PersonFragment : BaseFragment() {
+class TeamFragment : BaseFragment() {
 
-    private val vm: PersonViewModel by viewModel()
+    private val vm: TeamViewModel by viewModel()
 
     private var viewPager: ViewPager? = null
     private var linePageIndicator: LinePageIndicator? = null
-    private var personDescription: TextView? = null
+    private var teamDescription: TextView? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var recyclerView: RecyclerView? = null
-    private val listAdapter = PersonListAdapter()
+    private val listAdapter = TeamListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
-        return inflater.inflate(R.layout.fragment_person, container, false)
+        return inflater.inflate(R.layout.fragment_team_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class PersonFragment : BaseFragment() {
 
         viewPager = view.findViewById(R.id.view_pager)
         linePageIndicator = view.findViewById(R.id.page_indicator)
-        personDescription = view.findViewById(R.id.text_person_desc)
+        teamDescription = view.findViewById(R.id.text_team_desc)
 
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
@@ -49,7 +49,7 @@ class PersonFragment : BaseFragment() {
         }
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
-            setHasFixedSize(true)
+            setHasFixedSize(false)
             dividerItemDeco?.let { addItemDecoration(it) }
             layoutManager = LinearLayoutManager(context)
             adapter = listAdapter
@@ -57,8 +57,8 @@ class PersonFragment : BaseFragment() {
 
         vm.viewState.observe(this, Observer {
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
-            it.personDetailItems?.let { items -> listAdapter.setItems(items) }
-            it.personImages?.let { images ->
+            it.teamDetailItems?.let { items -> listAdapter.setItems(items) }
+            it.teamImages?.let { images ->
                 if (viewPager?.adapter == null) {
                     viewPager?.adapter = BoostCtrlSmallViewPagerAdapter(context!!, images)
                     linePageIndicator?.setViewPager(viewPager)
@@ -67,14 +67,14 @@ class PersonFragment : BaseFragment() {
                     if (images.size > 1) linePageIndicator?.visibility = View.VISIBLE
                 }
             }
-            personDescription?.text = it.personDescription
+            teamDescription?.text = it.teamDescription
         })
 
         vm.viewEffect.observe(this, Observer {
 //            when (it) {}
         })
 
-        vm.processEvent(PersonViewModel.PersonFragmentEvent.ViewCreated(arguments?.get("person") as? Person, context))
+        vm.processEvent(TeamViewModel.TeamFragmentEvent.ViewCreated(arguments?.get("team") as? Team, context))
     }
 
     override fun showErrorMessage(message: String) {

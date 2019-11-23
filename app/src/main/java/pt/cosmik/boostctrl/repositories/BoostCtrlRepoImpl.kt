@@ -12,8 +12,9 @@ import pt.cosmik.boostctrl.utils.HashUtils
 class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCtrlRepository {
 
     override fun getPerson(personName: String): Observable<Person?> {
-        val hash = HashUtils.sha1("GET/person/$personName${BuildConfig.BOOST_CTRL_API_SECRET}")
-        val url = "${Constants.BOOST_CTRL_API}/person/$personName?hash=$hash"
+        val personParam = personName.replace(" ", "%20")
+        val hash = HashUtils.sha1("GET/person/$personParam${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/person/$personParam?hash=$hash"
         return boostCtrlService.getPerson(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -52,8 +53,9 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
     }
 
     override fun getTeam(teamName: String): Observable<Team?> {
-        val hash = HashUtils.sha1("GET/team/$teamName${BuildConfig.BOOST_CTRL_API_SECRET}")
-        val url = "${Constants.BOOST_CTRL_API}/team/$teamName?hash=$hash"
+        val teamParam = teamName.replace(" ", "%20")
+        val hash = HashUtils.sha1("GET/team/$teamParam${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/team/$teamParam?hash=$hash"
         return boostCtrlService.getTeam(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

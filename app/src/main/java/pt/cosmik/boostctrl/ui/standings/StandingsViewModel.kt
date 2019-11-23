@@ -7,6 +7,7 @@ import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.zipWith
 import pt.cosmik.boostctrl.R
+import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.models.TournamentRanking
 import pt.cosmik.boostctrl.models.UpdateTimeKind
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
@@ -29,12 +30,25 @@ class StandingsViewModel(private val boostCtrlRepository: BoostCtrlRepository) :
             }
             StandingsFragmentEvent.DidTriggerRefresh -> loadStandings()
             is StandingsFragmentEvent.DidSelectRankingDescriptor -> {
-                /**
-                 * TODO:
-                 * show isLoading
-                 * boostCtrlRepository.getTeamByName(event.descriptor.teamName) and then make view navigate to global TeamFragment with that arg
-                 * hide isLoading
-                 */
+                if (event.descriptor.teamName == null) {
+                    viewEffect.value = StandingsFragmentViewEffect.ShowError("Cannot obtain the selected team.")
+                }
+                else {
+                    viewState.value = viewState.value?.copy(isLoading = true)
+                    disposables.add(boostCtrlRepository.getTeam(event.descriptor.teamName!!).subscribe ({
+                        viewState.value = viewState.value?.copy(isLoading = false)
+                        if (it == null) {
+                            viewEffect.value = StandingsFragmentViewEffect.ShowError("Cannot obtain the selected team.")
+                        }
+                        else {
+                            viewEffect.value = StandingsFragmentViewEffect.PresentTeamFragment(it)
+                        }
+                    }, {
+                        Crashlytics.logException(it)
+                        viewState.value = viewState.value?.copy(isLoading = false)
+                        viewEffect.value = StandingsFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected team.")
+                    }))
+                }
             }
         }
     }
@@ -68,6 +82,7 @@ class StandingsViewModel(private val boostCtrlRepository: BoostCtrlRepository) :
 
     sealed class StandingsFragmentViewEffect {
         data class ShowError(val message: String): StandingsFragmentViewEffect()
+        data class PresentTeamFragment(val team: Team): StandingsFragmentViewEffect()
     }
 
     sealed class StandingsFragmentEvent {

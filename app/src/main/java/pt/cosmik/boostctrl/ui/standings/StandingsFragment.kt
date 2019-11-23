@@ -5,19 +5,19 @@ import android.view.*
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 
 class StandingsFragment : BaseFragment() {
 
     private val vm: StandingsViewModel by viewModel()
-    private var disposables = CompositeDisposable()
 
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null
@@ -85,6 +85,7 @@ class StandingsFragment : BaseFragment() {
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is StandingsViewModel.StandingsFragmentViewEffect.ShowError -> showErrorMessage(it.message)
+                is StandingsViewModel.StandingsFragmentViewEffect.PresentTeamFragment -> findNavController().navigate(TeamFragmentDirections.actionGlobalTeamDetailFragment(it.team))
             }
         })
 

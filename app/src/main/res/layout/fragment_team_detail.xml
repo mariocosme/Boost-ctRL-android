@@ -35,7 +35,7 @@
             app:selectedColor="@color/colorRadicalRed"/>
 
         <TextView
-            android:id="@+id/text_person_desc"
+            android:id="@+id/text_team_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_between_m"
@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_pager"
-            tools:text="Emil fruity Moselund (born February 22, 1996) is a Danish Rocket League player."/>
+            tools:text="Renault Vitality is a partnership between the French esports organisation Team Vitality, which has teams competing in Rocket League, League of Legends, Call of Duty, FIFA, Rainbow Six: Siege, Halo, Counter-Strike: Global Offensive and H1Z1, and motorsport organisation Renault Sport."/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -59,7 +59,8 @@
             android:layout_marginBottom="@dimen/space_between_m"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_person_desc"/>
+            app:layout_constraintTop_toBottomOf="@id/text_team_desc"
+            tools:listitem="@layout/list_title_value_item"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.models.Person
+import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.DateUtils
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
@@ -63,7 +64,21 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
                 }))
             }
             ArticleLinkType.TEAM -> {
-                // TODO: not supported yet
+                viewState.value = viewState.value?.copy(isLoading = true)
+                val teamName = articleLink.replace("team/", "").replace("team_", "")
+                disposables.add(boostCtrlRepository.getTeam(teamName).subscribe ({
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    if (it == null) {
+                        viewEffect.value = NewsDetailFragmentViewEffect.ShowError("Cannot obtain the selected team.")
+                    }
+                    else {
+                        viewEffect.value = NewsDetailFragmentViewEffect.PresentTeamFragment(it)
+                    }
+                }, {
+                    Crashlytics.logException(it)
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    viewEffect.value = NewsDetailFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected team.")
+                }))
             }
             ArticleLinkType.UNKNOWN -> {}
         }
@@ -92,6 +107,7 @@ sealed class NewsDetailFragmentViewEffect {
     data class ShowError(val message: String): NewsDetailFragmentViewEffect()
     data class PresentSharesheet(val extra: String): NewsDetailFragmentViewEffect()
     data class PresentPersonFragment(val person: Person): NewsDetailFragmentViewEffect()
+    data class PresentTeamFragment(val team: Team): NewsDetailFragmentViewEffect()
 }
 
 sealed class NewsDetailFragmentEvent {

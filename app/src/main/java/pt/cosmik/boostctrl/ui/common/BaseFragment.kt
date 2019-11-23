@@ -3,15 +3,20 @@ package pt.cosmik.boostctrl.ui.common
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.BuildConfig
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 
 abstract class BaseFragment: Fragment(), BaseFragmentInterface {
+
+    protected var disposables = CompositeDisposable()
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -68,6 +73,7 @@ abstract class BaseFragment: Fragment(), BaseFragmentInterface {
     override fun onDestroyView() {
         super.onDestroyView()
         if (BuildConfig.DEBUG) Log.d(Constants.LOG_TAG, "${this::class.java}: onDestroyView")
+        disposables.clear()
     }
 
     override fun onDestroy() {

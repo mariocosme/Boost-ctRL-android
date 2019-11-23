@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.ui.person
+package pt.cosmik.boostctrl.ui.teams.detail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +11,10 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 import java.util.concurrent.TimeUnit
 
-class PersonListAdapter: RecyclerView.Adapter<PersonListAdapter.ViewHolder>() {
+class TeamListAdapter: RecyclerView.Adapter<TeamListAdapter.ViewHolder>() {
 
-    private var items: List<PersonDetailListItemDescriptor> = listOf()
-    private val itemClickSubject = PublishSubject.create<PersonDetailListItemDescriptor>()
+    private var items: List<TeamDetailListItemDescriptor> = listOf()
+    private val itemClickSubject = PublishSubject.create<TeamDetailListItemDescriptor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_title_value_item, parent, false))
@@ -29,9 +29,9 @@ class PersonListAdapter: RecyclerView.Adapter<PersonListAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    fun onItemClickEvent(): Observable<PersonDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
+    fun onItemClickEvent(): Observable<TeamDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
-    fun setItems(items: List<PersonDetailListItemDescriptor>) {
+    fun setItems(items: List<TeamDetailListItemDescriptor>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -42,7 +42,7 @@ class PersonListAdapter: RecyclerView.Adapter<PersonListAdapter.ViewHolder>() {
     }
 }
 
-class PersonDetailListItemDescriptor(
+class TeamDetailListItemDescriptor(
     val title: String?,
     val value: String?
 )
