@@ -10,7 +10,7 @@ android {
         applicationId "pt.cosmik.boostctrl"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
+        versionCode 4
         versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
