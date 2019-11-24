@@ -24,3 +24,10 @@ data class Team(
     @SerializedName("twitter") val twitter: String?,
     @SerializedName("youtube") val youtube: String?
 ): Serializable
+
+enum class RosterTeamPlayer {
+    @SerializedName("0") COACH,
+    @SerializedName("1") PLAYER,
+    @SerializedName("2") SUBSTITUTE,
+    @SerializedName("3") CAPTAIN;
+}

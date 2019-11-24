@@ -46,7 +46,7 @@ class PersonViewModel: ViewModel() {
         person.birthDate?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.birthdate), DateUtils.getDateFormatter(DateUtils.patternCommon).format(it))) }
         person.country?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.country), it)) }
         person.currentTeam?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.current_team), it)) }
-        person.role?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.role), it)) }
+        person.role?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.role), it as String?)) }
         person.status?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.status), it)) }
         return items
     }

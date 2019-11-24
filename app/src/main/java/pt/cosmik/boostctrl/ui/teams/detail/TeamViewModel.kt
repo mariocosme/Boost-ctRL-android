@@ -31,22 +31,22 @@ class TeamViewModel: ViewModel() {
                         barTitle = event.team.name,
                         teamImages = event.team.images,
                         teamDescription = event.team.summary,
-                        teamDetailItems = generateTeamDetailItemDescriptors(event.team)
+                        teamGeneralDetailItems = generateTeamGeneralDetailItemDescriptors(event.team)
                     )
                 }
             }
         }
     }
 
-    private fun generateTeamDetailItemDescriptors(team: Team): List<TeamDetailListItemDescriptor> {
-        val items = mutableListOf<TeamDetailListItemDescriptor>()
-        items.add(TeamDetailListItemDescriptor(context?.getString(R.string.name), team.name))
-        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(TeamDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
-        team.createdAt?.let { createdAt -> items.add(TeamDetailListItemDescriptor(context?.getString(R.string.created_at), createdAt)) }
-        team.region?.let { region -> items.add(TeamDetailListItemDescriptor(context?.getString(R.string.region), region.toString())) }
-        team.location?.let { location -> items.add(TeamDetailListItemDescriptor(context?.getString(R.string.location), location)) }
-        team.roster?.let { roster -> items.add(TeamDetailListItemDescriptor(context?.getString(R.string.roster), roster.map { it.nickname }.joinToString(", "))) }
-        team.manager?.let { manager -> items.add(TeamDetailListItemDescriptor(context?.getString(R.string.manager), manager)) }
+    private fun generateTeamGeneralDetailItemDescriptors(team: Team): List<TeamGeneralDetailListItemDescriptor> {
+        val items = mutableListOf<TeamGeneralDetailListItemDescriptor>()
+        items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.name), team.name))
+        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
+        team.createdAt?.let { createdAt -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.created_at), createdAt)) }
+        team.region?.let { region -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.region), region.toString())) }
+        team.location?.let { location -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.location), location)) }
+        team.roster?.let { roster -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.roster), roster.map { it.nickname }.joinToString(", "))) }
+        team.manager?.let { manager -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.manager), manager)) }
         return items
     }
 
@@ -57,7 +57,7 @@ class TeamViewModel: ViewModel() {
 
     data class TeamFragmentViewState(
         val barTitle: String? = null,
-        val teamDetailItems: List<TeamDetailListItemDescriptor>? = null,
+        val teamGeneralDetailItems: List<TeamGeneralDetailListItemDescriptor>? = null,
         val teamImages: List<String>? = null,
         val teamDescription: String? = null
     )

@@ -29,8 +29,8 @@ class TeamFragment : BaseFragment() {
     private var teamDescription: TextView? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
-    private var recyclerView: RecyclerView? = null
-    private val listAdapter = TeamListAdapter()
+    private var teamGeneralDetailsRecyclerView: RecyclerView? = null
+    private val teamGeneralDetailsListAdapter = TeamGeneralDetailsListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_team_detail, container, false)
@@ -48,16 +48,16 @@ class TeamFragment : BaseFragment() {
             ContextCompat.getDrawable(context, R.drawable.bg_list_news_item_separator)?.let { dividerItemDeco?.setDrawable(it) }
         }
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
-            setHasFixedSize(false)
+        teamGeneralDetailsRecyclerView = view.findViewById<RecyclerView>(R.id.team_general_details_recycler_view)?.apply {
+            setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }
             layoutManager = LinearLayoutManager(context)
-            adapter = listAdapter
+            adapter = teamGeneralDetailsListAdapter
         }
 
         vm.viewState.observe(this, Observer {
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
-            it.teamDetailItems?.let { items -> listAdapter.setItems(items) }
+            it.teamGeneralDetailItems?.let { items -> teamGeneralDetailsListAdapter.setItems(items) }
             it.teamImages?.let { images ->
                 if (viewPager?.adapter == null) {
                     viewPager?.adapter = BoostCtrlSmallViewPagerAdapter(context!!, images)

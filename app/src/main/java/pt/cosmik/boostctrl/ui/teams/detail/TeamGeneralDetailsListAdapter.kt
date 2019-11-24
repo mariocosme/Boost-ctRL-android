@@ -11,28 +11,28 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 import java.util.concurrent.TimeUnit
 
-class TeamListAdapter: RecyclerView.Adapter<TeamListAdapter.ViewHolder>() {
+class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsListAdapter.ViewHolder>() {
 
-    private var items: List<TeamDetailListItemDescriptor> = listOf()
-    private val itemClickSubject = PublishSubject.create<TeamDetailListItemDescriptor>()
+    private var itemGenerals: List<TeamGeneralDetailListItemDescriptor> = listOf()
+    private val itemClickSubject = PublishSubject.create<TeamGeneralDetailListItemDescriptor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_title_value_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
+        val item = itemGenerals[position]
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
         holder.valueText.text = item.value
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = itemGenerals.size
 
-    fun onItemClickEvent(): Observable<TeamDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
+    fun onItemClickEvent(): Observable<TeamGeneralDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
-    fun setItems(items: List<TeamDetailListItemDescriptor>) {
-        this.items = items
+    fun setItems(itemGenerals: List<TeamGeneralDetailListItemDescriptor>) {
+        this.itemGenerals = itemGenerals
         notifyDataSetChanged()
     }
 
@@ -42,7 +42,7 @@ class TeamListAdapter: RecyclerView.Adapter<TeamListAdapter.ViewHolder>() {
     }
 }
 
-class TeamDetailListItemDescriptor(
+class TeamGeneralDetailListItemDescriptor(
     val title: String?,
     val value: String?
 )

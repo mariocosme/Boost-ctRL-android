@@ -49,7 +49,7 @@
             tools:text="Renault Vitality is a partnership between the French esports organisation Team Vitality, which has teams competing in Rocket League, League of Legends, Call of Duty, FIFA, Rainbow Six: Siege, Halo, Counter-Strike: Global Offensive and H1Z1, and motorsport organisation Renault Sport."/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/team_general_details_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_ranking_collapsing_view"
