@@ -37,7 +37,7 @@ class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : Vie
     }
 
     private fun loadActiveTeams() {
-        viewState.value = viewState.value?.copy(isLoading = false)
+        viewState.value = viewState.value?.copy(isLoading = true)
 
         disposables.add(boostCtrlRepository.getActiveTeams().subscribe ({
             viewState.value = viewState.value?.copy(isLoading = false, teams = it)
