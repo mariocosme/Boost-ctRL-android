@@ -48,6 +48,7 @@ class PersonFragment : BaseFragment() {
             ContextCompat.getDrawable(context, R.drawable.bg_list_news_item_separator)?.let { dividerItemDeco?.setDrawable(it) }
         }
 
+        listAdapter.context = context
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
             setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }

@@ -61,11 +61,13 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
     private fun generateTeamGeneralDetailItemDescriptors(team: Team): List<TeamGeneralDetailListItemDescriptor> {
         val items = mutableListOf<TeamGeneralDetailListItemDescriptor>()
         items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.name), team.name))
-        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
-        team.createdAt?.let { createdAt -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.created_at), createdAt)) }
-        team.region?.let { region -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.region), region.toString())) }
-        team.location?.let { location -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.location), location)) }
+        // team.createdAt?.let { createdAt -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.created_at), createdAt)) }
+        team.region?.let { region -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.region), region.toString(), team.regionIcon)) }
+        team.location?.let { location -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.location), location, team.locationIcon)) }
         team.manager?.let { manager -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.manager), manager)) }
+        team.totalEarnings?.let { totalEarnings -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.total_earnings), totalEarnings)) }
+        team.liquipediaRating?.let { liquipediaRating -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.liquipedia_rating), liquipediaRating)) }
+        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
         return items
     }
 

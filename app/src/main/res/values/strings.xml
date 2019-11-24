@@ -29,6 +29,10 @@
     <string name="name">Name</string>
     <string name="status">Status</string>
     <string name="nickname">Nickname</string>
+    <string name="approximate_total_earnings">Approx. Total Earnings</string>
+    <string name="total_earnings">Total Earnings</string>
+    <string name="starting_game">Starting Game</string>
+    <string name="liquipedia_rating">Liquipedia Rating</string>
 
     <string name="sponsors">Sponsors</string>
     <string name="created_at">Created at</string>

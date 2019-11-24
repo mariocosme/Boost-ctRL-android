@@ -18,4 +18,6 @@
     <dimen name="text_size_16_pt">18sp</dimen>
     <dimen name="text_size_18_pt">20sp</dimen>
 
+    <dimen name="flag_icon">20dp</dimen>
+
 </resources>

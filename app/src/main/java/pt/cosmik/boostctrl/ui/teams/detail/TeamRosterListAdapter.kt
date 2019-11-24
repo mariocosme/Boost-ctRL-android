@@ -14,7 +14,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 import java.util.concurrent.TimeUnit
 
-class TeamRosterListAdapter(var context: Context?): RecyclerView.Adapter<TeamRosterListAdapter.ViewHolder>() {
+class TeamRosterListAdapter(var context: Context? = null): RecyclerView.Adapter<TeamRosterListAdapter.ViewHolder>() {
 
     private var items: List<TeamRosterPlayerListItemDescriptor> = listOf()
     val itemClickSubject = PublishSubject.create<TeamRosterPlayerListItemDescriptor>()

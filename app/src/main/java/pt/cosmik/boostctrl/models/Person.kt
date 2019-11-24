@@ -24,5 +24,7 @@ data class Person(
     @SerializedName("steam") val steam: String?,
     @SerializedName("instagram") val instagram: String?,
     @SerializedName("liquipediaUrl") val liquipediaUrl: String?,
+    @SerializedName("approxTotalEarnings") val approxTotalEarnings: String?,
+    @SerializedName("startingGame") val startingGame: String?,
     @SerializedName("summary") val summary: String?
 ): Serializable

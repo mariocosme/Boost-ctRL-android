@@ -1,17 +1,20 @@
 package pt.cosmik.boostctrl.ui.teams.detail
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 import java.util.concurrent.TimeUnit
 
-class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsListAdapter.ViewHolder>() {
+class TeamGeneralDetailsListAdapter(var context: Context? = null): RecyclerView.Adapter<TeamGeneralDetailsListAdapter.ViewHolder>() {
 
     private var items: List<TeamGeneralDetailListItemDescriptor> = listOf()
     private val itemClickSubject = PublishSubject.create<TeamGeneralDetailListItemDescriptor>()
@@ -25,6 +28,12 @@ class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsList
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
         holder.valueText.text = item.value
+        context?.let { context ->
+            item.image?.let {
+                holder.image.visibility = View.VISIBLE
+                Glide.with(context).load(it).into(holder.image)
+            }
+        }
     }
 
     override fun getItemCount() = items.size
@@ -39,10 +48,12 @@ class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsList
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val titleText: TextView = itemView.findViewById(R.id.text_title)
         val valueText: TextView = itemView.findViewById(R.id.text_value)
+        val image: ImageView = itemView.findViewById(R.id.image)
     }
 }
 
 class TeamGeneralDetailListItemDescriptor(
     val title: String?,
-    val value: String?
+    val value: String?,
+    val image: String? = null
 )

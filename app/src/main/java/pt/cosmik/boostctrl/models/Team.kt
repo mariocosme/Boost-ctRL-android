@@ -14,15 +14,19 @@ data class Team(
     @SerializedName("discord") val discord: String?,
     @SerializedName("liquipediaUrl") val liquipediaUrl: String?,
     @SerializedName("location") val location: String?,
+    @SerializedName("locationIcon") val locationIcon: String?,
     @SerializedName("mainImage") val mainImage: String?,
     @SerializedName("manager") val manager: String?,
     @SerializedName("name") val name: String,
     @SerializedName("region") val region: Region?,
+    @SerializedName("regionIcon") val regionIcon: String?,
     @SerializedName("roster") val roster: List<Person>?,
     @SerializedName("summary") val summary: String?,
     @SerializedName("twitch") val twitch: String?,
     @SerializedName("twitter") val twitter: String?,
-    @SerializedName("youtube") val youtube: String?
+    @SerializedName("youtube") val youtube: String?,
+    @SerializedName("totalEarnings") val totalEarnings: String?,
+    @SerializedName("liquipediaRating") val liquipediaRating: String?
 ): Serializable
 
 enum class RosterTeamPlayer {

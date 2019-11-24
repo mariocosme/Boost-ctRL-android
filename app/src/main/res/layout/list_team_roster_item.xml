@@ -16,7 +16,7 @@
 
     <ImageView
         android:id="@+id/country_image"
-        android:layout_width="20dp"
+        android:layout_width="@dimen/flag_icon"
         android:layout_height="wrap_content"
         android:contentDescription="@string/country_flag"
         app:layout_constraintTop_toTopOf="parent"

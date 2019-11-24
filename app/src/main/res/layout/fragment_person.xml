@@ -59,7 +59,8 @@
             android:layout_marginBottom="@dimen/space_between_m"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_person_desc"/>
+            app:layout_constraintTop_toBottomOf="@id/text_person_desc"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

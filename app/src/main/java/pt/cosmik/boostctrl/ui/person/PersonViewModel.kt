@@ -44,10 +44,12 @@ class PersonViewModel: ViewModel() {
         person.name?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.name), it)) }
         person.nickname?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.nickname), it)) }
         person.birthDate?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.birthdate), DateUtils.getDateFormatter(DateUtils.patternCommon).format(it))) }
-        person.country?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.country), it)) }
+        person.country?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.country), it, person.countryIcon)) }
         person.currentTeam?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.current_team), it)) }
         person.role?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.role), it as String?)) }
         person.status?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.status), it)) }
+        person.approxTotalEarnings?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.approximate_total_earnings), it)) }
+        person.startingGame?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.starting_game), it)) }
         return items
     }
 

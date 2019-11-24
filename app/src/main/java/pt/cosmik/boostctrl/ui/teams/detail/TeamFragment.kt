@@ -36,7 +36,7 @@ class TeamFragment : BaseFragment() {
     private var teamGeneralDetailsRecyclerView: RecyclerView? = null
     private val teamGeneralDetailsListAdapter = TeamGeneralDetailsListAdapter()
     private var teamRosterRecyclerView: RecyclerView? = null
-    private val teamRosterListAdapter = TeamRosterListAdapter(null)
+    private val teamRosterListAdapter = TeamRosterListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_team_detail, container, false)
@@ -55,6 +55,7 @@ class TeamFragment : BaseFragment() {
             ContextCompat.getDrawable(context, R.drawable.bg_list_news_item_separator)?.let { dividerItemDeco?.setDrawable(it) }
         }
 
+        teamGeneralDetailsListAdapter.context = context
         teamGeneralDetailsRecyclerView = view.findViewById<RecyclerView>(R.id.team_general_details_recycler_view)?.apply {
             setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }
