@@ -35,20 +35,6 @@ class BoostCtrlWebviewClient: WebViewClient() {
         didFinishedLoadingSubject.onNext(true)
     }
 
-    override fun onReceivedHttpError(
-        view: WebView?,
-        request: WebResourceRequest?,
-        errorResponse: WebResourceResponse?
-    ) {
-        super.onReceivedHttpError(view, request, errorResponse)
-        didFinishedLoadingSubject.onNext(true)
-    }
-
-    override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-        super.onReceivedSslError(view, handler, error)
-        didFinishedLoadingSubject.onNext(true)
-    }
-
     private fun isTwitterLink(url: String): Boolean {
         return !url.contains("/team/").or(url.contains("/player"))
     }
