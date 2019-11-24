@@ -1,7 +1,9 @@
 package pt.cosmik.boostctrl.utils
 
-import android.net.http.SslError
-import android.webkit.*
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import io.reactivex.subjects.PublishSubject
 
 class BoostCtrlWebviewClient: WebViewClient() {

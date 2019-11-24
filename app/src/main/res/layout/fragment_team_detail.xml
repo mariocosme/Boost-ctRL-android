@@ -1,67 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPickledBluewood"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@android:color/black"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_height="wrap_content">
 
-        <com.viewpagerindicator.LinePageIndicator
-            android:id="@+id/page_indicator"
-            android:layout_height="2dp"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/space_between_xs"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/view_pager"
-            app:strokeWidth="8dp"
-            app:lineWidth="16dp"
-            app:unselectedColor="@color/colorIceberg"
-            app:selectedColor="@color/colorRadicalRed"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/black"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            android:id="@+id/text_team_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_between_m"
-            android:layout_marginEnd="@dimen/space_between_m"
-            android:layout_marginTop="@dimen/space_between_m"
-            android:textSize="@dimen/text_size_14_pt"
-            android:textColor="@color/colorIceberg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_pager"
-            tools:text="Renault Vitality is a partnership between the French esports organisation Team Vitality, which has teams competing in Rocket League, League of Legends, Call of Duty, FIFA, Rainbow Six: Siege, Halo, Counter-Strike: Global Offensive and H1Z1, and motorsport organisation Renault Sport."/>
+            <com.viewpagerindicator.LinePageIndicator
+                android:id="@+id/page_indicator"
+                android:layout_height="2dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/space_between_xs"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/view_pager"
+                app:strokeWidth="8dp"
+                app:lineWidth="16dp"
+                app:unselectedColor="@color/colorIceberg"
+                app:selectedColor="@color/colorRadicalRed"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/team_general_details_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_ranking_collapsing_view"
-            android:layout_marginTop="@dimen/space_between_m"
-            android:layout_marginStart="@dimen/space_between_m"
-            android:layout_marginEnd="@dimen/space_between_m"
-            android:layout_marginBottom="@dimen/space_between_m"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_team_desc"
-            tools:listitem="@layout/list_title_value_item"/>
+            <TextView
+                android:id="@+id/text_team_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                android:textSize="@dimen/text_size_14_pt"
+                android:textColor="@color/colorIceberg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_pager"
+                tools:text="Renault Vitality is a partnership between the French esports organisation Team Vitality, which has teams competing in Rocket League, League of Legends, Call of Duty, FIFA, Rainbow Six: Siege, Halo, Counter-Strike: Global Offensive and H1Z1, and motorsport organisation Renault Sport."/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/text_team_general_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18_pt"
+                android:textColor="@color/colorAccent"
+                android:text="@string/general_details"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_team_desc" />
 
-</ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/team_general_details_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ranking_collapsing_view"
+                android:layout_marginTop="@dimen/space_between_s"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginBottom="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_team_general_details_title"
+                tools:listitem="@layout/list_title_value_item"/>
+
+            <TextView
+                android:id="@+id/text_team_roster_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18_pt"
+                android:textColor="@color/colorAccent"
+                android:text="@string/roster"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/team_general_details_recycler_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/team_roster_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ranking_collapsing_view"
+                android:layout_marginTop="@dimen/space_between_s"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginBottom="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_team_roster_title"
+                tools:listitem="@layout/list_team_roster_item"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

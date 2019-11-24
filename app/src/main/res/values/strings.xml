@@ -36,5 +36,7 @@
     <string name="manager">Manager</string>
     <string name="location">Location</string>
     <string name="roster">Roster</string>
+    <string name="country_flag">Country flag</string>
+    <string name="general_details">General details</string>
 
 </resources>

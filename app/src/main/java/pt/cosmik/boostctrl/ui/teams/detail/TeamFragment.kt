@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +20,14 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
+import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 
 
 class TeamFragment : BaseFragment() {
 
     private val vm: TeamViewModel by viewModel()
 
+    private var loadingBar: ProgressBar? = null
     private var viewPager: ViewPager? = null
     private var linePageIndicator: LinePageIndicator? = null
     private var teamDescription: TextView? = null
@@ -31,6 +35,8 @@ class TeamFragment : BaseFragment() {
     private var dividerItemDeco: DividerItemDecoration? = null
     private var teamGeneralDetailsRecyclerView: RecyclerView? = null
     private val teamGeneralDetailsListAdapter = TeamGeneralDetailsListAdapter()
+    private var teamRosterRecyclerView: RecyclerView? = null
+    private val teamRosterListAdapter = TeamRosterListAdapter(null)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_team_detail, container, false)
@@ -39,6 +45,7 @@ class TeamFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadingBar = view.findViewById(R.id.loading_bar)
         viewPager = view.findViewById(R.id.view_pager)
         linePageIndicator = view.findViewById(R.id.page_indicator)
         teamDescription = view.findViewById(R.id.text_team_desc)
@@ -55,9 +62,23 @@ class TeamFragment : BaseFragment() {
             adapter = teamGeneralDetailsListAdapter
         }
 
+        teamRosterListAdapter.context = context
+        teamRosterRecyclerView = view.findViewById<RecyclerView>(R.id.team_roster_recycler_view)?.apply {
+            setHasFixedSize(true)
+            dividerItemDeco?.let { addItemDecoration(it) }
+            layoutManager = LinearLayoutManager(context)
+            adapter = teamRosterListAdapter
+        }
+
+        disposables.add(teamRosterListAdapter.itemClickSubject.subscribe {
+            vm.processEvent(TeamViewModel.TeamFragmentEvent.SelectedRosterItem(it))
+        })
+
         vm.viewState.observe(this, Observer {
+            loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.teamGeneralDetailItems?.let { items -> teamGeneralDetailsListAdapter.setItems(items) }
+            it.teamRosterPlayerItems?.let { items -> teamRosterListAdapter.setItems(items) }
             it.teamImages?.let { images ->
                 if (viewPager?.adapter == null) {
                     viewPager?.adapter = BoostCtrlSmallViewPagerAdapter(context!!, images)
@@ -71,7 +92,10 @@ class TeamFragment : BaseFragment() {
         })
 
         vm.viewEffect.observe(this, Observer {
-//            when (it) {}
+            when (it) {
+                is TeamViewModel.TeamFragmentViewEffect.ShowError -> showErrorMessage(it.error)
+                is TeamViewModel.TeamFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(PersonFragmentDirections.actionGlobalPersonFragment(it.person))
+            }
         })
 
         vm.processEvent(TeamViewModel.TeamFragmentEvent.ViewCreated(arguments?.get("team") as? Team, context))

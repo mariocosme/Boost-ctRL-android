@@ -12,7 +12,7 @@ import pt.cosmik.boostctrl.ui.teams.detail.TeamViewModel
 
 var uiModule = module {
     viewModel { TeamsViewModel(get()) }
-    viewModel { TeamViewModel() }
+    viewModel { TeamViewModel(get()) }
 
     viewModel { NewsViewModel(get()) }
     viewModel { NewsDetailViewModel(get()) }

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsListAdapter.ViewHolder>() {
 
-    private var itemGenerals: List<TeamGeneralDetailListItemDescriptor> = listOf()
+    private var items: List<TeamGeneralDetailListItemDescriptor> = listOf()
     private val itemClickSubject = PublishSubject.create<TeamGeneralDetailListItemDescriptor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,18 +21,18 @@ class TeamGeneralDetailsListAdapter: RecyclerView.Adapter<TeamGeneralDetailsList
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = itemGenerals[position]
+        val item = items[position]
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
         holder.valueText.text = item.value
     }
 
-    override fun getItemCount() = itemGenerals.size
+    override fun getItemCount() = items.size
 
     fun onItemClickEvent(): Observable<TeamGeneralDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
-    fun setItems(itemGenerals: List<TeamGeneralDetailListItemDescriptor>) {
-        this.itemGenerals = itemGenerals
+    fun setItems(items: List<TeamGeneralDetailListItemDescriptor>) {
+        this.items = items
         notifyDataSetChanged()
     }
 

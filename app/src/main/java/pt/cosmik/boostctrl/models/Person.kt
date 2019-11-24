@@ -11,6 +11,7 @@ data class Person(
     @SerializedName("name") val name: String?,
     @SerializedName("country") val country: String?,
     @SerializedName("countryIcon") val countryIcon: String?,
+    @SerializedName("joinDate") val joinDate: String?,
     @SerializedName("birthdate") val birthDate: Date?,
     @SerializedName("currentTeam") val currentTeam: String?,
     @SerializedName("mainImage") val mainImage: String?,
