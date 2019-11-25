@@ -83,5 +83,15 @@ class PersonFragment : BaseFragment() {
     }
 
     override fun getActionBarTitle(): String = context?.getString(R.string.person) ?: ""
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeObservers()
+    }
+
+    override fun removeObservers() {
+        vm.viewState.removeObservers(this)
+        vm.viewEffect.removeObservers(this)
+    }
 }
 

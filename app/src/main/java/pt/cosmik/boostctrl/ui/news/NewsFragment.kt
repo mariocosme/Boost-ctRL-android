@@ -89,7 +89,12 @@ class NewsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposables.clear()
+        removeObservers()
+    }
+
+    override fun removeObservers() {
+        vm.viewState.removeObservers(this)
+        vm.viewEffect.removeObservers(this)
     }
 
 }

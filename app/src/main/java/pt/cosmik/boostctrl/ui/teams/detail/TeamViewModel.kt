@@ -61,7 +61,6 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
     private fun generateTeamGeneralDetailItemDescriptors(team: Team): List<TeamGeneralDetailListItemDescriptor> {
         val items = mutableListOf<TeamGeneralDetailListItemDescriptor>()
         items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.name), team.name))
-        // team.createdAt?.let { createdAt -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.created_at), createdAt)) }
         team.region?.let { region -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.region), region.toString(), team.regionIcon)) }
         team.location?.let { location -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.location), location, team.locationIcon)) }
         team.manager?.let { manager -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.manager), manager)) }

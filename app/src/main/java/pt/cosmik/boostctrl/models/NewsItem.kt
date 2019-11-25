@@ -9,7 +9,7 @@ data class NewsDataContainer(
 )
 
 data class NewsItem(
-    @SerializedName("id") val id: Int,
+    @SerializedName("id") val id: String,
     @SerializedName("Date") val date: Date?,
     @SerializedName("Author") val author: String = "Unknown",
     @SerializedName("Twitter") val twitter: String?,

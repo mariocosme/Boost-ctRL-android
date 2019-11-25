@@ -31,7 +31,6 @@ class NewsDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        arguments?.get("newsItem")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItem(it as NewsItem)) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,6 +81,8 @@ class NewsDetailFragment : BaseFragment() {
                 is NewsDetailFragmentViewEffect.PresentTeamFragment -> findNavController().navigate(TeamFragmentDirections.actionGlobalTeamDetailFragment(it.team))
             }
         })
+
+        arguments?.get("newsItem")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItem(it as NewsItem)) }
     }
 
     private fun presentSharesheet(extra: String) {
@@ -106,7 +107,12 @@ class NewsDetailFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        disposables.clear()
+        removeObservers()
+    }
+
+    override fun removeObservers() {
+        vm.viewState.removeObservers(this)
+        vm.viewEffect.removeObservers(this)
     }
 
 }

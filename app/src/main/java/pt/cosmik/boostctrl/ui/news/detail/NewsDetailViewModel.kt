@@ -23,8 +23,10 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
     fun processEvent(event: NewsDetailFragmentEvent) {
         when (event) {
             is NewsDetailFragmentEvent.DidCreateWithNewsItem -> {
-                newsItem = event.newsItem
-                initNewsItem()
+                if (event.newsItem.id != newsItem?.id) {
+                    newsItem = event.newsItem
+                    initNewsItem()
+                }
             }
             NewsDetailFragmentEvent.DitPressShareMenuItem -> viewEffect.value = NewsDetailFragmentViewEffect.PresentSharesheet("https://octane.gg/news/${newsItem?.hyphenated}")
             is NewsDetailFragmentEvent.DidTapArticleLink -> getDataToPresentDetailFragment(event.link)

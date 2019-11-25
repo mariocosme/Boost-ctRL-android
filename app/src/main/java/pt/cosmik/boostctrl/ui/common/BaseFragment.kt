@@ -91,4 +91,5 @@ abstract class BaseFragment: Fragment(), BaseFragmentInterface {
 interface BaseFragmentInterface {
     fun showErrorMessage(message: String)
     fun getActionBarTitle(): String
+    fun removeObservers()
 }
