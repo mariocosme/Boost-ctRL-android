@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
@@ -17,7 +17,7 @@ import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 
 class StandingsFragment : BaseFragment() {
 
-    private val vm: StandingsViewModel by viewModel()
+    private val vm: StandingsViewModel by sharedViewModel()
 
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null
@@ -61,7 +61,7 @@ class StandingsFragment : BaseFragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = listAdapter
+            if (adapter == null) adapter = listAdapter
         }
 
         disposables.add(listAdapter.itemClickSubject.subscribe {

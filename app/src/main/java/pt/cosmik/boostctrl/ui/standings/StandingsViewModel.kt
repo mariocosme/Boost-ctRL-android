@@ -26,7 +26,14 @@ class StandingsViewModel(private val boostCtrlRepository: BoostCtrlRepository) :
         when (event) {
             is StandingsFragmentEvent.ViewCreated -> {
                 context = event.context
-                loadStandings()
+                viewState.value?.rankingItems?.let {
+                    if (it.isEmpty()) {
+                        loadStandings()
+                    }
+                    else {
+                        viewState.value = viewState.value?.copy(rankingItems = it)
+                    }
+                }
             }
             StandingsFragmentEvent.DidTriggerRefresh -> loadStandings()
             is StandingsFragmentEvent.DidSelectRankingDescriptor -> {

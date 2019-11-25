@@ -11,7 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.android.viewmodel.ext.android.viewModel
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
@@ -19,8 +20,9 @@ import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 
 class TeamsFragment : BaseFragment() {
 
-    private val vm: TeamsViewModel by viewModel()
+    private val vm: TeamsViewModel by sharedViewModel()
 
+    private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null
 
     private var recyclerView: RecyclerView? = null
@@ -36,6 +38,15 @@ class TeamsFragment : BaseFragment() {
 
         loadingBar = view.findViewById(R.id.loading_bar)
 
+        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)?.apply {
+            setProgressBackgroundColorSchemeResource(R.color.colorCloudWhite)
+            setColorSchemeResources(R.color.colorAccent)
+            setOnRefreshListener {
+                isRefreshing = false
+                vm.processEvent(TeamsViewModel.TeamsFragmentEvent.DidTriggerRefresh)
+            }
+        }
+
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
             ContextCompat.getDrawable(context, R.drawable.bg_list_news_item_separator)?.let { dividerItemDeco?.setDrawable(it) }
@@ -46,7 +57,6 @@ class TeamsFragment : BaseFragment() {
             setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }
             layoutManager = LinearLayoutManager(context)
-            adapter = listAdapter
         }
 
         disposables.add(listAdapter.itemClickSubject.subscribe {

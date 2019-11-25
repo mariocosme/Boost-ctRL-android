@@ -9,14 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 
 class MatchesFragment : BaseFragment() {
 
-    private val vm: MatchesViewModel by viewModel()
+    private val vm: MatchesViewModel by sharedViewModel()
 
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var loadingBar: ProgressBar? = null

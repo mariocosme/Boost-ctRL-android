@@ -14,14 +14,18 @@ class NewsViewModel(private val octaneggRepository: OctaneggRepository) : ViewMo
     val viewEffect = SingleLiveEvent<NewsFragmentViewEffect>()
     private val disposables = CompositeDisposable()
 
-    init {
-        loadLatestNews()
-    }
-
     fun processEvent(event: NewsFragmentEvent) {
         when (event) {
-            NewsFragmentEvent.DidTriggerRefresh -> {
-                loadLatestNews()
+            NewsFragmentEvent.DidTriggerRefresh -> loadLatestNews()
+            NewsFragmentEvent.ViewCreated -> {
+                viewState.value?.newsItems?.let {
+                    if (it.isEmpty()) {
+                        loadLatestNews()
+                    }
+                    else {
+                        viewState.value = viewState.value?.copy(newsItems = it)
+                    }
+                }
             }
         }
     }
@@ -54,5 +58,6 @@ class NewsViewModel(private val octaneggRepository: OctaneggRepository) : ViewMo
 
     sealed class NewsFragmentEvent {
         object DidTriggerRefresh: NewsFragmentEvent()
+        object ViewCreated: NewsFragmentEvent()
     }
 }

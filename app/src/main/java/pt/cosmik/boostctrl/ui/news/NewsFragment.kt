@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 
 class NewsFragment : BaseFragment() {
 
-    private val vm: NewsViewModel by viewModel()
+    private val vm: NewsViewModel by sharedViewModel()
 
     private var recyclerView: RecyclerView? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
@@ -72,6 +72,8 @@ class NewsFragment : BaseFragment() {
                 is NewsViewModel.NewsFragmentViewEffect.ShowError -> showErrorMessage(it.message)
             }
         })
+
+        vm.processEvent(NewsViewModel.NewsFragmentEvent.ViewCreated)
     }
 
     override fun getActionBarTitle(): String = context?.getString(R.string.news) ?: ""
