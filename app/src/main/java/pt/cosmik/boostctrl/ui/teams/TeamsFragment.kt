@@ -57,6 +57,7 @@ class TeamsFragment : BaseFragment() {
             setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }
             layoutManager = LinearLayoutManager(context)
+            adapter = listAdapter
         }
 
         disposables.add(listAdapter.itemClickSubject.subscribe {
