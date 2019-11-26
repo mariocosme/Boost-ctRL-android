@@ -16,6 +16,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class NewsFragment : BaseFragment() {
 
@@ -89,6 +90,7 @@ class NewsFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("NewsFragment")
         (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 

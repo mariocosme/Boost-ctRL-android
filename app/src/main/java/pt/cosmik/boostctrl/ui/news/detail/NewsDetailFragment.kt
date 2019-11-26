@@ -17,6 +17,7 @@ import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.views.BoostCtrlWebView
 import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class NewsDetailFragment : BaseFragment() {
 
@@ -87,7 +88,13 @@ class NewsDetailFragment : BaseFragment() {
         arguments?.get("newsItemId")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItemId(it as String)) }
     }
 
+    override fun onResume() {
+        super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("NewsDetailFragment")
+    }
+
     private fun presentSharesheet(extra: String) {
+        BoostCtrlAnalytics.instance.logEvent(extra, "Share news article", "article")
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, extra)

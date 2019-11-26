@@ -13,6 +13,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class MatchesFragment : BaseFragment() {
 
@@ -75,6 +76,7 @@ class MatchesFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("MatchesFragment")
         (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 

@@ -21,6 +21,7 @@ import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
 import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
 class TeamFragment : BaseFragment() {
@@ -100,6 +101,11 @@ class TeamFragment : BaseFragment() {
         })
 
         vm.processEvent(TeamViewModel.TeamFragmentEvent.ViewCreated(arguments?.get("team") as? Team, context))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.viewState.value?.barTitle?.let { BoostCtrlAnalytics.instance.trackScreen("TeamFragment: $it") }
     }
 
     override fun showErrorMessage(message: String) {

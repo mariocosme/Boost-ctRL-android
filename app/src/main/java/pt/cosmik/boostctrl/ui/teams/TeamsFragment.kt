@@ -17,6 +17,7 @@ import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class TeamsFragment : BaseFragment() {
 
@@ -87,6 +88,7 @@ class TeamsFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("TeamsFragment")
         (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 

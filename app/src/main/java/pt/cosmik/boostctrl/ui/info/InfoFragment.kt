@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class InfoFragment : BaseFragment() {
 
@@ -22,6 +23,7 @@ class InfoFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("InfoFragment")
         (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 

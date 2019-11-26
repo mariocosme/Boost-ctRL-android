@@ -14,6 +14,7 @@ import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class StandingsFragment : BaseFragment() {
 
@@ -100,6 +101,7 @@ class StandingsFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        BoostCtrlAnalytics.instance.trackScreen("StandingsFragment")
         (activity as MainActivity).setActionBarTitle(getActionBarTitle())
     }
 

@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
 
+        <!-- Disable Advertising ID collection -->
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
             See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data

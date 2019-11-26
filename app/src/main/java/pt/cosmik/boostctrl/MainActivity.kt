@@ -16,8 +16,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import pt.cosmik.boostctrl.ui.news.detail.NewsDetailFragmentDirections
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 import pt.cosmik.boostctrl.utils.Constants
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private var appActionBar: Toolbar? = null
     private var coordinatorLayout: CoordinatorLayout? = null
     private lateinit var navController: NavController
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,9 @@ class MainActivity : AppCompatActivity() {
         graph.startDestination = R.id.navigation_news
         navController.graph = graph
 
+        // Firebase
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        BoostCtrlAnalytics.instance.initWith(firebaseAnalytics, this)
         FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.fcm_topic))
             .addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -69,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        BoostCtrlAnalytics.instance.trackScreen("MainActivity")
         intent.extras?.let {
             if (it.keySet().contains(Constants.FCM_NEWS_ITEM)) {
                 val newsItemId = it.get(Constants.FCM_NEWS_ITEM) as String
@@ -94,4 +101,6 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == android.R.id.home) onBackPressed()
         return super.onOptionsItemSelected(item)
     }
+
+    fun getFirebaseAnalytics(): FirebaseAnalytics = this.firebaseAnalytics
 }

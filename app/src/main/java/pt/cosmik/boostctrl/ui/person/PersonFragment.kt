@@ -18,6 +18,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
+import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
 class PersonFragment : BaseFragment() {
@@ -76,6 +77,11 @@ class PersonFragment : BaseFragment() {
         })
 
         vm.processEvent(PersonViewModel.PersonFragmentEvent.ViewCreated(arguments?.get("person") as? Person, context))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.viewState.value?.barTitle?.let { BoostCtrlAnalytics.instance.trackScreen("PersonFragment: $it") }
     }
 
     override fun showErrorMessage(message: String) {
