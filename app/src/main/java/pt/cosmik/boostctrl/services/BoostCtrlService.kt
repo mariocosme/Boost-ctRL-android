@@ -25,4 +25,9 @@ interface BoostCtrlService {
     @GET
     fun getTeam(@Url url: String): Observable<Team>
 
+    @GET
+    fun getNews(@Url url: String): Observable<List<NewsItem>>
+    @GET
+    fun getNewsItem(@Url url: String): Observable<NewsItem>
+
 }

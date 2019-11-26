@@ -19,6 +19,8 @@ import pt.cosmik.boostctrl.ui.common.BaseFragment
 
 class NewsFragment : BaseFragment() {
 
+    // TODO: add load more through `page+1` when reached the bottom
+
     private val vm: NewsViewModel by sharedViewModel()
 
     private var recyclerView: RecyclerView? = null
@@ -47,6 +49,13 @@ class NewsFragment : BaseFragment() {
             dividerItemDeco?.let { addItemDecoration(it) }
             layoutManager = LinearLayoutManager(context)
             adapter = listAdapter
+            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (!recyclerView.canScrollVertically(1)) {
+                        vm.processEvent(NewsViewModel.NewsFragmentEvent.LoadMoreNewsItems)
+                    }
+                }
+            })
         }
 
         swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)?.apply {
@@ -59,7 +68,7 @@ class NewsFragment : BaseFragment() {
         }
 
         disposables.add(listAdapter.onItemClickEvent().subscribe {
-            findNavController().navigate(NewsFragmentDirections.actionNavigationNewsToNewsItemDetailFragment(it))
+            findNavController().navigate(NewsFragmentDirections.actionGlobalNewsItemDetailFragment(it, null))
         })
 
         vm.viewState.observe(this, Observer {

@@ -15,4 +15,7 @@ interface BoostCtrlRepository {
 
     fun getActiveTeams(): Observable<List<Team>>
     fun getTeam(teamName: String): Observable<Team?>
+
+    fun getNews(page: Int): Observable<List<NewsItem>>
+    fun getNewsItem(newsItemId: String): Observable<NewsItem>
 }

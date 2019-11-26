@@ -5,7 +5,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import pt.cosmik.boostctrl.services.BoostCtrlService
-import pt.cosmik.boostctrl.services.OctaneggService
 import pt.cosmik.boostctrl.utils.BoostCtrlInterceptor
 import pt.cosmik.boostctrl.utils.BoostCtrlLogInterceptor
 import retrofit2.Retrofit
@@ -37,8 +36,6 @@ var restModule = module {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-    single<OctaneggService> { get<Retrofit>().create(OctaneggService::class.java) }
 
     single<BoostCtrlService> { get<Retrofit>().create(BoostCtrlService::class.java) }
 

@@ -4,20 +4,18 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
-data class NewsDataContainer(
-    @SerializedName("data") val data: List<NewsItem>
-)
-
 data class NewsItem(
-    @SerializedName("id") val id: String,
-    @SerializedName("Date") val date: Date?,
-    @SerializedName("Author") val author: String = "Unknown",
-    @SerializedName("Twitter") val twitter: String?,
+    @SerializedName("sourceId") val id: String,
+    @SerializedName("_id") val _id: String,
+    @SerializedName("date") val date: Date?,
+    @SerializedName("author") val author: String = "Unknown",
+    @SerializedName("twitter") val twitter: String?,
     @SerializedName("hyphenated") val hyphenated: String?,
-    @SerializedName("Title") val title: String?,
-    @SerializedName("Description") val description: String?,
-    @SerializedName("Image") val image: String?,
-    @SerializedName("Article") val firstArticle: String?,
-    @SerializedName("Article2") val secondArticle: String?,
-    @SerializedName("Publish") val publish: Int?
+    @SerializedName("title") val title: String?,
+    @SerializedName("description") val description: String?,
+    @SerializedName("image") val image: String?,
+    @SerializedName("article") val article: String?,
+    @SerializedName("source") val source: String?,
+    @SerializedName("publish") val publish: Int?,
+    @SerializedName("lastRequested") val lastRequested: Date?
 ): Serializable

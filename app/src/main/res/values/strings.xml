@@ -8,6 +8,7 @@
     <string name="info">Info</string>
     <string name="person">Person</string>
     <string name="team_detail">Team Detail</string>
+    <string name="news_article">News - %s</string>
 
     <string name="detail">Detail</string>
     <string name="share">Share</string>
@@ -43,4 +44,7 @@
     <string name="country_flag">Country flag</string>
     <string name="general_details">General details</string>
 
+    <!-- FCM -->
+    <string name="fcm_topic">boost-ctrl</string>
+    <string name="fcm_news_notification_channel_id">ba860250-c40d-4853-af9c-e194a20da276</string>
 </resources>

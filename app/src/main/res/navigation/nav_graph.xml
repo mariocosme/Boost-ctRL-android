@@ -21,15 +21,7 @@
         android:id="@+id/navigation_news"
         android:name="pt.cosmik.boostctrl.ui.news.NewsFragment"
         android:label="@string/news"
-        tools:layout="@layout/fragment_news" >
-        <action
-            android:id="@+id/action_navigation_news_to_news_item_detail_fragment"
-            app:destination="@id/news_item_detail_fragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_news" />
 
     <fragment
         android:id="@+id/navigation_standings"
@@ -50,7 +42,12 @@
         tools:layout="@layout/fragment_news_detail" >
         <argument
             android:name="newsItem"
-            app:argType="pt.cosmik.boostctrl.models.NewsItem" />
+            app:argType="pt.cosmik.boostctrl.models.NewsItem"
+            app:nullable="true"/>
+        <argument
+            android:name="newsItemId"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
 
     <fragment
@@ -88,5 +85,12 @@
         app:exitAnim="@android:anim/slide_out_right"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right" />
+    <action
+        android:id="@+id/action_global_news_item_detail_fragment"
+        app:destination="@id/news_item_detail_fragment"
+        app:enterAnim="@android:anim/slide_in_left"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"/>
 
 </navigation>

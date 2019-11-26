@@ -26,7 +26,7 @@ class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
         val item = items[position]
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
-        holder.sourceText.text = "Octane.gg" // TODO: there is only one news source so far
+        holder.sourceText.text = item.source
 
         item.date?.let {
             holder.dateText.text = DateUtils.getDateFormatter(DateUtils.patternCommon).format(it)

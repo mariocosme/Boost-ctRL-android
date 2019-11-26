@@ -28,8 +28,19 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
                     initNewsItem()
                 }
             }
-            NewsDetailFragmentEvent.DitPressShareMenuItem -> viewEffect.value = NewsDetailFragmentViewEffect.PresentSharesheet("https://octane.gg/news/${newsItem?.hyphenated}")
+            is NewsDetailFragmentEvent.DidCreateWithNewsItemId -> {
+                disposables.add(boostCtrlRepository.getNewsItem(event.newsItemId).subscribe ({
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    newsItem = it
+                    initNewsItem()
+                }, {
+                    Crashlytics.logException(it)
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    viewEffect.value = NewsDetailFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected news item.")
+                }))
+            }
             is NewsDetailFragmentEvent.DidTapArticleLink -> getDataToPresentDetailFragment(event.link)
+            NewsDetailFragmentEvent.DitPressShareMenuItem -> viewEffect.value = NewsDetailFragmentViewEffect.PresentSharesheet("https://octane.gg/news/${newsItem?.hyphenated}")
         }
     }
 
@@ -41,9 +52,9 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
     private fun initNewsItem() {
         newsItem?.let {
             viewState.value = viewState.value?.copy(
-                actionBarTitle = it.title,
+                actionBarTitle = it.source,
                 articleTitle = it.description,
-                articleContent = it.secondArticle ?: "",
+                articleContent = it.article,
                 articleImage = it.image,
                 articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateUtils.getDateFormatter(DateUtils.patternCommon).format(date) }}"
             )
@@ -114,6 +125,7 @@ sealed class NewsDetailFragmentViewEffect {
 
 sealed class NewsDetailFragmentEvent {
     data class DidCreateWithNewsItem(val newsItem: NewsItem): NewsDetailFragmentEvent()
+    data class DidCreateWithNewsItemId(val newsItemId: String): NewsDetailFragmentEvent()
     data class DidTapArticleLink(val link: String): NewsDetailFragmentEvent()
     object DitPressShareMenuItem: NewsDetailFragmentEvent()
 }

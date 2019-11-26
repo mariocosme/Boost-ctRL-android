@@ -71,6 +71,7 @@ class NewsDetailFragment : BaseFragment() {
             progressBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             webview?.loadTwitterContent(it.articleContent)
             it.articleImage?.let { imageLink -> Glide.with(this).load(imageLink).into(imageView!!) }
+            it.actionBarTitle?.let { newsSource -> (activity as MainActivity).setActionBarTitle(getString(R.string.news_article, newsSource)) }
         })
 
         vm.viewEffect.observe(this, Observer {
@@ -83,6 +84,7 @@ class NewsDetailFragment : BaseFragment() {
         })
 
         arguments?.get("newsItem")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItem(it as NewsItem)) }
+        arguments?.get("newsItemId")?.let { vm.processEvent(NewsDetailFragmentEvent.DidCreateWithNewsItemId(it as String)) }
     }
 
     private fun presentSharesheet(extra: String) {
@@ -94,12 +96,7 @@ class NewsDetailFragment : BaseFragment() {
         activity?.startActivity(intent)
     }
 
-    override fun getActionBarTitle(): String = "Octane.gg"
-
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).setActionBarTitle(getActionBarTitle())
-    }
+    override fun getActionBarTitle(): String = getString(R.string.news_article)
 
     override fun showErrorMessage(message: String) {
         (activity as MainActivity).showMessageInSnackBar(message)

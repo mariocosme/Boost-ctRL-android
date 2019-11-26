@@ -1,12 +1,14 @@
 package pt.cosmik.boostctrl
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -14,11 +16,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
+import pt.cosmik.boostctrl.ui.news.detail.NewsDetailFragmentDirections
+import pt.cosmik.boostctrl.utils.Constants
 
 class MainActivity : AppCompatActivity() {
 
     private var appActionBar: Toolbar? = null
     private var coordinatorLayout: CoordinatorLayout? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_info
         )).build()
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         findViewById<BottomNavigationView>(R.id.nav_view)?.apply {
@@ -49,6 +55,27 @@ class MainActivity : AppCompatActivity() {
         val graph = navController.navInflater.inflate(R.navigation.nav_graph)
         graph.startDestination = R.id.navigation_news
         navController.graph = graph
+
+        FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.fcm_topic))
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    if (BuildConfig.DEBUG) Log.d(Constants.LOG_TAG, "FCM Topic subscription failed.")
+                }
+                else {
+                    if (BuildConfig.DEBUG) Log.d(Constants.LOG_TAG, "FCM Subscribed to topic with success.")
+                }
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        intent.extras?.let {
+            if (it.keySet().contains(Constants.FCM_NEWS_ITEM)) {
+                val newsItemId = it.get(Constants.FCM_NEWS_ITEM) as String
+                navController.navigate(NewsDetailFragmentDirections.actionGlobalNewsItemDetailFragment(null, newsItemId))
+            }
+        }
     }
 
     fun setActionBarTitle(title: String) {

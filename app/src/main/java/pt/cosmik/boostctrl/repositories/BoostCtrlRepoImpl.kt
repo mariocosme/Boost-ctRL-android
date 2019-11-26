@@ -61,4 +61,20 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun getNews(page: Int): Observable<List<NewsItem>> {
+        val hash = HashUtils.sha1("GET/news${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/news?page=$page&hash=$hash"
+        return boostCtrlService.getNews(url)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getNewsItem(newsItemId: String): Observable<NewsItem> {
+        val hash = HashUtils.sha1("GET/news/$newsItemId${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/news/$newsItemId?hash=$hash"
+        return boostCtrlService.getNewsItem(url)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
 }
