@@ -40,6 +40,7 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
                 }))
             }
             is NewsDetailFragmentEvent.DidTapArticleLink -> getDataToPresentDetailFragment(event.link)
+            // TODO: change when we have more sources
             NewsDetailFragmentEvent.DitPressShareMenuItem -> viewEffect.value = NewsDetailFragmentViewEffect.PresentSharesheet("https://octane.gg/news/${newsItem?.hyphenated}")
         }
     }

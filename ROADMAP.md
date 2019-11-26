@@ -22,6 +22,6 @@ The basics so that the app can be released in the Google Play Store so that it c
 ## For the future aka _great to have_
 - Overall update to the UI/UX (depending on extra help)
 - Tablet dedicated UI and tested layouts (if needed)
-- Add notifications settings + notifications for when a news item is added (depends on external news websites scrapper app that triggers the push through firebase)
+- Add notifications settings
 - Polls before series on who is going to win
 - Polls after tournaments or days for MVP?
