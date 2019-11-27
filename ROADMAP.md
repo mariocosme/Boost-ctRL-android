@@ -7,6 +7,7 @@ The basics so that the app can be released in the Google Play Store so that it c
 - Implement analytics throughout the app
 - Implement Info fragment
 - Add in-app-purchases as tips for the developer
+- When no person is found (ex: Maaivy) 200 is returned with {}. Show toast saying nothing was found instead of the general error message
 
 ## Version 1.0.1
 - Add more news providers (like [rocketeers.gg](https://rocketeers.gg/))
