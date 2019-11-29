@@ -93,4 +93,22 @@
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"/>
 
+    <fragment
+        android:id="@+id/competition_detail_fragment"
+        android:name="pt.cosmik.boostctrl.ui.competitions.detail.CompetitionFragment"
+        android:label="@string/competition_detail"
+        tools:layout="@layout/fragment_competition_detail">
+        <argument
+            android:name="competition"
+            app:argType="pt.cosmik.boostctrl.models.Competition"
+            app:nullable="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_competition_detail_fragment"
+        app:destination="@id/competition_detail_fragment"
+        app:enterAnim="@android:anim/slide_in_left"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right" />
+
 </navigation>

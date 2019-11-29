@@ -33,7 +33,7 @@ class CompetitionsViewModel(private val boostCtrlRepository: BoostCtrlRepository
                     viewState.value = viewState.value?.copy(isLoading = true)
                     disposables.add(boostCtrlRepository.getCompetition(competitionId).subscribe ({
                         viewState.value = viewState.value?.copy(isLoading = false)
-                        // TODO: open competition detail fragment with competition
+                        viewEffect.value = CompetitionsFragmentViewEffect.PresentCompetitionFragment(it)
                     }, {
                         Crashlytics.logException(it)
                         viewState.value = viewState.value?.copy(isLoading = false)
@@ -140,6 +140,7 @@ class CompetitionsViewModel(private val boostCtrlRepository: BoostCtrlRepository
 
     sealed class CompetitionsFragmentViewEffect {
         data class ShowError(val message: String): CompetitionsFragmentViewEffect()
+        data class PresentCompetitionFragment(val competition: Competition): CompetitionsFragmentViewEffect()
     }
 
     sealed class CompetitionsFragmentEvent {

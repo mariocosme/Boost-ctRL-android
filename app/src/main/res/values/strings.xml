@@ -8,6 +8,7 @@
     <string name="info">Info</string>
     <string name="person">Person</string>
     <string name="team_detail">Team Detail</string>
+    <string name="competition_detail">Competition Detail</string>
     <string name="news_article">News - %s</string>
 
     <string name="detail">Detail</string>
@@ -43,8 +44,22 @@
     <string name="roster">Roster</string>
     <string name="country_flag">Country flag</string>
     <string name="general_details">General details</string>
+    <string name="series">Series</string>
+    <string name="organizer">Organizer</string>
+    <string name="mode">Mode</string>
+    <string name="competition_type">Competition Type</string>
+    <string name="venue">Venue</string>
+    <string name="prize_pool">Prize Pool</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="number_of_teams">Number of Teams</string>
+    <string name="other">Other</string>
+    <string name="premier">Premier</string>
+    <string name="major">Major</string>
+    <string name="minor">Minor</string>
 
     <!-- FCM -->
     <string name="fcm_topic">boost-ctrl</string>
     <string name="fcm_news_notification_channel_id">ba860250-c40d-4853-af9c-e194a20da276</string>
+    <string name="competition_image">Competition image</string>
 </resources>

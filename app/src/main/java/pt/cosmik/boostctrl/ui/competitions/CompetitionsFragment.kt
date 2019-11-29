@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -13,6 +14,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.ui.competitions.detail.CompetitionFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 class CompetitionsFragment : BaseFragment() {
@@ -62,6 +64,7 @@ class CompetitionsFragment : BaseFragment() {
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is CompetitionsViewModel.CompetitionsFragmentViewEffect.ShowError -> showErrorMessage(it.message)
+                is CompetitionsViewModel.CompetitionsFragmentViewEffect.PresentCompetitionFragment -> findNavController().navigate(CompetitionsFragmentDirections.actionGlobalCompetitionDetailFragment(it.competition))
             }
         })
 

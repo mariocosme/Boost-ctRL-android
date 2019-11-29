@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPickledBluewood"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/black"
+                android:contentDescription="@string/competition_image"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_competition_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                android:textSize="@dimen/text_size_14_pt"
+                android:textColor="@color/colorIceberg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_view"
+                tools:text="RLCS Season 8 is the second RLCS season in 2019. This marks the RLCS season prior to where Epic Games has acquired Psyonix - the developer of Rocket League.[1] The main change to the season comes in the Rocket League Rival Series as the second division in the RLCS has been extended to 10 teams from 8.[2]"/>
+
+            <TextView
+                android:id="@+id/text_competition_general_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18_pt"
+                android:textColor="@color/colorAccent"
+                android:text="@string/general_details"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_competition_desc" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/competition_general_details_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ranking_collapsing_view"
+                android:layout_marginTop="@dimen/space_between_s"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginBottom="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_competition_general_details_title"
+                tools:listitem="@layout/list_title_value_item"/>
+
+            <TextView
+                android:id="@+id/text_competition_standings_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18_pt"
+                android:textColor="@color/colorAccent"
+                android:text="@string/roster"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/competition_general_details_recycler_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/competition_standings_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ranking_collapsing_view"
+                android:layout_marginTop="@dimen/space_between_s"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginBottom="@dimen/space_between_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_competition_standings_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/list_team_roster_item"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

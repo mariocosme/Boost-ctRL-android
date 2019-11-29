@@ -3,6 +3,7 @@ package pt.cosmik.boostctrl.modules
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pt.cosmik.boostctrl.ui.competitions.CompetitionsViewModel
+import pt.cosmik.boostctrl.ui.competitions.detail.CompetitionViewModel
 import pt.cosmik.boostctrl.ui.matches.MatchesViewModel
 import pt.cosmik.boostctrl.ui.news.NewsViewModel
 import pt.cosmik.boostctrl.ui.news.detail.NewsDetailViewModel
@@ -18,6 +19,7 @@ var uiModule = module {
     viewModel { NewsDetailViewModel(get()) }
 
     viewModel { CompetitionsViewModel(get()) }
+    viewModel { CompetitionViewModel() }
 
     viewModel { MatchesViewModel(get()) }
 
