@@ -20,18 +20,18 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getRankings(): Observable<List<TournamentRanking>> {
-        val hash = HashUtils.sha1("GET/rankings${BuildConfig.BOOST_CTRL_API_SECRET}")
-        val url = "${Constants.BOOST_CTRL_API}/rankings?hash=$hash"
-        return boostCtrlService.getRankings(url)
+    override fun getAllCompetitions(): Observable<List<Competition>> {
+        val hash = HashUtils.sha1("GET/competition/all${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/competition/all?hash=$hash"
+        return boostCtrlService.getAllCompetitions(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getUpdatedTime(kind: UpdateTimeKind): Observable<UpdatedTime> {
-        val hash = HashUtils.sha1("GET/updated-time${BuildConfig.BOOST_CTRL_API_SECRET}")
-        val url = "${Constants.BOOST_CTRL_API}/updated-time?kind=${kind.ordinal}&hash=$hash"
-        return boostCtrlService.getUpdatedTime(url)
+    override fun getCompetition(competitionId: String): Observable<Competition> {
+        val hash = HashUtils.sha1("GET/competition/$competitionId${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/competition/$competitionId?hash=$hash"
+        return boostCtrlService.getCompetition(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

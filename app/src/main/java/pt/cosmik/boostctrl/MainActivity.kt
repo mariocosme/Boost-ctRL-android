@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_teams,
             R.id.navigation_matches,
             R.id.navigation_news,
-            R.id.navigation_standings,
+            R.id.navigation_competitions,
             R.id.navigation_info
         )).build()
 

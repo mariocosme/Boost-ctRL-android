@@ -7,9 +7,8 @@ interface BoostCtrlRepository {
 
     fun getPerson(personName: String): Observable<Person?>
 
-    fun getRankings(): Observable<List<TournamentRanking>>
-
-    fun getUpdatedTime(kind: UpdateTimeKind): Observable<UpdatedTime>
+    fun getAllCompetitions(): Observable<List<Competition>>
+    fun getCompetition(competitionId: String): Observable<Competition>
 
     fun getUpcomingAndOngoingMatches(): Observable<List<UpcomingMatch>>
 

@@ -3,6 +3,7 @@
     <dimen name="space_between_xxs">2dp</dimen>
     <dimen name="space_between_xs">4dp</dimen>
     <dimen name="space_between_s">8dp</dimen>
+    <dimen name="space_between_ms">12dp</dimen>
     <dimen name="space_between_m">16dp</dimen>
     <dimen name="space_between_l">24dp</dimen>
     <dimen name="space_between_xl">32dp</dimen>

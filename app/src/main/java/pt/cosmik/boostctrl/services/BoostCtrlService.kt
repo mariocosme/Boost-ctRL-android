@@ -11,10 +11,9 @@ interface BoostCtrlService {
     fun getPerson(@Url url: String): Observable<Person>
 
     @GET
-    fun getRankings(@Url url: String): Observable<List<TournamentRanking>>
-
+    fun getAllCompetitions(@Url url: String): Observable<List<Competition>>
     @GET
-    fun getUpdatedTime(@Url url: String): Observable<UpdatedTime>
+    fun getCompetition(@Url url: String): Observable<Competition>
 
     @GET
     fun getUpcomingAndOngoingMatches(@Url url: String): Observable<List<UpcomingMatch>>

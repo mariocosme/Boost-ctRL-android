@@ -3,8 +3,6 @@ This roadmap isn't final and always susceptible to changes depending on current 
 
 ## Version 1.0.0
 The basics so that the app can be released in the Google Play Store so that it can be useful for the RL esport fans without any neat features
-- Add an internet connection listener which shows a small informative view if the user doesn't have an active connection
-- Implement analytics throughout the app
 - Implement Info fragment
 - Add in-app-purchases as tips for the developer
 - When no person is found (ex: Maaivy) 200 is returned with {}. Show toast saying nothing was found instead of the general error message

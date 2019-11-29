@@ -21,9 +21,9 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/navigation_standings"
+        android:id="@+id/navigation_competitions"
         android:icon="@drawable/ic_standings_white"
-        android:title="@string/standings"
+        android:title="@string/competitions"
         app:showAsAction="ifRoom"/>
 
     <item

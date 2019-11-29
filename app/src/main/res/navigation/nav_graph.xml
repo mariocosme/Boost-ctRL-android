@@ -24,10 +24,10 @@
         tools:layout="@layout/fragment_news" />
 
     <fragment
-        android:id="@+id/navigation_standings"
-        android:name="pt.cosmik.boostctrl.ui.standings.StandingsFragment"
-        android:label="@string/standings"
-        tools:layout="@layout/fragment_standings" />
+        android:id="@+id/navigation_competitions"
+        android:name="pt.cosmik.boostctrl.ui.competitions.CompetitionsFragment"
+        android:label="@string/competitions"
+        tools:layout="@layout/fragment_competitions" />
 
     <fragment
         android:id="@+id/navigation_info"
