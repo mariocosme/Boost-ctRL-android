@@ -8,11 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.UpcomingMatch
+import pt.cosmik.boostctrl.utils.Constants
 import pt.cosmik.boostctrl.utils.DateUtils
+import java.util.concurrent.TimeUnit
 
 class UpcomingMatchesListAdapter(var context: Context?): RecyclerView.Adapter<UpcomingMatchesListAdapter.ViewHolder>() {
 
@@ -39,6 +42,8 @@ class UpcomingMatchesListAdapter(var context: Context?): RecyclerView.Adapter<Up
     }
 
     override fun getItemCount() = items.size
+
+    fun onItemClickEvent(): Observable<UpcomingMatch> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
     fun setMatchesItems(items: List<UpcomingMatch>) {
         this.items = items

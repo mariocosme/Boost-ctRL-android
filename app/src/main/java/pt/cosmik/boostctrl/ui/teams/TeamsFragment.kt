@@ -61,7 +61,7 @@ class TeamsFragment : BaseFragment() {
             adapter = listAdapter
         }
 
-        disposables.add(listAdapter.itemClickSubject.subscribe {
+        disposables.add(listAdapter.onItemClickEvent().subscribe {
             vm.processEvent(TeamsViewModel.TeamsFragmentEvent.DidSelectTeam(it))
         })
 

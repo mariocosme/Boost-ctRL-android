@@ -57,6 +57,7 @@
     <string name="premier">Premier</string>
     <string name="major">Major</string>
     <string name="minor">Minor</string>
+    <string name="standings">Standings</string>
 
     <!-- FCM -->
     <string name="fcm_topic">boost-ctrl</string>

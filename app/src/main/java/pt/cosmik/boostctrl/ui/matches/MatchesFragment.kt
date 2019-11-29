@@ -41,7 +41,7 @@ class MatchesFragment : BaseFragment() {
             adapter = listAdapter
         }
 
-        disposables.add(listAdapter.itemClickSubject.subscribe {
+        disposables.add(listAdapter.onItemClickEvent().subscribe {
             //            vm.processEvent(StandingsViewModel.StandingsFragmentEvent.DidSelectRankingDescriptor(it))
         })
 

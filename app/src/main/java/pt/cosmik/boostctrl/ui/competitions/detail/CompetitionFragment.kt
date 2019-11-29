@@ -13,17 +13,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.viewpagerindicator.LinePageIndicator
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Competition
-import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
-import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
-import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
@@ -35,12 +30,13 @@ class CompetitionFragment : BaseFragment() {
     private var loadingBar: ProgressBar? = null
     private var imageView: ImageView? = null
     private var competitionDescription: TextView? = null
+    private var standingsText: TextView? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var competitionGeneralDetailsRecyclerView: RecyclerView? = null
     private val competitionGeneralDetailsListAdapter = CompetitionGeneralDetailsListAdapter()
     private var competitionStandingsRecyclerView: RecyclerView? = null
-    //private val competitionStandingsListAdapter = CompetitionStandingsListAdapter()
+    private val competitionStandingsListAdapter = CompetitionStandingsListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_competition_detail, container, false)
@@ -52,6 +48,7 @@ class CompetitionFragment : BaseFragment() {
         loadingBar = view.findViewById(R.id.loading_bar)
         imageView = view.findViewById(R.id.image_view)
         competitionDescription = view.findViewById(R.id.text_competition_desc)
+        standingsText = view.findViewById(R.id.text_competition_standings_title)
 
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
@@ -66,7 +63,7 @@ class CompetitionFragment : BaseFragment() {
             adapter = competitionGeneralDetailsListAdapter
         }
 
-        /*competitionStandingsListAdapter.context = context
+        competitionStandingsListAdapter.context = context
         competitionStandingsRecyclerView = view.findViewById<RecyclerView>(R.id.competition_standings_recycler_view)?.apply {
             setHasFixedSize(true)
             dividerItemDeco?.let { addItemDecoration(it) }
@@ -74,15 +71,21 @@ class CompetitionFragment : BaseFragment() {
             adapter = competitionStandingsListAdapter
         }
 
-        disposables.add(competitionStandingsListAdapter.itemClickSubject.subscribe {
+        disposables.add(competitionStandingsListAdapter.onItemClickEvent().subscribe {
             vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.SelectedTeamItem(it))
-        })*/
+        })
 
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.competitionGeneralDetailItems?.let { items -> competitionGeneralDetailsListAdapter.setItems(items) }
-            //it.teamRosterPlayerItems?.let { items -> teamRosterListAdapter.setItems(items) }
+            it.competitionStandingItems?.let { items ->
+                if (items.isNotEmpty()) {
+                    standingsText!!.visibility = View.VISIBLE
+                    competitionStandingsRecyclerView?.visibility = View.VISIBLE
+                    competitionStandingsListAdapter.setStandingItemDescriptors(items)
+                }
+            }
             if (it.competitionImage != null && imageView != null) {
                 imageView!!.visibility = View.VISIBLE
                 Glide.with(context!!).load(it.competitionImage).into(imageView!!)

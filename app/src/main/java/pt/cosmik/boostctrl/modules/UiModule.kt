@@ -19,7 +19,7 @@ var uiModule = module {
     viewModel { NewsDetailViewModel(get()) }
 
     viewModel { CompetitionsViewModel(get()) }
-    viewModel { CompetitionViewModel() }
+    viewModel { CompetitionViewModel(get()) }
 
     viewModel { MatchesViewModel(get()) }
 

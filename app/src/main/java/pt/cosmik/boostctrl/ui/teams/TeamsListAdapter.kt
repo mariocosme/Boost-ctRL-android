@@ -9,9 +9,12 @@ import android.widget.SectionIndexer
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Team
+import pt.cosmik.boostctrl.utils.Constants
+import java.util.concurrent.TimeUnit
 
 
 class TeamsListAdapter(var context: Context?): RecyclerView.Adapter<TeamsListAdapter.ViewHolder>(), SectionIndexer {
@@ -37,6 +40,8 @@ class TeamsListAdapter(var context: Context?): RecyclerView.Adapter<TeamsListAda
     override fun getSectionForPosition(p0: Int): Int = 0
 
     override fun getPositionForSection(p0: Int): Int = sectionPositions[p0]
+
+    fun onItemClickEvent(): Observable<Team> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
     override fun getSections(): Array<String>? {
         val sections = mutableListOf<Char>()

@@ -1,17 +1,18 @@
 package pt.cosmik.boostctrl.ui.competitions.detail
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.models.*
+import pt.cosmik.boostctrl.models.Competition
+import pt.cosmik.boostctrl.models.CompetitionType
+import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
-class CompetitionViewModel: ViewModel() {
+class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
 
     val viewState = MutableLiveData(CompetitionFragmentViewState())
     val viewEffect = SingleLiveEvent<CompetitionFragmentViewEffect>()
@@ -34,25 +35,25 @@ class CompetitionViewModel: ViewModel() {
                         barTitle = event.competition.nameAbbreviated,
                         competitionImage = event.competition.image,
                         competitionDescription = event.competition.description,
-                        competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition)
-                        //competitionRankingItems = generateTeamRosterPlayerItemDescriptors(event.competition)
+                        competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition),
+                        competitionStandingItems = generateStandingItemDescriptors(event.competition)
                     )
                 }
             }
-            /*is CompetitionFragmentEvent.SelectedTeamItem -> {
-                event.item.playerNickname?.let { player ->
+            is CompetitionFragmentEvent.SelectedTeamItem -> {
+                event.item.teamName?.let { team ->
                     viewState.value = viewState.value?.copy(isLoading = true)
 
-                    disposables.add(boostCtrlRepository.getPerson(player).subscribe ({
+                    disposables.add(boostCtrlRepository.getTeam(team).subscribe ({
                         viewState.value = viewState.value?.copy(isLoading = false)
-                        it?.let { person -> viewEffect.value = TeamFragmentViewEffect.PresentPersonFragment(person) }
+                        it?.let { team -> viewEffect.value = CompetitionFragmentViewEffect.PresentTeamFragment(team) }
                     }, {
                         Crashlytics.logException(it)
                         viewState.value = viewState.value?.copy(isLoading = false)
-                        viewEffect.value = TeamFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected subject.")
+                        viewEffect.value = CompetitionFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected team.")
                     }))
                 }
-            }*/
+            }
         }
     }
 
@@ -82,25 +83,21 @@ class CompetitionViewModel: ViewModel() {
         return items
     }
 
-    /*@SuppressLint("DefaultLocale")
-    private fun generateTeamRosterPlayerItemDescriptors(competition: Competition): List<TeamRosterPlayerListItemDescriptor> {
-        val items = mutableListOf<TeamRosterPlayerListItemDescriptor>()
-        team.roster?.let { roster ->
-            roster.forEach { person ->
-                var playerName = person.nickname
-                (person.role as? String)?.toInt()?.let { enumVal ->
-                    playerName += " (${(RosterTeamPlayer.values()[enumVal]).name.toLowerCase().capitalize()})"
-                }
-                items.add(TeamRosterPlayerListItemDescriptor(
-                    person.countryIcon,
-                    playerName,
-                    person.nickname,
-                    person.joinDate
-                ))
-            }
+    private fun generateStandingItemDescriptors(competition: Competition): List<StandingItemDescriptor> {
+        val items = mutableListOf<StandingItemDescriptor>()
+        competition.groupStandings?.teams?.forEachIndexed { index, team ->
+            val item = StandingItemDescriptor()
+            item.index = "${index+1}."
+            item.teamName = team
+            item.teamImage = competition.groupStandings.teamImages?.get(index)
+            item.seriesWL = competition.groupStandings.winLoss?.get(index)
+            item.gamesDifference = competition.groupStandings.gamesDifference?.get(index)
+            item.gamesWL = competition.groupStandings.gamesWinLoss?.get(index)
+            item.teamColor = competition.groupStandings.colors?.get(index)
+            items.add(item)
         }
         return items
-    }*/
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -111,7 +108,7 @@ class CompetitionViewModel: ViewModel() {
         val isLoading: Boolean = false,
         val barTitle: String? = null,
         val competitionGeneralDetailItems: List<CompetitionGeneralDetailListItemDescriptor>? = null,
-        //val competitionRankingItems: List<TeamRosterPlayerListItemDescriptor>? = null,
+        val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
         val competitionDescription: String? = null
     )
@@ -123,6 +120,6 @@ class CompetitionViewModel: ViewModel() {
 
     sealed class CompetitionFragmentEvent {
         data class ViewCreated(val competition: Competition?, val context: Context?): CompetitionFragmentEvent()
-        //data class SelectedTeamItem(val item: TeamListItemDescriptor): CompetitionFragmentEvent()
+        data class SelectedTeamItem(val item: StandingItemDescriptor): CompetitionFragmentEvent()
     }
 }

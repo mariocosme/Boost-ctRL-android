@@ -25,6 +25,7 @@ class TeamGeneralDetailsListAdapter(var context: Context? = null): RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        holder.image.visibility = View.GONE // Not showing the image if there isn't one available
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
         holder.valueText.text = item.value

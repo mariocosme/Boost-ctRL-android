@@ -72,7 +72,7 @@ class TeamFragment : BaseFragment() {
             adapter = teamRosterListAdapter
         }
 
-        disposables.add(teamRosterListAdapter.itemClickSubject.subscribe {
+        disposables.add(teamRosterListAdapter.onItemClickEvent().subscribe {
             vm.processEvent(TeamViewModel.TeamFragmentEvent.SelectedRosterItem(it))
         })
 
