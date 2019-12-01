@@ -6,7 +6,7 @@
     android:background="@color/colorPickledBluewood"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,6 +79,7 @@
                 android:layout_marginStart="@dimen/space_between_m"
                 android:layout_marginEnd="@dimen/space_between_m"
                 android:layout_marginBottom="@dimen/space_between_m"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_team_general_details_title"
@@ -107,6 +108,7 @@
                 android:layout_marginStart="@dimen/space_between_m"
                 android:layout_marginEnd="@dimen/space_between_m"
                 android:layout_marginBottom="@dimen/space_between_m"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_team_roster_title"
@@ -115,7 +117,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/loading_bar"
