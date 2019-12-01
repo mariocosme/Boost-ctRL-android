@@ -10,7 +10,7 @@ import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.utils.Constants
-import pt.cosmik.boostctrl.utils.DateUtils
+import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
 class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
@@ -29,7 +29,7 @@ class NewsListAdapter: RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
         holder.sourceText.text = item.source
 
         item.date?.let {
-            holder.dateText.text = DateUtils.getDateFormatter(DateUtils.patternCommon).format(it)
+            holder.dateText.text = DateFormat.getDateInstance(DateFormat.SHORT).format(it)
         }
     }
 

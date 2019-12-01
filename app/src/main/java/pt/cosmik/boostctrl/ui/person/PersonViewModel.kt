@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
-import pt.cosmik.boostctrl.utils.DateUtils
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
+import java.text.DateFormat
 
 class PersonViewModel: ViewModel() {
 
@@ -43,7 +43,7 @@ class PersonViewModel: ViewModel() {
         val items = mutableListOf<PersonDetailListItemDescriptor>()
         person.name?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.name), it)) }
         person.nickname?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.nickname), it)) }
-        person.birthDate?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.birthdate), DateUtils.getDateFormatter(DateUtils.patternCommon).format(it))) }
+        person.birthDate?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.birthdate), DateFormat.getDateInstance(DateFormat.SHORT).format(it))) }
         person.country?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.country), it, person.countryIcon)) }
         person.currentTeam?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.current_team), it)) }
         person.role?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.role), it as String?)) }

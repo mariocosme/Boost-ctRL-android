@@ -1,5 +1,6 @@
 package pt.cosmik.boostctrl.ui.matches
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,30 +10,29 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.UpcomingMatch
 import pt.cosmik.boostctrl.utils.Constants
-import pt.cosmik.boostctrl.utils.DateUtils
+import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
 class UpcomingMatchesListAdapter(var context: Context?): RecyclerView.Adapter<UpcomingMatchesListAdapter.ViewHolder>() {
 
     private var items: List<UpcomingMatch> = listOf()
-    val itemClickSubject = PublishSubject.create<UpcomingMatch>()
-    private var disposables = CompositeDisposable()
+    private val itemClickSubject = PublishSubject.create<UpcomingMatch>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_ongoing_or_upcoming_match_item, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.homeTeamText.text = item.homeTeam?.name
         holder.awayTeamText.text = item.awayTeam?.name
-        holder.dateTimeText.text = DateUtils.getDateFormatter(DateUtils.patternWithHourMinuteSeconds).format(item.dateTime)
+        holder.dateTimeText.text = "${DateFormat.getDateInstance(DateFormat.SHORT).format(item.dateTime)} ${DateFormat.getTimeInstance(DateFormat.SHORT).format(item.dateTime)}" // 12/01/2019 17:45
         holder.tournamentText.text = item.tournamentName
         context?.let {
             Glide.with(it).load(item.homeTeam?.mainImage).into(holder.homeTeamImg)

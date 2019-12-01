@@ -8,8 +8,8 @@ import pt.cosmik.boostctrl.models.NewsItem
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
-import pt.cosmik.boostctrl.utils.DateUtils
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
+import java.text.DateFormat
 
 
 class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
@@ -57,7 +57,7 @@ class NewsDetailViewModel(private val boostCtrlRepository: BoostCtrlRepository):
                 articleTitle = it.description,
                 articleContent = it.article,
                 articleImage = it.image,
-                articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateUtils.getDateFormatter(DateUtils.patternCommon).format(date) }}"
+                articleAuthorDate = "${it.author} @ ${it.date?.let { date -> DateFormat.getDateInstance(DateFormat.SHORT).format(date) }}"
             )
         }
     }
