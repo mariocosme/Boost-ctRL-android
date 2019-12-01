@@ -3,6 +3,7 @@ package pt.cosmik.boostctrl.utils
 import android.app.Activity
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import pt.cosmik.boostctrl.BuildConfig
 import pt.cosmik.boostctrl.MainActivity
 
 class BoostCtrlAnalytics {
@@ -20,10 +21,14 @@ class BoostCtrlAnalytics {
     }
 
     fun trackScreen(screenName: String) {
+        if (BuildConfig.DEBUG) return
+
         firebaseAnalytics.setCurrentScreen(activity, screenName, null)
     }
 
     fun logEvent(eventId: String, eventName: String, eventType: String) {
+        if (BuildConfig.DEBUG) return
+
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, eventId)
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, eventName)
