@@ -23,12 +23,18 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5"/>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/mid_horizontal_guide"
+        <TextView
+            android:id="@+id/text_date_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.70"/>
+            android:layout_height="0dp"
+            android:textSize="@dimen/text_size_10_pt"
+            android:textColor="@color/colorCloudWhite"
+            android:layout_marginStart="@dimen/space_between_s"
+            android:layout_marginTop="@dimen/space_between_xs"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4h 27m 11s"/>
 
         <TextView
             android:id="@+id/text_versus"
@@ -39,7 +45,7 @@
             android:textSize="@dimen/text_size_12_pt"
             app:layout_constraintStart_toStartOf="@id/center_vertical_guide"
             app:layout_constraintEnd_toEndOf="@id/center_vertical_guide"
-            app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
@@ -49,7 +55,7 @@
             android:layout_marginEnd="@dimen/space_between_m"
             android:contentDescription="@string/home_team_logo"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/text_versus"
             tools:src="@drawable/common_full_open_on_phone" />
 
@@ -63,7 +69,7 @@
             android:layout_marginEnd="@dimen/space_between_s"
             android:textAllCaps="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image_view_home_team"
             tools:text="AER"/>
 
@@ -74,7 +80,7 @@
             android:layout_marginStart="@dimen/space_between_m"
             android:contentDescription="@string/away_team_logo"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_versus"
             tools:src="@drawable/common_full_open_on_phone"/>
 
@@ -88,23 +94,9 @@
             android:layout_marginStart="@dimen/space_between_s"
             android:textAllCaps="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guide"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/image_view_away_team"
             tools:text="AER"/>
-
-        <TextView
-            android:id="@+id/text_date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:textSize="@dimen/text_size_10_pt"
-            android:textColor="@color/colorCloudWhite"
-            android:layout_marginStart="@dimen/space_between_s"
-            android:layout_marginBottom="@dimen/space_between_xs"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/image_view_tournament"
-            app:layout_constraintTop_toTopOf="@id/image_view_tournament"
-            tools:text="4h 27m 11s"/>
 
         <ImageView
             android:id="@+id/image_view_tournament"
@@ -113,23 +105,23 @@
             android:layout_marginEnd="@dimen/space_between_s"
             android:layout_marginBottom="@dimen/space_between_xs"
             android:contentDescription="@string/tournament_logo"
-            app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guide"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_tournament_name"
             app:layout_constraintEnd_toEndOf="parent"
             tools:src="@drawable/common_full_open_on_phone" />
 
         <TextView
             android:id="@+id/text_tournament_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_10_pt"
             android:textColor="@color/colorCloudWhite"
             android:layout_marginBottom="@dimen/space_between_xs"
             android:layout_marginEnd="@dimen/space_between_xs"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@id/image_view_tournament"
-            app:layout_constraintTop_toTopOf="@id/image_view_tournament"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/image_view_tournament"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="RSSL - Season 2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
