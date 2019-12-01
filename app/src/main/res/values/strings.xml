@@ -9,6 +9,7 @@
     <string name="person">Person</string>
     <string name="team_detail">Team Detail</string>
     <string name="competition_detail">Competition Detail</string>
+    <string name="match_detail">Match Detail</string>
     <string name="news_article">News - %s</string>
 
     <string name="detail">Detail</string>

@@ -44,6 +44,14 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun getUpcomingAndOngoingMatch(matchId: String): Observable<UpcomingMatch> {
+        val hash = HashUtils.sha1("GET/upcoming-matches/$matchId${BuildConfig.BOOST_CTRL_API_SECRET}")
+        val url = "${Constants.BOOST_CTRL_API}/upcoming-matches/$matchId?hash=$hash"
+        return boostCtrlService.getUpcomingAndOngoingMatch(url)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     override fun getActiveTeams(): Observable<List<Team>> {
         val hash = HashUtils.sha1("GET/team/all${BuildConfig.BOOST_CTRL_API_SECRET}")
         val url = "${Constants.BOOST_CTRL_API}/team/all?hash=$hash"

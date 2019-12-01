@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import pt.cosmik.boostctrl.ui.competitions.CompetitionsViewModel
 import pt.cosmik.boostctrl.ui.competitions.detail.CompetitionViewModel
 import pt.cosmik.boostctrl.ui.matches.MatchesViewModel
+import pt.cosmik.boostctrl.ui.matches.detail.MatchViewModel
 import pt.cosmik.boostctrl.ui.news.NewsViewModel
 import pt.cosmik.boostctrl.ui.news.detail.NewsDetailViewModel
 import pt.cosmik.boostctrl.ui.person.PersonViewModel
@@ -22,6 +23,7 @@ var uiModule = module {
     viewModel { CompetitionViewModel(get()) }
 
     viewModel { MatchesViewModel(get()) }
+    viewModel { MatchViewModel() }
 
     viewModel { PersonViewModel() }
 }

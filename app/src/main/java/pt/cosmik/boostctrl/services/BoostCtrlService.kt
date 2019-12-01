@@ -17,6 +17,8 @@ interface BoostCtrlService {
 
     @GET
     fun getUpcomingAndOngoingMatches(@Url url: String): Observable<List<UpcomingMatch>>
+    @GET
+    fun getUpcomingAndOngoingMatch(@Url url: String): Observable<UpcomingMatch>
 
     @GET
     fun getActiveTeams(@Url url: String): Observable<List<Team>>

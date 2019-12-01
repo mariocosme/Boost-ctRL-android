@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPickledBluewood"
+    android:padding="@dimen/space_between_m"
+    tools:background="@color/colorPickledBluewood"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/text_event_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_14_pt"
+        android:textColor="@color/colorCloudWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12/1/19 5:00 PM"/>
+
+    <TextView
+        android:id="@+id/text_versus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorCloudWhite"
+        android:text="@string/versus"
+        android:textSize="@dimen/text_size_12_pt"
+        android:layout_marginTop="@dimen/space_between_xl"
+        app:layout_constraintTop_toBottomOf="@id/text_event_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/image_view_home_team"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_between_xs"
+        android:contentDescription="@string/home_team_logo"
+        app:layout_constraintBottom_toBottomOf="@id/text_versus"
+        app:layout_constraintTop_toTopOf="@id/text_versus"
+        app:layout_constraintEnd_toStartOf="@id/text_versus"
+        tools:src="@drawable/common_full_open_on_phone" />
+
+    <TextView
+        android:id="@+id/text_home_team"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorIceberg"
+        android:textSize="@dimen/text_size_14_pt"
+        android:gravity="center_vertical|end"
+        android:textAllCaps="true"
+        app:layout_constraintTop_toTopOf="@id/image_view_home_team"
+        app:layout_constraintBottom_toBottomOf="@id/image_view_home_team"
+        app:layout_constraintEnd_toStartOf="@id/image_view_home_team"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="AER"/>
+
+    <ImageView
+        android:id="@+id/image_view_away_team"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_between_xs"
+        android:contentDescription="@string/away_team_logo"
+        app:layout_constraintTop_toTopOf="@id/text_versus"
+        app:layout_constraintBottom_toBottomOf="@id/text_versus"
+        app:layout_constraintStart_toEndOf="@id/text_versus"
+        tools:src="@drawable/common_full_open_on_phone"/>
+
+    <TextView
+        android:id="@+id/text_away_team"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorIceberg"
+        android:textSize="@dimen/text_size_14_pt"
+        android:gravity="center_vertical"
+        android:textAllCaps="true"
+        app:layout_constraintTop_toTopOf="@id/image_view_away_team"
+        app:layout_constraintBottom_toBottomOf="@id/image_view_away_team"
+        app:layout_constraintStart_toEndOf="@id/image_view_away_team"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="AER"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_between_l"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_view_away_team">
+
+        <TextView
+            android:id="@+id/text_tournament_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_10_pt"
+            android:textColor="@color/colorCloudWhite"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/space_between_xxs"
+            tools:text="RSSL - Season 2"/>
+
+        <ImageView
+            android:id="@+id/image_view_tournament"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_between_xxs"
+            android:contentDescription="@string/tournament_logo"
+            tools:src="@drawable/common_full_open_on_phone" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

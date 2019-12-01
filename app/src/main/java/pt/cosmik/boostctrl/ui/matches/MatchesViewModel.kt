@@ -27,6 +27,18 @@ class MatchesViewModel(private val boostCtrlRepository: BoostCtrlRepository) : V
                     }
                 }
             }
+            is MatchesFragmentEvent.DidSelectMatch -> {
+                viewState.value = viewState.value?.copy(isLoading = true)
+
+                disposables.add(boostCtrlRepository.getUpcomingAndOngoingMatch(event.match.id).subscribe ({
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    viewEffect.value = MatchesFragmentViewEffect.PresentUpcomingMatchFragment(it)
+                }, {
+                    Crashlytics.logException(it)
+                    viewState.value = viewState.value?.copy(isLoading = false)
+                    viewEffect.value = MatchesFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected match.")
+                }))
+            }
         }
     }
 
@@ -54,11 +66,13 @@ class MatchesViewModel(private val boostCtrlRepository: BoostCtrlRepository) : V
 
     sealed class MatchesFragmentViewEffect {
         data class ShowError(val message: String): MatchesFragmentViewEffect()
+        data class PresentUpcomingMatchFragment(val match: UpcomingMatch): MatchesFragmentViewEffect()
     }
 
     sealed class MatchesFragmentEvent {
         object ViewCreated: MatchesFragmentEvent()
         object DidTriggerRefresh: MatchesFragmentEvent()
+        data class DidSelectMatch(val match: UpcomingMatch): MatchesFragmentEvent()
     }
 
 }

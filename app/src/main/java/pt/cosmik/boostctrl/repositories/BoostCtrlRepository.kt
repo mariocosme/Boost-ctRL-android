@@ -11,6 +11,7 @@ interface BoostCtrlRepository {
     fun getCompetition(competitionId: String): Observable<Competition>
 
     fun getUpcomingAndOngoingMatches(): Observable<List<UpcomingMatch>>
+    fun getUpcomingAndOngoingMatch(matchId: String): Observable<UpcomingMatch>
 
     fun getActiveTeams(): Observable<List<Team>>
     fun getTeam(teamName: String): Observable<Team?>

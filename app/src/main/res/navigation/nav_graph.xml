@@ -111,4 +111,22 @@
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right" />
 
+    <fragment
+        android:id="@+id/match_detail_fragment"
+        android:name="pt.cosmik.boostctrl.ui.matches.detail.MatchFragment"
+        android:label="@string/match_detail"
+        tools:layout="@layout/fragment_match_detail">
+        <argument
+            android:name="match"
+            app:argType="pt.cosmik.boostctrl.models.UpcomingMatch"
+            app:nullable="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_match_detail_fragment"
+        app:destination="@id/match_detail_fragment"
+        app:enterAnim="@android:anim/slide_in_left"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"/>
+
 </navigation>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -42,7 +43,7 @@ class MatchesFragment : BaseFragment() {
         }
 
         disposables.add(listAdapter.onItemClickEvent().subscribe {
-            //            vm.processEvent(StandingsViewModel.StandingsFragmentEvent.DidSelectRankingDescriptor(it))
+            vm.processEvent(MatchesViewModel.MatchesFragmentEvent.DidSelectMatch(it))
         })
 
         swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)?.apply {
@@ -62,10 +63,15 @@ class MatchesFragment : BaseFragment() {
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is MatchesViewModel.MatchesFragmentViewEffect.ShowError -> showErrorMessage(it.message)
+                is MatchesViewModel.MatchesFragmentViewEffect.PresentUpcomingMatchFragment -> findNavController().navigate(MatchesFragmentDirections.actionGlobalMatchDetailFragment(it.match))
             }
         })
 
         vm.processEvent(MatchesViewModel.MatchesFragmentEvent.ViewCreated)
+
+        // TODO: add a list below to to add to calendar and add a push when game starts
+        // TODO: add a list below with the roster from both teams
+        // TODO: add a list below with previous results from both teams
     }
 
     override fun showErrorMessage(message: String) {
