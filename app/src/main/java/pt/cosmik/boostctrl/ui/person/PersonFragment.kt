@@ -18,6 +18,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
+import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
@@ -31,7 +32,7 @@ class PersonFragment : BaseFragment() {
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var recyclerView: RecyclerView? = null
-    private val listAdapter = PersonListAdapter()
+    private val listAdapter = KeyValueListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_person, container, false)

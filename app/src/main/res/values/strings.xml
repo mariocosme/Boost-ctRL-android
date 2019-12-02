@@ -10,6 +10,7 @@
     <string name="team_detail">Team Detail</string>
     <string name="competition_detail">Competition Detail</string>
     <string name="match_detail">Match Detail</string>
+    <string name="match_details">Match Details</string>
     <string name="news_article">News - %s</string>
 
     <string name="detail">Detail</string>
@@ -43,6 +44,7 @@
     <string name="manager">Manager</string>
     <string name="location">Location</string>
     <string name="roster">Roster</string>
+    <string name="rosters">Rosters</string>
     <string name="country_flag">Country flag</string>
     <string name="general_details">General details</string>
     <string name="series">Series</string>
@@ -59,9 +61,12 @@
     <string name="major">Major</string>
     <string name="minor">Minor</string>
     <string name="standings">Standings</string>
+    <string name="date_when">When</string>
+    <string name="event">Event</string>
 
     <!-- FCM -->
     <string name="fcm_topic">boost-ctrl</string>
     <string name="fcm_news_notification_channel_id">ba860250-c40d-4853-af9c-e194a20da276</string>
     <string name="competition_image">Competition image</string>
+    <string name="live">Live</string>
 </resources>

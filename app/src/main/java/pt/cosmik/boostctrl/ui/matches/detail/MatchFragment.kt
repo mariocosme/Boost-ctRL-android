@@ -7,13 +7,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.UpcomingMatch
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
@@ -22,13 +29,20 @@ class MatchFragment : BaseFragment() {
     private val vm: MatchViewModel by viewModel()
 
     private var loadingBar: ProgressBar? = null
-    private var dateText: TextView? = null
     private var homeTeamImg: ImageView? = null
     private var awayTeamImg: ImageView? = null
-    private var tournamentImg: ImageView? = null
     private var homeTeamText: TextView? = null
     private var awayTeamText: TextView? = null
-    private var tournamentText: TextView? = null
+    private var liveText: TextView? = null
+    private var rostersText: TextView? = null
+
+    private var swipeRefresh: SwipeRefreshLayout? = null
+
+    private var dividerItemDeco: DividerItemDecoration? = null
+    private var matchDetailsRecyclerView: RecyclerView? = null
+    private val matchDetailsListAdapter = KeyValueListAdapter()
+    private var teamRostersRecyclerView: RecyclerView? = null
+    private val teamRostersListAdapter = TeamRostersListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_match_detail, container, false)
@@ -38,33 +52,70 @@ class MatchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loadingBar = view.findViewById(R.id.loading_bar)
-        dateText = view.findViewById(R.id.text_event_date)
         homeTeamImg = view.findViewById(R.id.image_view_home_team)
         awayTeamImg = view.findViewById(R.id.image_view_away_team)
         homeTeamText = view.findViewById(R.id.text_home_team)
         awayTeamText = view.findViewById(R.id.text_away_team)
-        tournamentText = view.findViewById(R.id.text_tournament_name)
-        tournamentImg = view.findViewById(R.id.image_view_tournament)
+        liveText = view.findViewById(R.id.text_live)
+        rostersText = view.findViewById(R.id.match_roster_title)
+
+        dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        context?.let { context ->
+            ContextCompat.getDrawable(context, R.drawable.bg_list_news_item_separator)?.let { dividerItemDeco?.setDrawable(it) }
+        }
+
+        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh)?.apply {
+            setProgressBackgroundColorSchemeResource(R.color.colorCloudWhite)
+            setColorSchemeResources(R.color.colorAccent)
+            setOnRefreshListener {
+                isRefreshing = false
+                vm.processEvent(MatchViewModel.MatchFragmentEvent.DidTriggerRefresh)
+            }
+        }
+
+        matchDetailsListAdapter.context = context
+        matchDetailsRecyclerView = view.findViewById<RecyclerView>(R.id.match_details_recycler_view)?.apply {
+            setHasFixedSize(true)
+            dividerItemDeco?.let { addItemDecoration(it) }
+            layoutManager = LinearLayoutManager(context)
+            adapter = matchDetailsListAdapter
+        }
+
+        teamRostersListAdapter.context = context
+        teamRostersRecyclerView = view.findViewById<RecyclerView>(R.id.teams_roster_recycler_view)?.apply {
+            setHasFixedSize(true)
+            dividerItemDeco?.let { addItemDecoration(it) }
+            layoutManager = LinearLayoutManager(context)
+            adapter = teamRostersListAdapter
+        }
+
+        disposables.add(teamRostersListAdapter.onItemClickEvent().subscribe {
+            vm.processEvent(MatchViewModel.MatchFragmentEvent.SelectedPlayer(it))
+        })
 
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
+            liveText?.visibility = if (it.isLive) View.VISIBLE else View.INVISIBLE
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             homeTeamText!!.text = it.homeTeamName
             awayTeamText!!.text = it.awayTeamName
-            tournamentText!!.text = it.tournamentName
-            dateText!!.text = it.matchDate
             Glide.with(context!!).load(it.homeTeamImage).into(homeTeamImg!!)
             Glide.with(context!!).load(it.awayTeamImage).into(awayTeamImg!!)
-            Glide.with(context!!).load(it.tournamentImage).into(tournamentImg!!)
+            it.matchDetailsItems?.let { items -> matchDetailsListAdapter.setItems(items) }
+            it.teamRostersItems?.let { items ->
+                if (items.isEmpty()) rostersText?.visibility = View.GONE
+                teamRostersListAdapter.setItems(items)
+            }
         })
 
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is MatchViewModel.MatchFragmentViewEffect.ShowError -> showErrorMessage(it.error)
+                is MatchViewModel.MatchFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(MatchFragmentDirections.actionGlobalPersonFragment(it.person))
             }
         })
 
-        vm.processEvent(MatchViewModel.MatchFragmentEvent.ViewCreated(arguments?.get("match") as? UpcomingMatch))
+        vm.processEvent(MatchViewModel.MatchFragmentEvent.ViewCreated(arguments?.get("match") as? UpcomingMatch, context))
     }
 
     override fun onResume() {

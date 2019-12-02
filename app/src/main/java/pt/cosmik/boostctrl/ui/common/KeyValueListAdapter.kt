@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.ui.competitions.detail
+package pt.cosmik.boostctrl.ui.common
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,10 +14,10 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.utils.Constants
 import java.util.concurrent.TimeUnit
 
-class CompetitionGeneralDetailsListAdapter(var context: Context? = null): RecyclerView.Adapter<CompetitionGeneralDetailsListAdapter.ViewHolder>() {
+class KeyValueListAdapter(var context: Context? = null): RecyclerView.Adapter<KeyValueListAdapter.ViewHolder>() {
 
-    private var items: List<CompetitionGeneralDetailListItemDescriptor> = listOf()
-    private val itemClickSubject = PublishSubject.create<CompetitionGeneralDetailListItemDescriptor>()
+    private var items: List<KeyValueListItemDescriptor> = listOf()
+    private val itemClickSubject = PublishSubject.create<KeyValueListItemDescriptor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_title_value_item, parent, false))
@@ -25,6 +25,7 @@ class CompetitionGeneralDetailsListAdapter(var context: Context? = null): Recycl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        holder.image.visibility = View.GONE // Not showing the image if there isn't one available
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.titleText.text = item.title
         holder.valueText.text = item.value
@@ -38,9 +39,9 @@ class CompetitionGeneralDetailsListAdapter(var context: Context? = null): Recycl
 
     override fun getItemCount() = items.size
 
-    fun onItemClickEvent(): Observable<CompetitionGeneralDetailListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
+    fun onItemClickEvent(): Observable<KeyValueListItemDescriptor> = itemClickSubject.throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS)
 
-    fun setItems(items: List<CompetitionGeneralDetailListItemDescriptor>) {
+    fun setItems(items: List<KeyValueListItemDescriptor>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -52,7 +53,7 @@ class CompetitionGeneralDetailsListAdapter(var context: Context? = null): Recycl
     }
 }
 
-class CompetitionGeneralDetailListItemDescriptor(
+class KeyValueListItemDescriptor(
     val title: String?,
     val value: String?,
     val image: String? = null

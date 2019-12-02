@@ -17,7 +17,7 @@ import pt.cosmik.boostctrl.utils.Constants
 import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
-class UpcomingMatchesListAdapter(var context: Context?): RecyclerView.Adapter<UpcomingMatchesListAdapter.ViewHolder>() {
+class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Adapter<UpcomingMatchesListAdapter.ViewHolder>() {
 
     private var items: List<UpcomingMatch> = listOf()
     private val itemClickSubject = PublishSubject.create<UpcomingMatch>()

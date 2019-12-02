@@ -19,6 +19,7 @@ import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
@@ -34,7 +35,7 @@ class CompetitionFragment : BaseFragment() {
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var competitionGeneralDetailsRecyclerView: RecyclerView? = null
-    private val competitionGeneralDetailsListAdapter = CompetitionGeneralDetailsListAdapter()
+    private val competitionGeneralDetailsListAdapter = KeyValueListAdapter()
     private var competitionStandingsRecyclerView: RecyclerView? = null
     private val competitionStandingsListAdapter = CompetitionStandingsListAdapter()
 

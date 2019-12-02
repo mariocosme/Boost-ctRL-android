@@ -20,6 +20,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
+import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
 import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
@@ -35,7 +36,7 @@ class TeamFragment : BaseFragment() {
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var teamGeneralDetailsRecyclerView: RecyclerView? = null
-    private val teamGeneralDetailsListAdapter = TeamGeneralDetailsListAdapter()
+    private val teamGeneralDetailsListAdapter = KeyValueListAdapter()
     private var teamRosterRecyclerView: RecyclerView? = null
     private val teamRosterListAdapter = TeamRosterListAdapter()
 

@@ -23,7 +23,7 @@ var uiModule = module {
     viewModel { CompetitionViewModel(get()) }
 
     viewModel { MatchesViewModel(get()) }
-    viewModel { MatchViewModel() }
+    viewModel { MatchViewModel(get()) }
 
     viewModel { PersonViewModel() }
 }

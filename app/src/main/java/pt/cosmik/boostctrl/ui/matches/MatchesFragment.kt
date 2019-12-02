@@ -24,7 +24,7 @@ class MatchesFragment : BaseFragment() {
     private var loadingBar: ProgressBar? = null
 
     private var recyclerView: RecyclerView? = null
-    private val listAdapter = UpcomingMatchesListAdapter(null)
+    private val listAdapter = UpcomingMatchesListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         return inflater.inflate(R.layout.fragment_matches, container, false)

@@ -8,109 +8,161 @@
     tools:background="@color/colorPickledBluewood"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_event_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_14_pt"
-        android:textColor="@color/colorCloudWhite"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="12/1/19 5:00 PM"/>
-
-    <TextView
-        android:id="@+id/text_versus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorCloudWhite"
-        android:text="@string/versus"
-        android:textSize="@dimen/text_size_12_pt"
-        android:layout_marginTop="@dimen/space_between_xl"
-        app:layout_constraintTop_toBottomOf="@id/text_event_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
-        android:id="@+id/image_view_home_team"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_between_xs"
-        android:contentDescription="@string/home_team_logo"
-        app:layout_constraintBottom_toBottomOf="@id/text_versus"
-        app:layout_constraintTop_toTopOf="@id/text_versus"
-        app:layout_constraintEnd_toStartOf="@id/text_versus"
-        tools:src="@drawable/common_full_open_on_phone" />
-
-    <TextView
-        android:id="@+id/text_home_team"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorIceberg"
-        android:textSize="@dimen/text_size_14_pt"
-        android:gravity="center_vertical|end"
-        android:textAllCaps="true"
-        app:layout_constraintTop_toTopOf="@id/image_view_home_team"
-        app:layout_constraintBottom_toBottomOf="@id/image_view_home_team"
-        app:layout_constraintEnd_toStartOf="@id/image_view_home_team"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="AER"/>
-
-    <ImageView
-        android:id="@+id/image_view_away_team"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_between_xs"
-        android:contentDescription="@string/away_team_logo"
-        app:layout_constraintTop_toTopOf="@id/text_versus"
-        app:layout_constraintBottom_toBottomOf="@id/text_versus"
-        app:layout_constraintStart_toEndOf="@id/text_versus"
-        tools:src="@drawable/common_full_open_on_phone"/>
-
-    <TextView
-        android:id="@+id/text_away_team"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorIceberg"
-        android:textSize="@dimen/text_size_14_pt"
-        android:gravity="center_vertical"
-        android:textAllCaps="true"
-        app:layout_constraintTop_toTopOf="@id/image_view_away_team"
-        app:layout_constraintBottom_toBottomOf="@id/image_view_away_team"
-        app:layout_constraintStart_toEndOf="@id/image_view_away_team"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="AER"/>
-
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/space_between_l"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_view_away_team">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_tournament_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_10_pt"
-            android:textColor="@color/colorCloudWhite"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/space_between_xxs"
-            tools:text="RSSL - Season 2"/>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_view_tournament"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/space_between_xxs"
-            android:contentDescription="@string/tournament_logo"
-            tools:src="@drawable/common_full_open_on_phone" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+                <View
+                    android:id="@+id/match_result_container"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:background="@color/colorFiord"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/text_versus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorCloudWhite"
+                    android:text="@string/versus"
+                    android:textSize="@dimen/text_size_12_pt"
+                    app:layout_constraintTop_toTopOf="@id/match_result_container"
+                    app:layout_constraintBottom_toBottomOf="@id/match_result_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/image_view_home_team"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_between_xs"
+                    android:contentDescription="@string/home_team_logo"
+                    app:layout_constraintBottom_toBottomOf="@id/text_versus"
+                    app:layout_constraintTop_toTopOf="@id/text_versus"
+                    app:layout_constraintEnd_toStartOf="@id/text_versus"
+                    tools:src="@drawable/common_full_open_on_phone" />
+
+                <TextView
+                    android:id="@+id/text_home_team"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorIceberg"
+                    android:textSize="@dimen/text_size_14_pt"
+                    android:gravity="center_vertical|end"
+                    android:textAllCaps="true"
+                    app:layout_constraintTop_toTopOf="@id/image_view_home_team"
+                    app:layout_constraintBottom_toBottomOf="@id/image_view_home_team"
+                    app:layout_constraintEnd_toStartOf="@id/image_view_home_team"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="AER"/>
+
+                <ImageView
+                    android:id="@+id/image_view_away_team"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_between_xs"
+                    android:contentDescription="@string/away_team_logo"
+                    app:layout_constraintTop_toTopOf="@id/text_versus"
+                    app:layout_constraintBottom_toBottomOf="@id/text_versus"
+                    app:layout_constraintStart_toEndOf="@id/text_versus"
+                    tools:src="@drawable/common_full_open_on_phone"/>
+
+                <TextView
+                    android:id="@+id/text_away_team"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorIceberg"
+                    android:textSize="@dimen/text_size_14_pt"
+                    android:gravity="center_vertical"
+                    android:textAllCaps="true"
+                    app:layout_constraintTop_toTopOf="@id/image_view_away_team"
+                    app:layout_constraintBottom_toBottomOf="@id/image_view_away_team"
+                    app:layout_constraintStart_toEndOf="@id/image_view_away_team"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="AER"/>
+
+                <TextView
+                    android:id="@+id/text_live"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:text="@string/live"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="@dimen/text_size_14_pt"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/space_between_s"
+                    android:layout_marginTop="@dimen/space_between_xs"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toTopOf="@id/match_result_container"
+                    app:layout_constraintStart_toStartOf="@id/match_result_container"/>
+
+                <TextView
+                    android:id="@+id/match_details_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18_pt"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/match_details"
+                    android:layout_marginTop="@dimen/space_between_m"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/match_result_container" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/match_details_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ranking_collapsing_view"
+                    android:layout_marginTop="@dimen/space_between_s"
+                    android:layout_marginBottom="@dimen/space_between_m"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/match_details_title"
+                    tools:listitem="@layout/list_title_value_item"/>
+
+                <TextView
+                    android:id="@+id/match_roster_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18_pt"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/rosters"
+                    android:layout_marginTop="@dimen/space_between_m"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/match_details_recycler_view" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teams_roster_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ranking_collapsing_view"
+                    android:layout_marginTop="@dimen/space_between_s"
+                    android:layout_marginBottom="@dimen/space_between_m"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/match_roster_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/list_team_roster_item"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/loading_bar"

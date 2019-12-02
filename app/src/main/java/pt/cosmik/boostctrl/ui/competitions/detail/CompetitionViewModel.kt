@@ -10,6 +10,7 @@ import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.models.CompetitionType
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
+import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
 class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
@@ -57,18 +58,18 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         }
     }
 
-    private fun generateCompetitionGeneralDetailItemDescriptors(competition: Competition): List<CompetitionGeneralDetailListItemDescriptor> {
-        val items = mutableListOf<CompetitionGeneralDetailListItemDescriptor>()
-        items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.name), competition.name))
-        competition.series?.let { series -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.series), series, competition.seriesIcon)) }
-        competition.organizer?.let { organizer -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.organizer), organizer)) }
-        competition.location?.let { location -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.location), location, competition.locationIcon)) }
-        competition.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
-        competition.competitionType?.let { competitionType -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.competition_type), competitionType)) }
-        competition.venue?.let { venue -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.venue), venue)) }
-        competition.startDate?.let { startDate -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.start_date), startDate)) }
-        competition.endDate?.let { endDate -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.end_date), endDate)) }
-        competition.prizePool?.let { prizePool -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.prize_pool), prizePool)) }
+    private fun generateCompetitionGeneralDetailItemDescriptors(competition: Competition): List<KeyValueListItemDescriptor> {
+        val items = mutableListOf<KeyValueListItemDescriptor>()
+        items.add(KeyValueListItemDescriptor(context?.getString(R.string.name), competition.name))
+        competition.series?.let { series -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.series), series, competition.seriesIcon)) }
+        competition.organizer?.let { organizer -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.organizer), organizer)) }
+        competition.location?.let { location -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.location), location, competition.locationIcon)) }
+        competition.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(KeyValueListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
+        competition.competitionType?.let { competitionType -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.competition_type), competitionType)) }
+        competition.venue?.let { venue -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.venue), venue)) }
+        competition.startDate?.let { startDate -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.start_date), startDate)) }
+        competition.endDate?.let { endDate -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.end_date), endDate)) }
+        competition.prizePool?.let { prizePool -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.prize_pool), prizePool)) }
         competition.type?.let { type ->
             val typeStr = when (type) {
                 CompetitionType.PREMIER -> context?.getString(R.string.premier)
@@ -76,10 +77,10 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                 CompetitionType.MINOR -> context?.getString(R.string.minor)
                 CompetitionType.OTHER -> context?.getString(R.string.other)
             }
-            items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.competition_type), typeStr))
+            items.add(KeyValueListItemDescriptor(context?.getString(R.string.competition_type), typeStr))
         }
-        competition.numberOfTeams?.let { numberOfTeams -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.number_of_teams), numberOfTeams)) }
-        competition.mode?.let { mode -> items.add(CompetitionGeneralDetailListItemDescriptor(context?.getString(R.string.mode), mode)) }
+        competition.numberOfTeams?.let { numberOfTeams -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.number_of_teams), numberOfTeams)) }
+        competition.mode?.let { mode -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.mode), mode)) }
         return items
     }
 
@@ -107,7 +108,7 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
     data class CompetitionFragmentViewState(
         val isLoading: Boolean = false,
         val barTitle: String? = null,
-        val competitionGeneralDetailItems: List<CompetitionGeneralDetailListItemDescriptor>? = null,
+        val competitionGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
         val competitionDescription: String? = null

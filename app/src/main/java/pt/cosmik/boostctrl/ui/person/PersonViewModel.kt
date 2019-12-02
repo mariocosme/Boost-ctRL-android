@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
+import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 import java.text.DateFormat
 
@@ -39,17 +40,17 @@ class PersonViewModel: ViewModel() {
         }
     }
 
-    private fun generatePersonDetailItemDescriptors(person: Person): List<PersonDetailListItemDescriptor> {
-        val items = mutableListOf<PersonDetailListItemDescriptor>()
-        person.name?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.name), it)) }
-        person.nickname?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.nickname), it)) }
-        person.birthDate?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.birthdate), DateFormat.getDateInstance(DateFormat.SHORT).format(it))) }
-        person.country?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.country), it, person.countryIcon)) }
-        person.currentTeam?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.current_team), it)) }
-        person.role?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.role), it as String?)) }
-        person.status?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.status), it)) }
-        person.approxTotalEarnings?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.approximate_total_earnings), it)) }
-        person.startingGame?.let { items.add(PersonDetailListItemDescriptor(context?.getString(R.string.starting_game), it)) }
+    private fun generatePersonDetailItemDescriptors(person: Person): List<KeyValueListItemDescriptor> {
+        val items = mutableListOf<KeyValueListItemDescriptor>()
+        person.name?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.name), it)) }
+        person.nickname?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.nickname), it)) }
+        person.birthDate?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.birthdate), DateFormat.getDateInstance(DateFormat.SHORT).format(it))) }
+        person.country?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.country), it, person.countryIcon)) }
+        person.currentTeam?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.current_team), it)) }
+        person.role?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.role), it as String?)) }
+        person.status?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.status), it)) }
+        person.approxTotalEarnings?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.approximate_total_earnings), it)) }
+        person.startingGame?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.starting_game), it)) }
         return items
     }
 
@@ -60,7 +61,7 @@ class PersonViewModel: ViewModel() {
 
     data class PersonFragmentViewState(
         val barTitle: String? = null,
-        val personDetailItems: List<PersonDetailListItemDescriptor>? = null,
+        val personDetailItems: List<KeyValueListItemDescriptor>? = null,
         val personImages: List<String>? = null,
         val personDescription: String? = null
     )

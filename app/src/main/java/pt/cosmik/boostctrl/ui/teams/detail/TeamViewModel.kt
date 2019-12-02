@@ -11,6 +11,7 @@ import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.models.RosterTeamPlayer
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
+import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
 class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
@@ -58,15 +59,15 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
         }
     }
 
-    private fun generateTeamGeneralDetailItemDescriptors(team: Team): List<TeamGeneralDetailListItemDescriptor> {
-        val items = mutableListOf<TeamGeneralDetailListItemDescriptor>()
-        items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.name), team.name))
-        team.region?.let { region -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.region), region.toString(), team.regionIcon)) }
-        team.location?.let { location -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.location), location, team.locationIcon)) }
-        team.manager?.let { manager -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.manager), manager)) }
-        team.totalEarnings?.let { totalEarnings -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.total_earnings), totalEarnings)) }
-        team.liquipediaRating?.let { liquipediaRating -> items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.liquipedia_rating), liquipediaRating)) }
-        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(TeamGeneralDetailListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
+    private fun generateTeamGeneralDetailItemDescriptors(team: Team): List<KeyValueListItemDescriptor> {
+        val items = mutableListOf<KeyValueListItemDescriptor>()
+        items.add(KeyValueListItemDescriptor(context?.getString(R.string.name), team.name))
+        team.region?.let { region -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.region), region.toString(), team.regionIcon)) }
+        team.location?.let { location -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.location), location, team.locationIcon)) }
+        team.manager?.let { manager -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.manager), manager)) }
+        team.totalEarnings?.let { totalEarnings -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.total_earnings), totalEarnings)) }
+        team.liquipediaRating?.let { liquipediaRating -> items.add(KeyValueListItemDescriptor(context?.getString(R.string.liquipedia_rating), liquipediaRating)) }
+        team.sponsors?.let { sponsors -> if (sponsors.isNotEmpty()) items.add(KeyValueListItemDescriptor(context?.getString(R.string.sponsors), sponsors.joinToString(", "))) }
         return items
     }
 
@@ -98,7 +99,7 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
     data class TeamFragmentViewState(
         val isLoading: Boolean = false,
         val barTitle: String? = null,
-        val teamGeneralDetailItems: List<TeamGeneralDetailListItemDescriptor>? = null,
+        val teamGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val teamRosterPlayerItems: List<TeamRosterPlayerListItemDescriptor>? = null,
         val teamImages: List<String>? = null,
         val teamDescription: String? = null
