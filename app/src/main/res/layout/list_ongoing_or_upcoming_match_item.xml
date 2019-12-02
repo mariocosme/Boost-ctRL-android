@@ -27,6 +27,21 @@
             app:layout_constraintGuide_percent="0.5"/>
 
         <TextView
+            android:id="@+id/text_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="@string/live"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="@dimen/text_size_14_pt"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/space_between_s"
+            android:layout_marginTop="@dimen/space_between_xs"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
             android:id="@+id/text_date_time"
             android:layout_width="wrap_content"
             android:layout_height="0dp"

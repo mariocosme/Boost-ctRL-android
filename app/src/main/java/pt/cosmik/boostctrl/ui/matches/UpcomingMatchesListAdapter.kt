@@ -15,6 +15,7 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.UpcomingMatch
 import pt.cosmik.boostctrl.utils.Constants
 import java.text.DateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Adapter<UpcomingMatchesListAdapter.ViewHolder>() {
@@ -32,13 +33,22 @@ class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Ada
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.homeTeamText.text = item.homeTeam?.name
         holder.awayTeamText.text = item.awayTeam?.name
-        holder.dateTimeText.text = "${DateFormat.getDateInstance(DateFormat.SHORT).format(item.dateTime)} ${DateFormat.getTimeInstance(DateFormat.SHORT).format(item.dateTime)}" // 12/01/2019 17:45
         holder.tournamentText.text = item.tournamentName
         context?.let {
             Glide.with(it).load(item.homeTeam?.mainImage).into(holder.homeTeamImg)
             Glide.with(it).load(item.awayTeam?.mainImage).into(holder.awayTeamImg)
             Glide.with(it).load(item.tournamentImage).into(holder.tournamentImg)
         }
+
+        if (item.dateTime.before(Date())) {
+            holder.liveText.visibility = View.VISIBLE
+            holder.dateTimeText.visibility = View.INVISIBLE
+        }
+        else {
+            holder.liveText.visibility = View.INVISIBLE
+            holder.dateTimeText.visibility = View.VISIBLE
+        }
+        holder.dateTimeText.text = "${DateFormat.getDateInstance(DateFormat.SHORT).format(item.dateTime)} ${DateFormat.getTimeInstance(DateFormat.SHORT).format(item.dateTime)}" // 12/01/2019 17:45
     }
 
     override fun getItemCount() = items.size
@@ -56,6 +66,7 @@ class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Ada
         val awayTeamText: TextView = itemView.findViewById(R.id.text_away_team)
         val awayTeamImg: ImageView = itemView.findViewById(R.id.image_view_away_team)
         val dateTimeText: TextView = itemView.findViewById(R.id.text_date_time)
+        val liveText: TextView = itemView.findViewById(R.id.text_live)
         val tournamentImg: ImageView = itemView.findViewById(R.id.image_view_tournament)
         val tournamentText: TextView = itemView.findViewById(R.id.text_tournament_name)
     }

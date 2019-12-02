@@ -12,6 +12,7 @@ import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 import java.text.DateFormat
+import java.util.*
 
 class MatchViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
 
@@ -38,7 +39,8 @@ class MatchViewModel(private val boostCtrlRepository: BoostCtrlRepository): View
                         awayTeamImage = event.match.awayTeam?.mainImage,
                         awayTeamName = event.match.awayTeam?.name,
                         matchDetailsItems = generateMatchDetailItems(event.match),
-                        teamRostersItems = generateMatchTeamRosterItems(event.match)
+                        teamRostersItems = generateMatchTeamRosterItems(event.match),
+                        isLive = event.match.dateTime.before(Date())
                     )
                 }
             }
@@ -69,7 +71,8 @@ class MatchViewModel(private val boostCtrlRepository: BoostCtrlRepository): View
                     awayTeamImage = it.awayTeam?.mainImage,
                     awayTeamName = it.awayTeam?.name,
                     matchDetailsItems = generateMatchDetailItems(it),
-                    teamRostersItems = generateMatchTeamRosterItems(it)
+                    teamRostersItems = generateMatchTeamRosterItems(it),
+                    isLive = it.dateTime.before(Date())
                 )
                 viewState.value = viewState.value?.copy(isLoading = false)
             }, {
