@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -19,6 +20,7 @@ import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
+import pt.cosmik.boostctrl.ui.common.SocialsListAdapter
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
@@ -29,10 +31,13 @@ class PersonFragment : BaseFragment() {
     private var viewPager: ViewPager? = null
     private var linePageIndicator: LinePageIndicator? = null
     private var personDescription: TextView? = null
+    private var socialsText: TextView? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var recyclerView: RecyclerView? = null
     private val listAdapter = KeyValueListAdapter()
+    private var socialsRecyclerView: RecyclerView? = null
+    private val socialsAdapter = SocialsListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_person, container, false)
@@ -44,6 +49,7 @@ class PersonFragment : BaseFragment() {
         viewPager = view.findViewById(R.id.view_pager)
         linePageIndicator = view.findViewById(R.id.page_indicator)
         personDescription = view.findViewById(R.id.text_person_desc)
+        socialsText = view.findViewById(R.id.text_socials)
 
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
@@ -58,9 +64,24 @@ class PersonFragment : BaseFragment() {
             adapter = listAdapter
         }
 
+        socialsAdapter.context = context
+        socialsRecyclerView = view.findViewById<RecyclerView>(R.id.socials_recycler_view)?.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = socialsAdapter
+        }
+
+        disposables.add(socialsAdapter.onItemClickEvent().subscribe {
+            vm.processEvent(PersonViewModel.PersonFragmentEvent.SelectedPersonSocial(it))
+        })
+
         vm.viewState.observe(this, Observer {
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.personDetailItems?.let { items -> listAdapter.setItems(items) }
+            it.personSocialItems?.let { items ->
+                if (items.isNotEmpty()) socialsText?.visibility = View.VISIBLE
+                socialsAdapter.setItems(items)
+            }
             it.personImages?.let { images ->
                 if (viewPager?.adapter == null) {
                     viewPager?.adapter = BoostCtrlSmallViewPagerAdapter(context!!, images)
@@ -74,7 +95,10 @@ class PersonFragment : BaseFragment() {
         })
 
         vm.viewEffect.observe(this, Observer {
-//            when (it) {}
+            when (it) {
+                is PersonViewModel.PersonFragmentViewEffect.ShowError -> showErrorMessage(it.error)
+                is PersonViewModel.PersonFragmentViewEffect.OpenActivity -> startActivity(it.intent)
+            }
         })
 
         vm.processEvent(PersonViewModel.PersonFragmentEvent.ViewCreated(arguments?.get("person") as? Person, context))

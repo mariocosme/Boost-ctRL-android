@@ -64,6 +64,29 @@
             android:nestedScrollingEnabled="false"
             tools:ignore="UnusedAttribute" />
 
+        <TextView
+            android:id="@+id/text_socials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_18_pt"
+            android:textColor="@color/colorAccent"
+            android:text="@string/socials"
+            android:layout_marginStart="@dimen/space_between_m"
+            android:layout_marginEnd="@dimen/space_between_m"
+            android:layout_marginTop="@dimen/space_between_m"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/socials_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_between_s"
+            android:layout_marginStart="@dimen/space_between_m"
+            android:layout_marginEnd="@dimen/space_between_m"
+            android:layout_marginBottom="@dimen/space_between_m"
+            android:nestedScrollingEnabled="false"
+            android:background="@drawable/bg_ranking_collapsing_view"/>
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

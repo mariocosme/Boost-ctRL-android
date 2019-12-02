@@ -1,6 +1,8 @@
 package pt.cosmik.boostctrl.ui.person
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -9,6 +11,7 @@ import org.joda.time.Years
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
+import pt.cosmik.boostctrl.ui.common.SocialType
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 import java.text.DateFormat
 
@@ -36,9 +39,23 @@ class PersonViewModel: ViewModel() {
                         barTitle = event.person.nickname,
                         personImages = event.person.images,
                         personDescription = event.person.summary,
-                        personDetailItems = generatePersonDetailItemDescriptors(event.person)
+                        personDetailItems = generatePersonDetailItemDescriptors(event.person),
+                        personSocialItems = generatePersonSocialItems(event.person)
                     )
                 }
+            }
+            is PersonFragmentEvent.SelectedPersonSocial -> {
+                val intent = when (event.socialType) {
+                    SocialType.DISCORD -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.discord))
+                    SocialType.INSTAGRAM -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.instagram))
+                    SocialType.TWITTER -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.twitter))
+                    SocialType.TWITCH -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.twitch))
+                    SocialType.FACEBOOK -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.facebook))
+                    SocialType.YOUTUBE -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.youtube))
+                    SocialType.STEAM -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.steam))
+                    SocialType.SNAPCHAT -> Intent(Intent.ACTION_VIEW, Uri.parse(person?.snapchat))
+                }
+                viewEffect.value = PersonFragmentViewEffect.OpenActivity(intent)
             }
         }
     }
@@ -61,6 +78,19 @@ class PersonViewModel: ViewModel() {
         return items
     }
 
+    private fun generatePersonSocialItems(person: Person): List<SocialType> {
+        val items = mutableListOf<SocialType>()
+        person.youtube?.let { items.add(SocialType.YOUTUBE) }
+        person.twitch?.let { items.add(SocialType.TWITCH) }
+        person.twitter?.let { items.add(SocialType.TWITTER) }
+        person.discord?.let { items.add(SocialType.DISCORD) }
+        person.instagram?.let { items.add(SocialType.INSTAGRAM) }
+        person.facebook?.let { items.add(SocialType.FACEBOOK) }
+        person.steam?.let { items.add(SocialType.STEAM) }
+        person.snapchat?.let { items.add(SocialType.SNAPCHAT) }
+        return items
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
@@ -70,14 +100,17 @@ class PersonViewModel: ViewModel() {
         val barTitle: String? = null,
         val personDetailItems: List<KeyValueListItemDescriptor>? = null,
         val personImages: List<String>? = null,
-        val personDescription: String? = null
+        val personDescription: String? = null,
+        val personSocialItems: List<SocialType>? = null
     )
 
     sealed class PersonFragmentViewEffect {
-        data class ShowError(val message: String): PersonFragmentViewEffect()
+        data class ShowError(val error: String): PersonFragmentViewEffect()
+        data class OpenActivity(val intent: Intent): PersonFragmentViewEffect()
     }
 
     sealed class PersonFragmentEvent {
         data class ViewCreated(val person: Person?, val context: Context?): PersonFragmentEvent()
+        data class SelectedPersonSocial(val socialType: SocialType): PersonFragmentEvent()
     }
 }

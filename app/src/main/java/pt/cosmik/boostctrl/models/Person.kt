@@ -21,6 +21,8 @@ data class Person(
     @SerializedName("twitch") val twitch: String?,
     @SerializedName("youtube") val youtube: String?,
     @SerializedName("discord") val discord: String?,
+    @SerializedName("facebook") val facebook: String?,
+    @SerializedName("snapchat") val snapchat: String?,
     @SerializedName("steam") val steam: String?,
     @SerializedName("instagram") val instagram: String?,
     @SerializedName("liquipediaUrl") val liquipediaUrl: String?,
