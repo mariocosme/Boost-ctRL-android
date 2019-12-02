@@ -8,7 +8,6 @@ import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.models.UpcomingMatch
-import pt.cosmik.boostctrl.repositories.BoostCtrlRepoImpl
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent

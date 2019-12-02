@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -21,6 +22,7 @@ import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.BoostCtrlSmallViewPagerAdapter
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
+import pt.cosmik.boostctrl.ui.common.SocialsListAdapter
 import pt.cosmik.boostctrl.ui.person.PersonFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
@@ -33,12 +35,15 @@ class TeamFragment : BaseFragment() {
     private var viewPager: ViewPager? = null
     private var linePageIndicator: LinePageIndicator? = null
     private var teamDescription: TextView? = null
+    private var socialsText: TextView? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
     private var teamGeneralDetailsRecyclerView: RecyclerView? = null
     private val teamGeneralDetailsListAdapter = KeyValueListAdapter()
     private var teamRosterRecyclerView: RecyclerView? = null
     private val teamRosterListAdapter = TeamRosterListAdapter()
+    private var socialsRecyclerView: RecyclerView? = null
+    private val socialsAdapter = SocialsListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_team_detail, container, false)
@@ -51,6 +56,7 @@ class TeamFragment : BaseFragment() {
         viewPager = view.findViewById(R.id.view_pager)
         linePageIndicator = view.findViewById(R.id.page_indicator)
         teamDescription = view.findViewById(R.id.text_team_desc)
+        socialsText = view.findViewById(R.id.text_socials)
 
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
@@ -77,11 +83,26 @@ class TeamFragment : BaseFragment() {
             vm.processEvent(TeamViewModel.TeamFragmentEvent.SelectedRosterItem(it))
         })
 
+        socialsAdapter.context = context
+        socialsRecyclerView = view.findViewById<RecyclerView>(R.id.socials_recycler_view)?.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = socialsAdapter
+        }
+
+        disposables.add(socialsAdapter.onItemClickEvent().subscribe {
+            vm.processEvent(TeamViewModel.TeamFragmentEvent.SelectedTeamSocial(it))
+        })
+
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.teamGeneralDetailItems?.let { items -> teamGeneralDetailsListAdapter.setItems(items) }
             it.teamRosterPlayerItems?.let { items -> teamRosterListAdapter.setItems(items) }
+            it.teamSocialItems?.let { items ->
+                if (items.isNotEmpty()) socialsText?.visibility = View.VISIBLE
+                socialsAdapter.setItems(items)
+            }
             it.teamImages?.let { images ->
                 if (viewPager?.adapter == null) {
                     viewPager?.adapter = BoostCtrlSmallViewPagerAdapter(context!!, images)
@@ -98,6 +119,7 @@ class TeamFragment : BaseFragment() {
             when (it) {
                 is TeamViewModel.TeamFragmentViewEffect.ShowError -> showErrorMessage(it.error)
                 is TeamViewModel.TeamFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(PersonFragmentDirections.actionGlobalPersonFragment(it.person))
+                is TeamViewModel.TeamFragmentViewEffect.OpenActivity -> startActivity(it.intent)
             }
         })
 

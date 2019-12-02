@@ -2,6 +2,8 @@ package pt.cosmik.boostctrl.ui.teams.detail
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
@@ -12,6 +14,7 @@ import pt.cosmik.boostctrl.models.RosterTeamPlayer
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
+import pt.cosmik.boostctrl.ui.common.SocialType
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
 class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
@@ -38,7 +41,8 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
                         teamImages = event.team.images,
                         teamDescription = event.team.summary,
                         teamGeneralDetailItems = generateTeamGeneralDetailItemDescriptors(event.team),
-                        teamRosterPlayerItems = generateTeamRosterPlayerItemDescriptors(event.team)
+                        teamRosterPlayerItems = generateTeamRosterPlayerItemDescriptors(event.team),
+                        teamSocialItems = generateTeamSocialItems(event.team)
                     )
                 }
             }
@@ -55,6 +59,19 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
                         viewEffect.value = TeamFragmentViewEffect.ShowError("Something went wrong trying to obtain the selected subject.")
                     }))
                 }
+            }
+            is TeamFragmentEvent.SelectedTeamSocial -> {
+                val intent = when (event.socialType) {
+                    SocialType.DISCORD -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.discord))
+                    SocialType.INSTAGRAM -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.instagram))
+                    SocialType.TWITTER -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.twitter))
+                    SocialType.TWITCH -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.twitch))
+                    SocialType.FACEBOOK -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.facebook))
+                    SocialType.YOUTUBE -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.youtube))
+                    SocialType.STEAM -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.steam))
+                    SocialType.SNAPCHAT -> Intent(Intent.ACTION_VIEW, Uri.parse(team?.snapchat))
+                }
+                viewEffect.value = TeamFragmentViewEffect.OpenActivity(intent)
             }
         }
     }
@@ -91,6 +108,19 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
         return items
     }
 
+    private fun generateTeamSocialItems(team: Team): List<SocialType> {
+        val items = mutableListOf<SocialType>()
+        team.youtube?.let { items.add(SocialType.YOUTUBE) }
+        team.twitch?.let { items.add(SocialType.TWITCH) }
+        team.twitter?.let { items.add(SocialType.TWITTER) }
+        team.discord?.let { items.add(SocialType.DISCORD) }
+        team.instagram?.let { items.add(SocialType.INSTAGRAM) }
+        team.facebook?.let { items.add(SocialType.FACEBOOK) }
+        team.steam?.let { items.add(SocialType.STEAM) }
+        team.snapchat?.let { items.add(SocialType.SNAPCHAT) }
+        return items
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
@@ -101,6 +131,7 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
         val barTitle: String? = null,
         val teamGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val teamRosterPlayerItems: List<TeamRosterPlayerListItemDescriptor>? = null,
+        val teamSocialItems: List<SocialType>? = null,
         val teamImages: List<String>? = null,
         val teamDescription: String? = null
     )
@@ -108,10 +139,12 @@ class TeamViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewM
     sealed class TeamFragmentViewEffect {
         data class ShowError(val error: String): TeamFragmentViewEffect()
         data class PresentPersonFragment(val person: Person): TeamFragmentViewEffect()
+        data class OpenActivity(val intent: Intent): TeamFragmentViewEffect()
     }
 
     sealed class TeamFragmentEvent {
         data class ViewCreated(val team: Team?, val context: Context?): TeamFragmentEvent()
         data class SelectedRosterItem(val item: TeamRosterPlayerListItemDescriptor): TeamFragmentEvent()
+        data class SelectedTeamSocial(val socialType: SocialType): TeamFragmentEvent()
     }
 }

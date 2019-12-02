@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class TeamRosterListAdapter(var context: Context? = null): RecyclerView.Adapter<TeamRosterListAdapter.ViewHolder>() {
 
     private var items: List<TeamRosterPlayerListItemDescriptor> = listOf()
-    val itemClickSubject = PublishSubject.create<TeamRosterPlayerListItemDescriptor>()
+    private val itemClickSubject = PublishSubject.create<TeamRosterPlayerListItemDescriptor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_team_roster_item, parent, false))
@@ -29,7 +29,6 @@ class TeamRosterListAdapter(var context: Context? = null): RecyclerView.Adapter<
         holder.playerNameText.text = item.name
         holder.joinDateText.text = item.joinDate
         context?.let { context -> Glide.with(context).load(item.countryFlag).into(holder.countryImage) }
-
     }
 
     override fun getItemCount() = items.size

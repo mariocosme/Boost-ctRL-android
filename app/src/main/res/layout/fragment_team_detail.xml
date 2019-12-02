@@ -9,14 +9,20 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/space_between_m"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
@@ -42,6 +48,8 @@
                 app:unselectedColor="@color/colorIceberg"
                 app:selectedColor="@color/colorRadicalRed"/>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/text_team_desc"
                 android:layout_width="match_parent"
@@ -51,9 +59,6 @@
                 android:layout_marginTop="@dimen/space_between_m"
                 android:textSize="@dimen/text_size_14_pt"
                 android:textColor="@color/colorIceberg"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_pager"
                 tools:text="Renault Vitality is a partnership between the French esports organisation Team Vitality, which has teams competing in Rocket League, League of Legends, Call of Duty, FIFA, Rainbow Six: Siege, Halo, Counter-Strike: Global Offensive and H1Z1, and motorsport organisation Renault Sport."/>
 
             <TextView
@@ -65,10 +70,7 @@
                 android:text="@string/general_details"
                 android:layout_marginStart="@dimen/space_between_m"
                 android:layout_marginEnd="@dimen/space_between_m"
-                android:layout_marginTop="@dimen/space_between_m"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_team_desc" />
+                android:layout_marginTop="@dimen/space_between_m" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/team_general_details_recycler_view"
@@ -80,9 +82,6 @@
                 android:layout_marginEnd="@dimen/space_between_m"
                 android:layout_marginBottom="@dimen/space_between_m"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_team_general_details_title"
                 tools:listitem="@layout/list_title_value_item"/>
 
             <TextView
@@ -94,10 +93,7 @@
                 android:text="@string/roster"
                 android:layout_marginStart="@dimen/space_between_m"
                 android:layout_marginEnd="@dimen/space_between_m"
-                android:layout_marginTop="@dimen/space_between_m"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/team_general_details_recycler_view" />
+                android:layout_marginTop="@dimen/space_between_m"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/team_roster_recycler_view"
@@ -109,13 +105,32 @@
                 android:layout_marginEnd="@dimen/space_between_m"
                 android:layout_marginBottom="@dimen/space_between_m"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_team_roster_title"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:listitem="@layout/list_team_roster_item"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/text_socials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18_pt"
+                android:textColor="@color/colorAccent"
+                android:text="@string/socials"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginTop="@dimen/space_between_m"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/socials_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_s"
+                android:layout_marginStart="@dimen/space_between_m"
+                android:layout_marginEnd="@dimen/space_between_m"
+                android:layout_marginBottom="@dimen/space_between_m"
+                android:nestedScrollingEnabled="false"
+                android:background="@drawable/bg_ranking_collapsing_view"/>
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
