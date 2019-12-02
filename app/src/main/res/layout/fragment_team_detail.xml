@@ -9,7 +9,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/space_between_m"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,6 +127,7 @@
                 android:layout_marginEnd="@dimen/space_between_m"
                 android:layout_marginBottom="@dimen/space_between_m"
                 android:nestedScrollingEnabled="false"
+                android:paddingBottom="@dimen/space_between_m"
                 android:background="@drawable/bg_ranking_collapsing_view"/>
 
         </LinearLayout>
