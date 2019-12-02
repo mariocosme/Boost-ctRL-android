@@ -22,7 +22,7 @@ class TeamsListAdapter(var context: Context?): RecyclerView.Adapter<TeamsListAda
     private var items: List<Team> = listOf()
     private var sectionPositions: List<Int> = listOf()
 
-    val itemClickSubject = PublishSubject.create<Team>()
+    private val itemClickSubject = PublishSubject.create<Team>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_team_item, parent, false))
@@ -49,7 +49,14 @@ class TeamsListAdapter(var context: Context?): RecyclerView.Adapter<TeamsListAda
         var i = 0
         val size = items.size
         while (i < size) {
-            val section = items[i].name[0].toUpperCase()
+            val section = if (items[i].name.startsWith("Team")) { // Sorting teams which start with `Team` by their second name
+                val subStr = items[i].name.substringAfter("Team ")
+                items[i].name[items[i].name.length - subStr.length].toUpperCase()
+            }
+            else {
+                items[i].name[0].toUpperCase()
+            }
+
             if (!sections.contains(section)) {
                 sections.add(section)
                 tmpSectionPositions.add(i)
@@ -57,8 +64,6 @@ class TeamsListAdapter(var context: Context?): RecyclerView.Adapter<TeamsListAda
             i++
         }
         sectionPositions = tmpSectionPositions
-
-
         return sections.map { it.toString() }.toTypedArray()
     }
 

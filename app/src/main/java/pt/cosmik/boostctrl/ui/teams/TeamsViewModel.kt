@@ -7,6 +7,8 @@ import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
+import java.util.*
+import kotlin.Comparator
 
 class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : ViewModel() {
 
@@ -50,13 +52,35 @@ class TeamsViewModel(private val boostCtrlRepository: BoostCtrlRepository) : Vie
         viewState.value = viewState.value?.copy(isLoading = true)
 
         disposables.add(boostCtrlRepository.getActiveTeams().subscribe ({
-            viewState.value = viewState.value?.copy(isLoading = false, teams = it)
+            viewState.value = viewState.value?.copy(
+                isLoading = false,
+                teams = sortTeamsAlphabetically(it)
+            )
         }, {
             Crashlytics.logException(it)
             viewState.value = viewState.value?.copy(isLoading = false)
             viewEffect.value = TeamsFragmentViewEffect.ShowError("Something went wrong trying to obtain the list of active teams.")
         }))
     }
+
+    // Sorting teams alphabetically considering those which start with `Team` by their second name
+    private fun sortTeamsAlphabetically(teams: List<Team>): List<Team> = teams.sortedWith(Comparator { a, b ->
+        var nameA = a.name.toLowerCase(Locale.getDefault())
+        var nameB = b.name.toLowerCase(Locale.getDefault())
+
+        if (nameA.contains("team ")) {
+            nameA = nameA.substringAfter("team ")
+        }
+        if (nameB.contains("team ")) {
+            nameB = nameB.substringAfter("team ")
+        }
+
+        when {
+            nameA > nameB -> 1
+            nameA < nameB -> -1
+            else -> 0
+        }
+    })
 
     override fun onCleared() {
         super.onCleared()
