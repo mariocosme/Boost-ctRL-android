@@ -26,6 +26,7 @@
     <string name="team_logo">Team logo</string>
 
     <string name="birthdate">Birthdate</string>
+    <string name="age">age %s</string>
     <string name="country">Country</string>
     <string name="current_team">Current Team</string>
     <string name="role">Role</string>

@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
+import org.joda.time.LocalDate
+import org.joda.time.Years
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.Person
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 import java.text.DateFormat
+
 
 class PersonViewModel: ViewModel() {
 
@@ -44,7 +47,11 @@ class PersonViewModel: ViewModel() {
         val items = mutableListOf<KeyValueListItemDescriptor>()
         person.name?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.name), it)) }
         person.nickname?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.nickname), it)) }
-        person.birthDate?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.birthdate), DateFormat.getDateInstance(DateFormat.SHORT).format(it))) }
+        person.birthDate?.let {
+            val age: Years = Years.yearsBetween(LocalDate(it), LocalDate())
+            val ageString = context?.getString(R.string.age, age.years.toString())
+            items.add(KeyValueListItemDescriptor(context?.getString(R.string.birthdate), "${DateFormat.getDateInstance(DateFormat.MEDIUM).format(it)} ($ageString)"))
+        }
         person.country?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.country), it, person.countryIcon)) }
         person.currentTeam?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.current_team), it)) }
         person.role?.let { items.add(KeyValueListItemDescriptor(context?.getString(R.string.role), it as String?)) }
