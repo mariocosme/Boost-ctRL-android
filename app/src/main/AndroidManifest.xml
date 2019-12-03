@@ -36,13 +36,18 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPickledBluewood" />
-        <!-- The news notification channel -->
+
+        <!-- Notification channels -->
         <meta-data
             android:name="pt.cosmik.boostctrl.news_notification_channel_id"
             android:value="@string/fcm_news_notification_channel_id" />
         <meta-data
             android:name="pt.cosmik.boostctrl.debug_notification_channel_id"
             android:value="@string/fcm_debug_notification_channel_id" />
+        <meta-data
+            android:name="pt.cosmik.boostctrl.in_app_channel_id"
+            android:value="@string/in_app_channel_id" />
+
         <service
             android:name="pt.cosmik.boostctrl.services.BoostCtrlFirebaseMsgService"
             android:exported="false">

@@ -107,6 +107,15 @@
                     app:layout_constraintTop_toTopOf="@id/match_result_container"
                     app:layout_constraintStart_toStartOf="@id/match_result_container"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/match_detail_actions_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_between_m"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/match_result_container"/>
+
                 <TextView
                     android:id="@+id/match_details_title"
                     android:layout_width="match_parent"
@@ -117,7 +126,7 @@
                     android:layout_marginTop="@dimen/space_between_m"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/match_result_container" />
+                    app:layout_constraintTop_toBottomOf="@id/match_detail_actions_recycler_view" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/match_details_recycler_view"

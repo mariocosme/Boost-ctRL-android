@@ -1,5 +1,9 @@
 package pt.cosmik.boostctrl
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import androidx.multidex.MultiDexApplication
 import net.danlew.android.joda.JodaTimeAndroid
 import org.koin.android.ext.koin.androidContext
@@ -14,7 +18,22 @@ class BoostCtrlApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         initKoin()
+        initNotificationChannels()
         JodaTimeAndroid.init(this)
+    }
+
+    private fun initNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.in_app_channel_name)
+            val descriptionText = getString(R.string.in_app_channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(getString(R.string.in_app_channel_id), name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun initKoin() {

@@ -20,7 +20,9 @@ import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.models.UpcomingMatch
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.ui.common.KeyValueActionListAdapter
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
+import pt.cosmik.boostctrl.ui.common.VerticalSpaceItemDecoration
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
 
@@ -39,10 +41,14 @@ class MatchFragment : BaseFragment() {
     private var swipeRefresh: SwipeRefreshLayout? = null
 
     private var dividerItemDeco: DividerItemDecoration? = null
+    private var verticalSpacerDeco = VerticalSpaceItemDecoration()
+
     private var matchDetailsRecyclerView: RecyclerView? = null
     private val matchDetailsListAdapter = KeyValueListAdapter()
     private var teamRostersRecyclerView: RecyclerView? = null
     private val teamRostersListAdapter = TeamRostersListAdapter()
+    private var matchDetailActionsRecyclerView: RecyclerView? = null
+    private val matchDetailActionsListAdapter = KeyValueActionListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_match_detail, container, false)
@@ -72,6 +78,18 @@ class MatchFragment : BaseFragment() {
                 vm.processEvent(MatchViewModel.MatchFragmentEvent.DidTriggerRefresh)
             }
         }
+
+        matchDetailActionsListAdapter.context = context
+        matchDetailActionsRecyclerView = view.findViewById<RecyclerView>(R.id.match_detail_actions_recycler_view)?.apply {
+            setHasFixedSize(true)
+            addItemDecoration(verticalSpacerDeco)
+            layoutManager = LinearLayoutManager(context)
+            adapter = matchDetailActionsListAdapter
+        }
+
+        disposables.add(matchDetailActionsListAdapter.onItemClickEvent().subscribe {
+            vm.processEvent(MatchViewModel.MatchFragmentEvent.SelectedAction(it))
+        })
 
         matchDetailsListAdapter.context = context
         matchDetailsRecyclerView = view.findViewById<RecyclerView>(R.id.match_details_recycler_view)?.apply {
@@ -106,12 +124,14 @@ class MatchFragment : BaseFragment() {
                 if (items.isEmpty()) rostersText?.visibility = View.GONE
                 teamRostersListAdapter.setItems(items)
             }
+            it.matchActions?.let { items -> matchDetailActionsListAdapter.setItems(items) }
         })
 
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is MatchViewModel.MatchFragmentViewEffect.ShowError -> showErrorMessage(it.error)
                 is MatchViewModel.MatchFragmentViewEffect.PresentPersonFragment -> findNavController().navigate(MatchFragmentDirections.actionGlobalPersonFragment(it.person))
+                is MatchViewModel.MatchFragmentViewEffect.StartActivity -> startActivity(it.intent)
             }
         })
 

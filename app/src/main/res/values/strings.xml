@@ -64,10 +64,16 @@
     <string name="standings">Standings</string>
     <string name="date_when">When</string>
     <string name="event">Event</string>
-
-    <!-- FCM -->
-    <string name="fcm_topic">boost-ctrl</string>
-    <string name="fcm_news_notification_channel_id">ba860250-c40d-4853-af9c-e194a20da276</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="notify_me">Notify me</string>
     <string name="competition_image">Competition image</string>
     <string name="live">Live</string>
+
+    <!-- FCM / Notification -->
+    <string name="fcm_topic">boost-ctrl</string>
+    <string name="fcm_news_notification_channel_id">ba860250-c40d-4853-af9c-e194a20da276</string>
+    <string name="in_app_channel_id">17f8f5fe-cfc3-44f7-aaef-79ec5bb83a93</string>
+    <string name="in_app_channel_name">Boost-ctRL Notifications</string>
+    <string name="in_app_channel_description">Unspecific common in app notifications</string>
+
 </resources>
