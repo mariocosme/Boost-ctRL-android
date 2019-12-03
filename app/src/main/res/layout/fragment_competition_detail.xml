@@ -9,6 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +97,6 @@
                 android:layout_marginTop="@dimen/space_between_s"
                 android:layout_marginStart="@dimen/space_between_m"
                 android:layout_marginEnd="@dimen/space_between_m"
-                android:layout_marginBottom="@dimen/space_between_m"
                 android:visibility="gone"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +104,15 @@
                 app:layout_constraintTop_toBottomOf="@id/text_competition_standings_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:listitem="@layout/list_team_roster_item"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+                <FrameLayout
+                    android:id="@+id/brackets"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
 
         </LinearLayout>
 

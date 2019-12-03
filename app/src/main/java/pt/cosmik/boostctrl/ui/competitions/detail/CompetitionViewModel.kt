@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
+import pt.cosmik.boostctrl.models.BracketContainer
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.models.CompetitionType
 import pt.cosmik.boostctrl.models.Team
@@ -37,7 +38,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                         competitionImage = event.competition.image,
                         competitionDescription = event.competition.description,
                         competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition),
-                        competitionStandingItems = generateStandingItemDescriptors(event.competition)
+                        competitionStandingItems = generateStandingItemDescriptors(event.competition),
+                        competitionBrackets = event.competition.brackets
                     )
                 }
             }
@@ -111,7 +113,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         val competitionGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
-        val competitionDescription: String? = null
+        val competitionDescription: String? = null,
+        val competitionBrackets: List<BracketContainer>? = null
     )
 
     sealed class CompetitionFragmentViewEffect {

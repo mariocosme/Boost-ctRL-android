@@ -4,6 +4,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pt.cosmik.boostctrl.ui.competitions.CompetitionsViewModel
 import pt.cosmik.boostctrl.ui.competitions.detail.CompetitionViewModel
+import pt.cosmik.boostctrl.ui.info.InfoViewModel
 import pt.cosmik.boostctrl.ui.matches.MatchesViewModel
 import pt.cosmik.boostctrl.ui.matches.detail.MatchViewModel
 import pt.cosmik.boostctrl.ui.news.NewsViewModel
@@ -26,4 +27,6 @@ var uiModule = module {
     viewModel { MatchViewModel(get()) }
 
     viewModel { PersonViewModel() }
+
+    viewModel { InfoViewModel(get()) }
 }

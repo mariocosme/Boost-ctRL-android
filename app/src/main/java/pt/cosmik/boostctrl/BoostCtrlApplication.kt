@@ -4,6 +4,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.multidex.MultiDexApplication
 import net.danlew.android.joda.JodaTimeAndroid
 import org.koin.android.ext.koin.androidContext
@@ -12,8 +14,14 @@ import org.koin.core.context.startKoin
 import pt.cosmik.boostctrl.modules.repositoryModule
 import pt.cosmik.boostctrl.modules.restModule
 import pt.cosmik.boostctrl.modules.uiModule
+import kotlin.math.roundToInt
+
 
 class BoostCtrlApplication : MultiDexApplication() {
+
+    companion object {
+        val instance = BoostCtrlApplication()
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -48,4 +56,12 @@ class BoostCtrlApplication : MultiDexApplication() {
         }
     }
 
+    fun dpToPx(dp: Int): Int {
+        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val displayMetrics = DisplayMetrics()
+        wm.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+        return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    }
 }

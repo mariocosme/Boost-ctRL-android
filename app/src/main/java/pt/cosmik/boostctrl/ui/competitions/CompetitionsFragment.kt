@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
+import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 

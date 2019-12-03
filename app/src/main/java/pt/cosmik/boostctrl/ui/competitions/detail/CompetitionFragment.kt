@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
+import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
@@ -92,6 +94,10 @@ class CompetitionFragment : BaseFragment() {
                 Glide.with(context!!).load(it.competitionImage).into(imageView!!)
             }
             competitionDescription?.text = it.competitionDescription
+
+            it.competitionBrackets?.let { brackets ->
+                // TODO: implementation
+            }
         })
 
         vm.viewEffect.observe(this, Observer {
@@ -100,6 +106,8 @@ class CompetitionFragment : BaseFragment() {
                 is CompetitionViewModel.CompetitionFragmentViewEffect.PresentTeamFragment -> findNavController().navigate(TeamFragmentDirections.actionGlobalTeamDetailFragment(it.team))
             }
         })
+
+        fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
 
         vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.ViewCreated(arguments?.get("competition") as? Competition, context))
     }
