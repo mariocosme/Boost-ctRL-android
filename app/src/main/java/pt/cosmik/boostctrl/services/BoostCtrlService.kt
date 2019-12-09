@@ -14,6 +14,8 @@ interface BoostCtrlService {
     fun getAllCompetitions(@Url url: String): Observable<List<Competition>>
     @GET
     fun getCompetition(@Url url: String): Observable<Competition>
+    @GET
+    fun getCompetitionBrackets(@Url url: String): Observable<List<BracketContainer>>
 
     @GET
     fun getUpcomingAndOngoingMatches(@Url url: String): Observable<List<UpcomingMatch>>

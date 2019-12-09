@@ -38,8 +38,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                         competitionImage = event.competition.image,
                         competitionDescription = event.competition.description,
                         competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition),
-                        competitionStandingItems = generateStandingItemDescriptors(event.competition),
-                        competitionBrackets = event.competition.brackets
+                        competitionStandingItems = generateStandingItemDescriptors(event.competition)
+//                        competitionBrackets = event.competition.brackets
                     )
                 }
             }
@@ -113,8 +113,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         val competitionGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
-        val competitionDescription: String? = null,
-        val competitionBrackets: List<BracketContainer>? = null
+        val competitionDescription: String? = null
+//        val competitionBrackets: List<BracketContainer>? = null
     )
 
     sealed class CompetitionFragmentViewEffect {

@@ -95,9 +95,9 @@ class CompetitionFragment : BaseFragment() {
             }
             competitionDescription?.text = it.competitionDescription
 
-            it.competitionBrackets?.let { brackets ->
-                // TODO: implementation
-            }
+//            it.competitionBrackets?.let { brackets ->
+//                // TODO: implementation
+//            }
         })
 
         vm.viewEffect.observe(this, Observer {

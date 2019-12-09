@@ -26,7 +26,7 @@ data class Competition(
     @SerializedName("startDate") val startDate: String?,
     @SerializedName("endDate") val endDate: String?,
     @SerializedName("numberOfTeams") val numberOfTeams: String?,
-    @SerializedName("brackets") val brackets: List<BracketContainer>?,
+    @SerializedName("bracketsLastUpdated") val bracketsLastUpdated: Date?,
     @SerializedName("groupStandings") val groupStandings: GroupStanding?
 ): Serializable
 
@@ -49,7 +49,8 @@ data class GroupStanding(
 
 data class BracketContainer(
     @SerializedName("title") val title: String?,
-    @SerializedName("sections") val sections: List<BracketSection>?
+    @SerializedName("sections") val sections: List<BracketSection>?,
+    @SerializedName("competitionId") val competitionId: String?
 ): Serializable
 
 data class BracketSection(
