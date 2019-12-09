@@ -9,7 +9,7 @@ interface BoostCtrlRepository {
 
     fun getAllCompetitions(): Observable<List<Competition>>
     fun getCompetition(competitionId: String): Observable<Competition>
-    fun getCompetitionBrackets(competitionId: String): Observable<List<BracketContainer>>
+    fun getCompetitionBrackets(competitionId: String): Observable<List<BracketContainer>?>
 
     fun getUpcomingAndOngoingMatches(): Observable<List<UpcomingMatch>>
     fun getUpcomingAndOngoingMatch(matchId: String): Observable<UpcomingMatch>

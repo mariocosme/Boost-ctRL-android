@@ -1,11 +1,8 @@
 package pt.cosmik.boostctrl.ui.competitions.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -18,7 +15,6 @@ import com.bumptech.glide.Glide
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
@@ -40,6 +36,32 @@ class CompetitionFragment : BaseFragment() {
     private val competitionGeneralDetailsListAdapter = KeyValueListAdapter()
     private var competitionStandingsRecyclerView: RecyclerView? = null
     private val competitionStandingsListAdapter = CompetitionStandingsListAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.competition_detail_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.brackets_item) {
+            // TODO: implement
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        vm.viewState.value?.let {
+            it.competitionHasBrackets?.let { hasBrackets ->
+                menu.findItem(R.id.brackets_item).isVisible = hasBrackets
+            }
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_competition_detail, container, false)
@@ -80,6 +102,10 @@ class CompetitionFragment : BaseFragment() {
 
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
+            it.competitionHasBrackets?.let { hasBrackets ->
+                if (hasBrackets) activity?.invalidateOptionsMenu()
+            }
+
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.competitionGeneralDetailItems?.let { items -> competitionGeneralDetailsListAdapter.setItems(items) }
             it.competitionStandingItems?.let { items ->
@@ -94,10 +120,6 @@ class CompetitionFragment : BaseFragment() {
                 Glide.with(context!!).load(it.competitionImage).into(imageView!!)
             }
             competitionDescription?.text = it.competitionDescription
-
-//            it.competitionBrackets?.let { brackets ->
-//                // TODO: implementation
-//            }
         })
 
         vm.viewEffect.observe(this, Observer {
@@ -107,7 +129,7 @@ class CompetitionFragment : BaseFragment() {
             }
         })
 
-        fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
+        //fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
 
         vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.ViewCreated(arguments?.get("competition") as? Competition, context))
     }

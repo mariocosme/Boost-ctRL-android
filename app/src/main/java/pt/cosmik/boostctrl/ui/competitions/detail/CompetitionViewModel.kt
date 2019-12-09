@@ -1,17 +1,18 @@
 package pt.cosmik.boostctrl.ui.competitions.detail
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.models.BracketContainer
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.models.CompetitionType
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
+import pt.cosmik.boostctrl.utils.Constants
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 
 class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
@@ -39,8 +40,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                         competitionDescription = event.competition.description,
                         competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition),
                         competitionStandingItems = generateStandingItemDescriptors(event.competition)
-//                        competitionBrackets = event.competition.brackets
                     )
+                    updateCompetitionHasBrackets()
                 }
             }
             is CompetitionFragmentEvent.SelectedTeamItem -> {
@@ -102,6 +103,14 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         return items
     }
 
+    private fun updateCompetitionHasBrackets() {
+        disposables.add(boostCtrlRepository.getCompetitionBrackets(competition?.id!!).subscribe ({
+            it?.let { bracketContainers -> viewState.value = viewState.value?.copy(competitionHasBrackets = bracketContainers.isNotEmpty()) }
+        }, {
+            Log.d(Constants.LOG_TAG, "Error getting the brackets: ${it.localizedMessage}")
+        }))
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
@@ -113,8 +122,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         val competitionGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
-        val competitionDescription: String? = null
-//        val competitionBrackets: List<BracketContainer>? = null
+        val competitionDescription: String? = null,
+        val competitionHasBrackets: Boolean? = null
     )
 
     sealed class CompetitionFragmentViewEffect {

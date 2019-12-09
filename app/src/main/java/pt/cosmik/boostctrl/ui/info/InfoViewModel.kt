@@ -3,7 +3,6 @@ package pt.cosmik.boostctrl.ui.info
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
-import pt.cosmik.boostctrl.models.BracketContainer
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 

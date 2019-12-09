@@ -105,11 +105,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:listitem="@layout/list_team_roster_item"/>
 
-            <FrameLayout
+            <!--<FrameLayout
                 android:id="@+id/brackets"
                 android:nestedScrollingEnabled="true"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" />
+                android:layout_height="400dp" />-->
 
         </LinearLayout>
 

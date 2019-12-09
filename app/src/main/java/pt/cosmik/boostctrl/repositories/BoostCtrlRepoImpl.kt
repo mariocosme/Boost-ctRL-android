@@ -36,7 +36,7 @@ class BoostCtrlRepoImpl(private val boostCtrlService: BoostCtrlService): BoostCt
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getCompetitionBrackets(competitionId: String): Observable<List<BracketContainer>> {
+    override fun getCompetitionBrackets(competitionId: String): Observable<List<BracketContainer>?> {
         val hash = HashUtils.sha1("GET/competition/$competitionId/brackets${BuildConfig.BOOST_CTRL_API_SECRET}")
         val url = "${Constants.BOOST_CTRL_API}/competition/$competitionId/brackets?hash=$hash"
         return boostCtrlService.getCompetitionBrackets(url)

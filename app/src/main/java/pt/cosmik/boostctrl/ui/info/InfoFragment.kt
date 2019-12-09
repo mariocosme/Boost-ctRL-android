@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.lifecycle.Observer
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.MainActivity
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment
 import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
 
@@ -28,7 +26,6 @@ class InfoFragment : BaseFragment() {
 
         })
 
-        fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
         vm.processEvent(InfoViewModel.InfoFragmentEvent.ViewCreated)
     }
 
