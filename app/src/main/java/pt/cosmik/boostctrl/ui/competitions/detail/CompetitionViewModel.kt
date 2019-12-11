@@ -21,8 +21,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
     val viewEffect = SingleLiveEvent<CompetitionFragmentViewEffect>()
 
     private val disposables = CompositeDisposable()
-    private var competition: Competition? = null
     private var context: Context? = null
+    private var competition: Competition? = null
 
     fun processEvent(event: CompetitionFragmentEvent) {
         when (event) {
@@ -58,6 +58,7 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                     }))
                 }
             }
+            CompetitionFragmentEvent.SelectedBracketsMenuItem -> viewEffect.value = CompetitionFragmentViewEffect.PresentBracketsFragment(competition!!.id)
         }
     }
 
@@ -129,10 +130,12 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
     sealed class CompetitionFragmentViewEffect {
         data class ShowError(val error: String): CompetitionFragmentViewEffect()
         data class PresentTeamFragment(val team: Team): CompetitionFragmentViewEffect()
+        data class PresentBracketsFragment(val competitionId: String): CompetitionFragmentViewEffect()
     }
 
     sealed class CompetitionFragmentEvent {
         data class ViewCreated(val competition: Competition?, val context: Context?): CompetitionFragmentEvent()
         data class SelectedTeamItem(val item: StandingItemDescriptor): CompetitionFragmentEvent()
+        object SelectedBracketsMenuItem: CompetitionFragmentEvent()
     }
 }

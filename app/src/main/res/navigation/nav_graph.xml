@@ -102,6 +102,13 @@
             android:name="competition"
             app:argType="pt.cosmik.boostctrl.models.Competition"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_competition_detail_fragment_to_brackets_fragment2"
+            app:destination="@id/brackets_fragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <action
         android:id="@+id/action_global_competition_detail_fragment"
@@ -128,5 +135,15 @@
         app:exitAnim="@android:anim/slide_out_right"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"/>
+
+    <fragment
+        android:id="@+id/brackets_fragment"
+        android:name="pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment"
+        android:label="@string/brackets"
+        tools:layout="@layout/fragment_brackets" >
+        <argument
+            android:name="competitionId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

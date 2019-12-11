@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColomnFragment;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.ColomnData;
+import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColumnFragment;
+import pt.cosmik.boostctrl.external.tournament_brackets.model.ColumnData;
 
 /**
  * Created by Emil on 21/10/17.
@@ -17,10 +17,10 @@ import pt.cosmik.boostctrl.external.tournament_brackets.model.ColomnData;
 
 public class BracketsSectionAdapter  extends FragmentStatePagerAdapter {
 
-    private ArrayList<ColomnData> sectionList;
+    private ArrayList<ColumnData> sectionList;
 
 
-    public BracketsSectionAdapter(FragmentManager fm, ArrayList<ColomnData> sectionList) {
+    public BracketsSectionAdapter(FragmentManager fm, ArrayList<ColumnData> sectionList) {
         super(fm);
         this.sectionList =sectionList;
     }
@@ -28,8 +28,8 @@ public class BracketsSectionAdapter  extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("colomn_data", this.sectionList.get(position));
-        BracketsColomnFragment fragment = new BracketsColomnFragment();
+        bundle.putSerializable("column_data", this.sectionList.get(position));
+        BracketsColumnFragment fragment = new BracketsColumnFragment();
         bundle.putInt("section_number", position);
         if (position > 0)
             bundle.putInt("previous_section_size", sectionList.get(position - 1).getMatches().size());

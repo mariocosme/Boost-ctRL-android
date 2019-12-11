@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * Created by Emil on 21/10/17.
  */
 
-public class ColomnData implements Serializable {
+public class ColumnData implements Serializable {
 
-    public ColomnData(ArrayList<MatchData> matches) {
+    public ColumnData(ArrayList<MatchData> matches) {
         this.matches = matches;
     }
 

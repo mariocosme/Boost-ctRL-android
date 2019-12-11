@@ -48,9 +48,7 @@ class CompetitionFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.brackets_item) {
-            // TODO: implement
-        }
+        if (item.itemId == R.id.brackets_item) vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.SelectedBracketsMenuItem)
         return super.onOptionsItemSelected(item)
     }
 
@@ -126,10 +124,11 @@ class CompetitionFragment : BaseFragment() {
             when (it) {
                 is CompetitionViewModel.CompetitionFragmentViewEffect.ShowError -> showErrorMessage(it.error)
                 is CompetitionViewModel.CompetitionFragmentViewEffect.PresentTeamFragment -> findNavController().navigate(TeamFragmentDirections.actionGlobalTeamDetailFragment(it.team))
+                is CompetitionViewModel.CompetitionFragmentViewEffect.PresentBracketsFragment -> findNavController().navigate(CompetitionFragmentDirections.actionCompetitionDetailFragmentToBracketsFragment2(it.competitionId))
             }
         })
 
-        //fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
+//        fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
 
         vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.ViewCreated(arguments?.get("competition") as? Competition, context))
     }

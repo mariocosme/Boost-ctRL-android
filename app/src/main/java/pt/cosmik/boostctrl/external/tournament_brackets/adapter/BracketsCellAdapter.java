@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pt.cosmik.boostctrl.R;
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColomnFragment;
+import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColumnFragment;
 import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
 import pt.cosmik.boostctrl.external.tournament_brackets.viewholder.BracketsCellViewHolder;
 
@@ -21,14 +21,14 @@ import pt.cosmik.boostctrl.external.tournament_brackets.viewholder.BracketsCellV
 
 public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private BracketsColomnFragment fragment;
+    private BracketsColumnFragment fragment;
     private Context context;
     private ArrayList<MatchData> list;
     private boolean handler;
 
-    public BracketsCellAdapter(BracketsColomnFragment bracketsColomnFragment, Context context, ArrayList<MatchData> list) {
+    public BracketsCellAdapter(BracketsColumnFragment bracketsColumnFragment, Context context, ArrayList<MatchData> list) {
 
-        this.fragment = bracketsColomnFragment;
+        this.fragment = bracketsColumnFragment;
         this.context = context;
         this.list = list;
     }
@@ -68,8 +68,8 @@ public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return this.list.size();
     }
 
-    public void setList(ArrayList<MatchData> colomnList) {
-        this.list = colomnList;
+    public void setList(ArrayList<MatchData> columnList) {
+        this.list = columnList;
         notifyDataSetChanged();
     }
 }

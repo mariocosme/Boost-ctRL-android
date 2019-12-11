@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import pt.cosmik.boostctrl.BoostCtrlApplication;
 import pt.cosmik.boostctrl.R;
 import pt.cosmik.boostctrl.external.tournament_brackets.adapter.BracketsCellAdapter;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.ColomnData;
+import pt.cosmik.boostctrl.external.tournament_brackets.model.ColumnData;
 import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
 
 /**
  * Created by Emil on 21/10/17.
  */
 
-public class BracketsColomnFragment extends Fragment {
+public class BracketsColumnFragment extends Fragment {
 
-    private ColomnData colomnData;
+    private ColumnData columnData;
     private int sectionNumber = 0;
     private int previousBracketSize;
     private ArrayList<MatchData> list;
@@ -37,7 +37,7 @@ public class BracketsColomnFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_brackets_colomn, container, false);
+        return inflater.inflate(R.layout.fragment_brackets_column, container, false);
     }
 
     @Override
@@ -53,17 +53,17 @@ public class BracketsColomnFragment extends Fragment {
         bracketsRV = (RecyclerView) getView().findViewById(R.id.rv_score_board);
     }
 
-    public ArrayList<MatchData> getColomnList() {
+    public ArrayList<MatchData> getColumnList() {
         return list;
     }
 
     private void getExtras() {
         if (getArguments() != null) {
             list = new ArrayList<>();
-            colomnData = (ColomnData) getArguments().getSerializable("colomn_data");
+            columnData = (ColumnData) getArguments().getSerializable("column_data");
             sectionNumber = getArguments().getInt("section_number");
             previousBracketSize = getArguments().getInt("previous_section_size");
-            list.addAll(colomnData.getMatches());
+            list.addAll(columnData.getMatches());
             setInitialHeightForList();
         }
     }

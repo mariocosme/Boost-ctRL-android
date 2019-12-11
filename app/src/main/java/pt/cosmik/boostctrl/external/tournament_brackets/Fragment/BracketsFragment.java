@@ -15,7 +15,7 @@ import java.util.List;
 import pt.cosmik.boostctrl.BoostCtrlApplication;
 import pt.cosmik.boostctrl.R;
 import pt.cosmik.boostctrl.external.tournament_brackets.adapter.BracketsSectionAdapter;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.ColomnData;
+import pt.cosmik.boostctrl.external.tournament_brackets.model.ColumnData;
 import pt.cosmik.boostctrl.external.tournament_brackets.model.CompetitorData;
 import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
 
@@ -28,7 +28,7 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
 
     private ViewPager viewPager;
     private BracketsSectionAdapter sectionAdapter;
-    private ArrayList<ColomnData> sectionList;
+    private ArrayList<ColumnData> sectionList;
     private int mNextSelectedScreen;
     private int mCurrentPagerState;
 
@@ -36,7 +36,7 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_brackts, container, false);
+        return inflater.inflate(R.layout.fragment_brackets, container, false);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
         Colomn1matchesList.add(matchData2);
         Colomn1matchesList.add(matchData3);
         Colomn1matchesList.add(matchData4);
-        ColomnData colomnData1 = new ColomnData(Colomn1matchesList);
-        sectionList.add(colomnData1);
+        ColumnData columnData1 = new ColumnData(Colomn1matchesList);
+        sectionList.add(columnData1);
         CompetitorData competitorNine = new CompetitorData("Manchester United Fc", "2");
         CompetitorData competitorTen = new CompetitorData("Chelsea", "4");
         CompetitorData competitorEleven = new CompetitorData("Liverpool", "2");
@@ -78,14 +78,14 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
         MatchData matchData6 = new MatchData(competitorEleven, competitorTwelve);
         colomn2MatchesList.add(matchData5);
         colomn2MatchesList.add(matchData6);
-        ColomnData colomnData2 = new ColomnData(colomn2MatchesList);
-        sectionList.add(colomnData2);
+        ColumnData columnData2 = new ColumnData(colomn2MatchesList);
+        sectionList.add(columnData2);
         CompetitorData competitorThirteen = new CompetitorData("Chelsea", "2");
         CompetitorData competitorForteen = new CompetitorData("Liverpool", "1");
         MatchData matchData7 = new MatchData(competitorThirteen, competitorForteen);
         colomn3MatchesList.add(matchData7);
-        ColomnData colomnData3 = new ColomnData(colomn3MatchesList);
-        sectionList.add(colomnData3);
+        ColumnData columnData3 = new ColumnData(colomn3MatchesList);
+        sectionList.add(columnData3);
 
     }
 
@@ -117,10 +117,10 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
                 if (position + 1 != mNextSelectedScreen) {
                     mNextSelectedScreen = position + 1;
                     //update view here
-                    if (getBracketsFragment(position).getColomnList().get(0).getHeight()
+                    if (getBracketsFragment(position).getColumnList().get(0).getHeight()
                             != ((BoostCtrlApplication)getActivity().getApplication()).dpToPx(131))
                         getBracketsFragment(position).shrinkView(((BoostCtrlApplication)getActivity().getApplication()).dpToPx(131));
-                    if (getBracketsFragment(position + 1).getColomnList().get(0).getHeight()
+                    if (getBracketsFragment(position + 1).getColumnList().get(0).getHeight()
                             != ((BoostCtrlApplication)getActivity().getApplication()).dpToPx(131))
                         getBracketsFragment(position + 1).shrinkView(((BoostCtrlApplication)getActivity().getApplication()).dpToPx(131));
                 }
@@ -173,14 +173,14 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
 
     }
 
-    public BracketsColomnFragment getBracketsFragment(int position) {
-        BracketsColomnFragment bracktsFrgmnt = null;
+    public BracketsColumnFragment getBracketsFragment(int position) {
+        BracketsColumnFragment bracktsFrgmnt = null;
         if (getChildFragmentManager() != null) {
             List<Fragment> fragments = getChildFragmentManager().getFragments();
             if (fragments != null) {
                 for (Fragment fragment : fragments) {
-                    if (fragment instanceof BracketsColomnFragment) {
-                        bracktsFrgmnt = (BracketsColomnFragment) fragment;
+                    if (fragment instanceof BracketsColumnFragment) {
+                        bracktsFrgmnt = (BracketsColumnFragment) fragment;
                         if (bracktsFrgmnt.getSectionNumber() == position)
                             break;
                     }
