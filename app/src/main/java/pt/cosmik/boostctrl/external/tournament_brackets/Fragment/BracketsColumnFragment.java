@@ -49,11 +49,10 @@ public class BracketsColumnFragment extends Fragment {
     }
 
     private void initViews() {
-
-        bracketsRV = (RecyclerView) getView().findViewById(R.id.rv_score_board);
+        bracketsRV = getView().findViewById(R.id.rv_score_board);
     }
 
-    public ArrayList<MatchData> getColumnList() {
+    ArrayList<MatchData> getColumnList() {
         return list;
     }
 
@@ -67,7 +66,8 @@ public class BracketsColumnFragment extends Fragment {
             setInitialHeightForList();
         }
     }
-    public int getSectionNumber() {
+
+    int getSectionNumber() {
         return sectionNumber;
     }
 
@@ -88,7 +88,7 @@ public class BracketsColumnFragment extends Fragment {
 
     }
 
-    public void expandHeight(int height) {
+    void expandHeight(int height) {
 
         for (MatchData data : list) {
             data.setHeight(height);
@@ -96,7 +96,7 @@ public class BracketsColumnFragment extends Fragment {
         adapter.setList(list);
     }
 
-    public void shrinkView(int height) {
+    void shrinkView(int height) {
         for (MatchData data : list) {
             data.setHeight(height);
         }
@@ -105,7 +105,7 @@ public class BracketsColumnFragment extends Fragment {
     private void initAdapter() {
 
 //        pBar.setVisibility(View.GONE);
-         adapter = new BracketsCellAdapter(this, getContext(), list);
+         adapter = new BracketsCellAdapter(getContext(), list);
         if (bracketsRV != null) {
             bracketsRV.setHasFixedSize(true);
             bracketsRV.setNestedScrollingEnabled(false);
@@ -118,10 +118,10 @@ public class BracketsColumnFragment extends Fragment {
         }
     }
 
-    public int getCurrentBracketSize() {
+    int getCurrentBracketSize() {
         return list.size();
     }
-    public int getPreviousBracketSize() {
+    int getPreviousBracketSize() {
         return previousBracketSize;
     }
 }

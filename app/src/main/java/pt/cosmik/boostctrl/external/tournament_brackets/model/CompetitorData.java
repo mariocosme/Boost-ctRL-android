@@ -20,10 +20,6 @@ public class CompetitorData implements Serializable {
         return score;
     }
 
-    public void setScore(String score) {
-        this.score = score;
-    }
-
     public String getName() {
         return name;
     }

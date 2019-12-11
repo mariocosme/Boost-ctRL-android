@@ -44,7 +44,7 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
         super.onActivityCreated(savedInstanceState);
         initViews();
         setData();
-        intialiseViewPagerAdapter();
+        initialiseViewPagerAdapter();
     }
 
     private void setData() {
@@ -89,7 +89,7 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
 
     }
 
-    private void intialiseViewPagerAdapter() {
+    private void initialiseViewPagerAdapter() {
 
         sectionAdapter = new BracketsSectionAdapter(getChildFragmentManager(),this.sectionList);
         viewPager.setOffscreenPageLimit(10);
@@ -103,8 +103,7 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     private void initViews() {
-
-        viewPager = (ViewPager) getView().findViewById(R.id.container);
+        viewPager = getView().findViewById(R.id.container);
     }
 
     @Override
@@ -173,20 +172,16 @@ public class BracketsFragment extends Fragment implements ViewPager.OnPageChange
 
     }
 
-    public BracketsColumnFragment getBracketsFragment(int position) {
-        BracketsColumnFragment bracktsFrgmnt = null;
-        if (getChildFragmentManager() != null) {
-            List<Fragment> fragments = getChildFragmentManager().getFragments();
-            if (fragments != null) {
-                for (Fragment fragment : fragments) {
-                    if (fragment instanceof BracketsColumnFragment) {
-                        bracktsFrgmnt = (BracketsColumnFragment) fragment;
-                        if (bracktsFrgmnt.getSectionNumber() == position)
-                            break;
-                    }
-                }
+    private BracketsColumnFragment getBracketsFragment(int position) {
+        BracketsColumnFragment bracketsFragment = null;
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof BracketsColumnFragment) {
+                bracketsFragment = (BracketsColumnFragment) fragment;
+                if (bracketsFragment.getSectionNumber() == position)
+                    break;
             }
         }
-        return bracktsFrgmnt;
+        return bracketsFragment;
     }
 }

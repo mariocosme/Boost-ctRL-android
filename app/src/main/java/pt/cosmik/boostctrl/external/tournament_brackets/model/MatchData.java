@@ -29,16 +29,8 @@ public class MatchData implements Serializable {
         return competitorTwo;
     }
 
-    public void setCompetitorTwo(CompetitorData competitorTwo) {
-        this.competitorTwo = competitorTwo;
-    }
-
     public CompetitorData getCompetitorOne() {
-
         return competitorOne;
     }
 
-    public void setCompetitorOne(CompetitorData competitorOne) {
-        this.competitorOne = competitorOne;
-    }
 }

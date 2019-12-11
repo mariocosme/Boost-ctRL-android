@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pt.cosmik.boostctrl.R;
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColumnFragment;
 import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
 import pt.cosmik.boostctrl.external.tournament_brackets.viewholder.BracketsCellViewHolder;
 
@@ -21,15 +20,10 @@ import pt.cosmik.boostctrl.external.tournament_brackets.viewholder.BracketsCellV
 
 public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private BracketsColumnFragment fragment;
-    private Context context;
     private ArrayList<MatchData> list;
-    private boolean handler;
 
-    public BracketsCellAdapter(BracketsColumnFragment bracketsColumnFragment, Context context, ArrayList<MatchData> list) {
+    public BracketsCellAdapter(Context context, ArrayList<MatchData> list) {
 
-        this.fragment = bracketsColumnFragment;
-        this.context = context;
         this.list = list;
     }
 
@@ -42,7 +36,7 @@ public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        BracketsCellViewHolder viewHolder = null;
+        BracketsCellViewHolder viewHolder;
         if (holder instanceof BracketsCellViewHolder){
             viewHolder = (BracketsCellViewHolder) holder;
             setFields(viewHolder, position);
@@ -50,13 +44,12 @@ public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void setFields(final BracketsCellViewHolder viewHolder, final int position) {
-        handler = new Handler().postDelayed(new Runnable() {
+        boolean handler = new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 viewHolder.setAnimation(list.get(position).getHeight());
             }
         }, 100);
-
         viewHolder.getTeamOneName().setText(list.get(position).getCompetitorOne().getName());
         viewHolder.getTeamTwoName().setText(list.get(position).getCompetitorTwo().getName());
         viewHolder.getTeamOneScore().setText(list.get(position).getCompetitorOne().getScore());

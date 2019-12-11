@@ -10,9 +10,9 @@ import android.view.animation.Transformation;
 
 public class SlideAnimation extends Animation {
 
-    int mFromHeight;
-    int mToHeight;
-    View mView;
+    private int mFromHeight;
+    private int mToHeight;
+    private View mView;
 
     public SlideAnimation(View view, int fromHeight, int toHeight) {
         this.mView = view;
