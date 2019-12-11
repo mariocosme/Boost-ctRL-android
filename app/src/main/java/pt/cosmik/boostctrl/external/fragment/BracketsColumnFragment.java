@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.Fragment;
+package pt.cosmik.boostctrl.external.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 import pt.cosmik.boostctrl.BoostCtrlApplication;
 import pt.cosmik.boostctrl.R;
-import pt.cosmik.boostctrl.external.tournament_brackets.adapter.BracketsCellAdapter;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.ColumnData;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
+import pt.cosmik.boostctrl.external.adapter.BracketsCellAdapter;
+import pt.cosmik.boostctrl.external.model.ColumnData;
+import pt.cosmik.boostctrl.external.model.MatchData;
 
 /**
  * Created by Emil on 21/10/17.

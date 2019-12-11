@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.adapter;
+package pt.cosmik.boostctrl.external.adapter;
 
 import android.os.Bundle;
 
@@ -8,8 +8,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-import pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsColumnFragment;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.ColumnData;
+import pt.cosmik.boostctrl.external.fragment.BracketsColumnFragment;
+import pt.cosmik.boostctrl.external.model.ColumnData;
+
 
 /**
  * Created by Emil on 21/10/17.
@@ -22,7 +23,7 @@ public class BracketsSectionAdapter  extends FragmentStatePagerAdapter {
 
     public BracketsSectionAdapter(FragmentManager fm, ArrayList<ColumnData> sectionList) {
         super(fm);
-        this.sectionList =sectionList;
+        this.sectionList = sectionList;
     }
 
     @Override

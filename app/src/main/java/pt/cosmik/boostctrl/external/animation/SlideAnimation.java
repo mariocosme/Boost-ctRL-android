@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.animation;
+package pt.cosmik.boostctrl.external.animation;
 
 import android.view.View;
 import android.view.animation.Animation;

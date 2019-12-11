@@ -128,8 +128,6 @@ class CompetitionFragment : BaseFragment() {
             }
         })
 
-//        fragmentManager?.beginTransaction()?.add(R.id.brackets, BracketsFragment())?.commit()
-
         vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.ViewCreated(arguments?.get("competition") as? Competition, context))
     }
 

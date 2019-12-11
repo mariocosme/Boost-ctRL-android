@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.viewholder;
+package pt.cosmik.boostctrl.external.viewholder;
 
 
 import android.view.View;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import pt.cosmik.boostctrl.R;
-import pt.cosmik.boostctrl.external.tournament_brackets.animation.SlideAnimation;
+import pt.cosmik.boostctrl.external.animation.SlideAnimation;
 
 /**
  * Created by Emil on 21/10/17.
@@ -33,7 +33,7 @@ public class BracketsCellViewHolder extends RecyclerView.ViewHolder {
         rootLayout = itemView.findViewById(R.id.layout_root);
     }
 
-    public void setAnimation(int height){
+    public void setAnimation(int height) {
         Animation animation = new SlideAnimation(rootLayout, rootLayout.getHeight(),
                 height);
         animation.setInterpolator(new LinearInterpolator());

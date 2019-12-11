@@ -42,4 +42,13 @@
         android:layout_height="match_parent">
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
 </RelativeLayout>

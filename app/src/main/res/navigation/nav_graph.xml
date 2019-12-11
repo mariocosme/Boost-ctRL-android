@@ -138,7 +138,7 @@
 
     <fragment
         android:id="@+id/brackets_fragment"
-        android:name="pt.cosmik.boostctrl.external.tournament_brackets.Fragment.BracketsFragment"
+        android:name="pt.cosmik.boostctrl.external.fragment.BracketsFragment"
         android:label="@string/brackets"
         tools:layout="@layout/fragment_brackets" >
         <argument

@@ -2,6 +2,7 @@ package pt.cosmik.boostctrl.modules
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import pt.cosmik.boostctrl.external.fragment.BracketsViewModel
 import pt.cosmik.boostctrl.ui.competitions.CompetitionsViewModel
 import pt.cosmik.boostctrl.ui.competitions.detail.CompetitionViewModel
 import pt.cosmik.boostctrl.ui.info.InfoViewModel
@@ -22,6 +23,8 @@ var uiModule = module {
 
     viewModel { CompetitionsViewModel(get()) }
     viewModel { CompetitionViewModel(get()) }
+
+    viewModel { BracketsViewModel(get()) }
 
     viewModel { MatchesViewModel(get()) }
     viewModel { MatchViewModel(get()) }

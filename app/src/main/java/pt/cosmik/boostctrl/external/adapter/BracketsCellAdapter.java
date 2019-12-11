@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.adapter;
+package pt.cosmik.boostctrl.external.adapter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pt.cosmik.boostctrl.R;
-import pt.cosmik.boostctrl.external.tournament_brackets.model.MatchData;
-import pt.cosmik.boostctrl.external.tournament_brackets.viewholder.BracketsCellViewHolder;
+import pt.cosmik.boostctrl.external.model.MatchData;
+import pt.cosmik.boostctrl.external.viewholder.BracketsCellViewHolder;
 
 /**
  * Created by Emil on 21/10/17.

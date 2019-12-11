@@ -1,4 +1,4 @@
-package pt.cosmik.boostctrl.external.tournament_brackets.model;
+package pt.cosmik.boostctrl.external.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
