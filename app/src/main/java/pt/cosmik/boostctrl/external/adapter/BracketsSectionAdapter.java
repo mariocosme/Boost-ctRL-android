@@ -44,4 +44,9 @@ public class BracketsSectionAdapter  extends FragmentStatePagerAdapter {
     public int getCount() {
         return this.sectionList.size();
     }
+
+    public void setItems(ArrayList<ColumnData> items) {
+        this.sectionList = items;
+        this.notifyDataSetChanged();
+    }
 }

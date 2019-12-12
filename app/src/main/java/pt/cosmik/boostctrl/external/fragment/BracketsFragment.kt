@@ -1,13 +1,16 @@
 package pt.cosmik.boostctrl.external.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
+import com.jakewharton.rxbinding3.view.clicks
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.BoostCtrlApplication
 import pt.cosmik.boostctrl.MainActivity
@@ -15,6 +18,8 @@ import pt.cosmik.boostctrl.R
 import pt.cosmik.boostctrl.external.adapter.BracketsSectionAdapter
 import pt.cosmik.boostctrl.external.model.ColumnData
 import pt.cosmik.boostctrl.ui.common.BaseFragment
+import pt.cosmik.boostctrl.utils.Constants
+import java.util.concurrent.TimeUnit
 
 class BracketsFragment: BaseFragment(), ViewPager.OnPageChangeListener {
 
@@ -26,6 +31,8 @@ class BracketsFragment: BaseFragment(), ViewPager.OnPageChangeListener {
     private var mNextSelectedScreen = 0
 
     private var loadingBar: ProgressBar? = null
+    private var containerButton: Button? = null
+    private var sectionButton: Button? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,21 +46,60 @@ class BracketsFragment: BaseFragment(), ViewPager.OnPageChangeListener {
         super.onViewCreated(view, savedInstanceState)
 
         loadingBar = view.findViewById(R.id.loading_bar)
+        containerButton = view.findViewById<Button>(R.id.container_button)?.apply {
+            disposables.add(clicks().throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS).subscribe {
+                vm.processEvent(BracketsViewModel.BracketsFragmentEvent.SelectedChangeContainerButton)
+            })
+        }
+        sectionButton = view.findViewById<Button>(R.id.section_button)?.apply {
+            disposables.add(clicks().throttleFirst(Constants.THROTTLE_SINGLE_CLICK_MILLISECONDS, TimeUnit.MILLISECONDS).subscribe {
+                vm.processEvent(BracketsViewModel.BracketsFragmentEvent.SelectedChangeSectionButton)
+            })
+        }
 
         vm.viewState.observe(this, Observer {
-            loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
+            if (it.isLoading) {
+                loadingBar?.visibility = View.VISIBLE
+                containerButton?.isEnabled = false
+                sectionButton?.isEnabled = false
+            }
+            else {
+                loadingBar?.visibility = View.GONE
+                containerButton?.isEnabled = true
+                sectionButton?.isEnabled = true
+            }
         })
 
         vm.viewEffect.observe(this, Observer {
             when (it) {
                 is BracketsViewModel.BracketsFragmentViewEffect.ShowError -> showErrorMessage(it.error)
                 is BracketsViewModel.BracketsFragmentViewEffect.ShowBrackets -> {
-                    sectionList.addAll(it.brackets)
+                    sectionList = it.brackets
                     initialiseViewPagerAdapter()
                 }
                 BracketsViewModel.BracketsFragmentViewEffect.ShowNoBracketsAvailable -> {
                     showErrorMessage("There are no brackets available for this competition")
                     findNavController().popBackStack()
+                }
+                is BracketsViewModel.BracketsFragmentViewEffect.ShowDialogContainerPicker -> {
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(context?.getString(R.string.select))
+                        .setItems(it.containers.toTypedArray()) { _, which ->
+                            containerButton?.text = it.containers[which]
+                            sectionButton?.text = context?.getString(R.string.chose_section)
+                            vm.processEvent(BracketsViewModel.BracketsFragmentEvent.SelectedContainer(it.containers[which]))
+                        }
+                    builder.create().show()
+
+                }
+                is BracketsViewModel.BracketsFragmentViewEffect.ShowDialogSectionPicker -> {
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(context?.getString(R.string.select))
+                        .setItems(it.sections.toTypedArray()) { _, which ->
+                            sectionButton?.text = it.sections[which]
+                            vm.processEvent(BracketsViewModel.BracketsFragmentEvent.SelectedSection(it.sections[which]))
+                        }
+                    builder.create().show()
                 }
             }
         })
@@ -67,14 +113,19 @@ class BracketsFragment: BaseFragment(), ViewPager.OnPageChangeListener {
     }
 
     private fun initialiseViewPagerAdapter() {
-        sectionAdapter = BracketsSectionAdapter(childFragmentManager, sectionList)
-        viewPager!!.offscreenPageLimit = 10
-        viewPager!!.adapter = sectionAdapter
-        viewPager!!.currentItem = 0
-        viewPager!!.pageMargin = -200
-        viewPager!!.isHorizontalFadingEdgeEnabled = true
-        viewPager!!.setFadingEdgeLength(50)
-        viewPager!!.addOnPageChangeListener(this)
+        if (sectionAdapter != null) {
+            viewPager!!.adapter = BracketsSectionAdapter(childFragmentManager, sectionList)
+        }
+        else {
+            sectionAdapter = BracketsSectionAdapter(childFragmentManager, sectionList)
+            viewPager!!.offscreenPageLimit = 10
+            viewPager!!.adapter = sectionAdapter
+            viewPager!!.currentItem = 0
+            viewPager!!.pageMargin = -200
+            viewPager!!.isHorizontalFadingEdgeEnabled = true
+            viewPager!!.setFadingEdgeLength(50)
+            viewPager!!.addOnPageChangeListener(this)
+        }
     }
 
     private fun initViews() {

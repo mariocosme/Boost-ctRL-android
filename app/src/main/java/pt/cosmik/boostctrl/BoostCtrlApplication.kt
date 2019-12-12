@@ -14,6 +14,7 @@ import org.koin.core.context.startKoin
 import pt.cosmik.boostctrl.modules.repositoryModule
 import pt.cosmik.boostctrl.modules.restModule
 import pt.cosmik.boostctrl.modules.uiModule
+import pt.cosmik.boostctrl.utils.BoostCtrlPreferences
 import kotlin.math.roundToInt
 
 
@@ -27,6 +28,7 @@ class BoostCtrlApplication : MultiDexApplication() {
         super.onCreate()
         initKoin()
         initNotificationChannels()
+        initPreferences()
         JodaTimeAndroid.init(this)
     }
 
@@ -42,6 +44,10 @@ class BoostCtrlApplication : MultiDexApplication() {
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun initPreferences() {
+        BoostCtrlPreferences.instance.initWithContext(this)
     }
 
     private fun initKoin() {

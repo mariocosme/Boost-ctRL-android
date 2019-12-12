@@ -7,6 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.external.model.ColumnData
 import pt.cosmik.boostctrl.external.model.CompetitorData
 import pt.cosmik.boostctrl.external.model.MatchData
+import pt.cosmik.boostctrl.models.BracketContainer
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
 import java.util.*
@@ -17,6 +18,9 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
     val viewEffect = SingleLiveEvent<BracketsFragmentViewEffect>()
 
     private val disposables = CompositeDisposable()
+    private var bracketContainers: List<BracketContainer>? = null
+    private var selectedContainer: String? = null
+    private var selectedSection: String? = null
 
     fun processEvent(event: BracketsFragmentEvent) {
         when (event) {
@@ -26,27 +30,14 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
                     disposables.add(boostCtrlRepository.getCompetitionBrackets(competitionId).subscribe({
                         viewState.value = viewState.value?.copy(isLoading = false)
                         it?.let { bracketContainers ->
+                            this.bracketContainers = bracketContainers
+
                             if (bracketContainers.isEmpty()) {
                                 viewEffect.value = BracketsFragmentViewEffect.ShowNoBracketsAvailable
                             }
                             else {
-                                val columns = ArrayList<ColumnData>()
-
-                                val bracketContainer = bracketContainers[2]
-                                val bracketSection = bracketContainer.sections!![0]
-                                bracketSection.phases?.forEach { bracketPhase ->
-                                    val matchDatas = ArrayList<MatchData>()
-                                    bracketPhase.brackets?.forEach { bracket ->
-                                        val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore, bracket.homeTeamIcon)
-                                        val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore, bracket.awayTeamIcon)
-                                        val match = MatchData(homeTeam, awayTeam)
-                                        matchDatas.add(match)
-                                    }
-
-                                    columns.add(ColumnData(matchDatas))
-                                }
-
-                                viewEffect.value = BracketsFragmentViewEffect.ShowBrackets(columns)
+                                // TODO: chose 1st
+                                loadBrackets(null, null)
                             }
                         }
                     }, {
@@ -57,6 +48,50 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
                     }))
                 }
             }
+            BracketsFragmentEvent.SelectedChangeContainerButton -> {
+                bracketContainers?.let { containers ->
+                    viewEffect.value = BracketsFragmentViewEffect.ShowDialogContainerPicker(containers.map { container -> container.title })
+                }
+            }
+            BracketsFragmentEvent.SelectedChangeSectionButton -> {
+                selectedContainer?.let { selectedContainer ->
+                    bracketContainers?.let { containers ->
+                        containers.firstOrNull { container -> container.title == selectedContainer }?.let { bracketContainer ->
+                            bracketContainer.sections?.let { sections ->
+                                viewEffect.value = BracketsFragmentViewEffect.ShowDialogSectionPicker(sections.map { section -> section.title })
+                            }
+                        }
+                    }
+                }
+            }
+            is BracketsFragmentEvent.SelectedContainer -> {
+                selectedContainer = event.container
+                selectedSection = null
+            }
+            is BracketsFragmentEvent.SelectedSection -> {
+                selectedSection = event.section
+                loadBrackets(selectedContainer, selectedSection)
+            }
+        }
+    }
+
+    private fun loadBrackets(selectedContainer: String?, selectedSection: String?) {
+        val chosenSection = bracketContainers?.firstOrNull { bracketContainer -> bracketContainer.title == selectedContainer }?.sections?.firstOrNull { section -> section.title == selectedSection }
+        chosenSection?.let { section ->
+            val columns = ArrayList<ColumnData>()
+            section.phases?.forEach { bracketPhase ->
+                val matchData = ArrayList<MatchData>()
+                bracketPhase.brackets?.forEach { bracket ->
+                    val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore, bracket.homeTeamIcon)
+                    val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore, bracket.awayTeamIcon)
+                    val match = MatchData(homeTeam, awayTeam)
+                    matchData.add(match)
+                }
+
+                columns.add(ColumnData(matchData))
+            }
+
+            viewEffect.value = BracketsFragmentViewEffect.ShowBrackets(columns)
         }
     }
 
@@ -73,9 +108,15 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
         data class ShowError(val error: String): BracketsFragmentViewEffect()
         data class ShowBrackets(val brackets: ArrayList<ColumnData>): BracketsFragmentViewEffect()
         object ShowNoBracketsAvailable: BracketsFragmentViewEffect()
+        data class ShowDialogContainerPicker(val containers: List<String?>): BracketsFragmentViewEffect()
+        data class ShowDialogSectionPicker(val sections: List<String?>): BracketsFragmentViewEffect()
     }
 
     sealed class BracketsFragmentEvent {
         data class ViewCreated(var competitionId: String?): BracketsFragmentEvent()
+        object SelectedChangeContainerButton: BracketsFragmentEvent()
+        data class SelectedContainer(val container: String?): BracketsFragmentEvent()
+        object SelectedChangeSectionButton: BracketsFragmentEvent()
+        data class SelectedSection(val section: String?): BracketsFragmentEvent()
     }
 }

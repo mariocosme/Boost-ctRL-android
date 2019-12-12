@@ -1,5 +1,6 @@
 package pt.cosmik.boostctrl.ui.competitions.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -20,6 +21,7 @@ import pt.cosmik.boostctrl.ui.common.BaseFragment
 import pt.cosmik.boostctrl.ui.common.KeyValueListAdapter
 import pt.cosmik.boostctrl.ui.teams.detail.TeamFragmentDirections
 import pt.cosmik.boostctrl.utils.BoostCtrlAnalytics
+import pt.cosmik.boostctrl.utils.BoostCtrlPreferences
 
 
 class CompetitionFragment : BaseFragment() {
@@ -48,7 +50,23 @@ class CompetitionFragment : BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.brackets_item) vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.SelectedBracketsMenuItem)
+        if (item.itemId == R.id.brackets_item) {
+            val didShowBracketsWarning = BoostCtrlPreferences.instance.getPrefs().getBoolean(
+                BoostCtrlPreferences.BRACKETS_IN_DEVELOPMENT_WARNING, false)
+            if (!didShowBracketsWarning) {
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("A little info...")
+                builder.setMessage("As you are probably aware this is a beta app still in development. \n\nI wanted to make brackets available before the RLCS S8 Finals LAN however it might still be very buggy. Don't expect it to be fully functional. Thank you and sorry :)")
+                builder.setNeutralButton("I understand") { _, _ ->
+                    BoostCtrlPreferences.instance.getPrefs().edit().putBoolean(BoostCtrlPreferences.BRACKETS_IN_DEVELOPMENT_WARNING, true).apply()
+                    vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.SelectedBracketsMenuItem)
+                }
+                builder.create().show()
+            }
+            else {
+                vm.processEvent(CompetitionViewModel.CompetitionFragmentEvent.SelectedBracketsMenuItem)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

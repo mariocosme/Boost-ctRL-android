@@ -69,6 +69,7 @@
     <string name="competition_image">Competition image</string>
     <string name="live">Live</string>
     <string name="choose_bracket">Choose Bracket</string>
+    <string name="select">Select:</string>
 
     <!-- FCM / Notification -->
     <string name="fcm_topic">boost-ctrl</string>
@@ -78,5 +79,9 @@
     <string name="in_app_channel_description">Unspecific common in app notifications</string>
     <string name="competition_brackets">Competition Brackets</string>
     <string name="brackets">Brackets</string>
+    <string name="container">Container</string>
+    <string name="section">Section</string>
+    <string name="chose_section">Chose section</string>
+    <string name="chose_container">Chose container</string>
 
 </resources>

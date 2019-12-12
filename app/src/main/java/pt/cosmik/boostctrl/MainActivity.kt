@@ -81,6 +81,9 @@ class MainActivity : AppCompatActivity() {
             if (it.keySet().contains(Constants.FCM_NEWS_ITEM)) {
                 val newsItemId = it.get(Constants.FCM_NEWS_ITEM) as String
                 navController.navigate(NewsDetailFragmentDirections.actionGlobalNewsItemDetailFragment(null, newsItemId))
+
+                // TODO: Does this fix the issue when we open the app through a news article?
+                it.remove(Constants.FCM_NEWS_ITEM)
             }
         }
     }

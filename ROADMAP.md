@@ -24,3 +24,5 @@ The basics so that the app can be released in the Google Play Store so that it c
 - Add notifications settings
 - Polls before series on who is going to win
 - Polls after tournaments or days for MVP?
+
+# Bugs
