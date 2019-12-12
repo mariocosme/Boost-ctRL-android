@@ -20,5 +20,6 @@
     <dimen name="text_size_18_pt">20sp</dimen>
 
     <dimen name="flag_icon">20dp</dimen>
+    <dimen name="team_logo">40dp</dimen>
 
 </resources>

@@ -27,7 +27,8 @@ data class Competition(
     @SerializedName("endDate") val endDate: String?,
     @SerializedName("numberOfTeams") val numberOfTeams: String?,
     @SerializedName("bracketsLastUpdated") val bracketsLastUpdated: Date?,
-    @SerializedName("groupStandings") val groupStandings: GroupStanding?
+    @SerializedName("groupStandings") val groupStandings: GroupStanding?,
+    @SerializedName("bracketsTitleHTMLSelectors") val bracketsTitleHTMLSelectors: List<String>?
 ): Serializable
 
 enum class CompetitionType {

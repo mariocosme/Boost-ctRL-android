@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import pt.cosmik.boostctrl.R;
@@ -21,10 +23,11 @@ import pt.cosmik.boostctrl.external.viewholder.BracketsCellViewHolder;
 public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private ArrayList<MatchData> list;
+    private Context context;
 
     public BracketsCellAdapter(Context context, ArrayList<MatchData> list) {
-
         this.list = list;
+        this.context = context;
     }
 
     @Override
@@ -50,10 +53,12 @@ public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.setAnimation(list.get(position).getHeight());
             }
         }, 100);
-        viewHolder.getTeamOneName().setText(list.get(position).getCompetitorOne().getName());
-        viewHolder.getTeamTwoName().setText(list.get(position).getCompetitorTwo().getName());
-        viewHolder.getTeamOneScore().setText(list.get(position).getCompetitorOne().getScore());
-        viewHolder.getTeamTwoScore().setText(list.get(position).getCompetitorTwo().getScore());
+        viewHolder.getHomeTeamName().setText(list.get(position).getCompetitorOne().getName());
+        viewHolder.getAwayTeamName().setText(list.get(position).getCompetitorTwo().getName());
+        viewHolder.getHomeTeamScore().setText(list.get(position).getCompetitorOne().getScore());
+        viewHolder.getAwayTeamScore().setText(list.get(position).getCompetitorTwo().getScore());
+        Glide.with(context).load(list.get(position).getCompetitorOne().getImage()).into(viewHolder.getHomeTeamIV());
+        Glide.with(context).load(list.get(position).getCompetitorTwo().getImage()).into(viewHolder.getAwayTeamIV());
     }
 
     @Override

@@ -10,10 +10,12 @@ public class CompetitorData implements Serializable {
 
     private String name;
     private String score;
+    private String image;
 
-    public CompetitorData(String name, String score){
+    public CompetitorData(String name, String score, String image) {
         this.name = name;
         this.score = score;
+        this.image = image;
     }
 
     public String getScore() {
@@ -26,5 +28,9 @@ public class CompetitorData implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

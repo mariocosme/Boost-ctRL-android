@@ -32,22 +32,19 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
                             else {
                                 val columns = ArrayList<ColumnData>()
 
-//                        TODO: implementation
-//                        it?.let { bracketContainers ->
-//                            val bracketContainer = bracketContainers[2]
-//                            val bracketSection = bracketContainer.sections!![0]
-//                            bracketSection.phases?.forEach { bracketPhase ->
-//                                val matchDatas = ArrayList<MatchData>()
-//                                bracketPhase.brackets?.forEach { bracket ->
-//                                    val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore)
-//                                    val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore)
-//                                    val match = MatchData(homeTeam, awayTeam)
-//                                    matchDatas.add(match)
-//                                }
-//
-//                                columns.add(ColumnData(matchDatas))
-//                            }
-//                        }
+                                val bracketContainer = bracketContainers[2]
+                                val bracketSection = bracketContainer.sections!![0]
+                                bracketSection.phases?.forEach { bracketPhase ->
+                                    val matchDatas = ArrayList<MatchData>()
+                                    bracketPhase.brackets?.forEach { bracket ->
+                                        val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore, bracket.homeTeamIcon)
+                                        val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore, bracket.awayTeamIcon)
+                                        val match = MatchData(homeTeam, awayTeam)
+                                        matchDatas.add(match)
+                                    }
+
+                                    columns.add(ColumnData(matchDatas))
+                                }
 
                                 viewEffect.value = BracketsFragmentViewEffect.ShowBrackets(columns)
                             }

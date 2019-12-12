@@ -4,6 +4,7 @@ package pt.cosmik.boostctrl.external.viewholder;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,18 +19,22 @@ import pt.cosmik.boostctrl.external.animation.SlideAnimation;
 
 public class BracketsCellViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView teamOneName;
-    private TextView teamTwoName;
-    private TextView teamOneScore;
-    private TextView teamTwoScore;
+    private TextView homeTeamName;
+    private TextView awayTeamName;
+    private TextView homeTeamScore;
+    private TextView awayTeamScore;
+    private ImageView homeTeamIV;
+    private ImageView awayTeamIV;
     private RelativeLayout rootLayout;
 
     public BracketsCellViewHolder(View itemView) {
         super(itemView);
-        teamOneName = itemView.findViewById(R.id.team_one_name);
-        teamTwoName = itemView.findViewById(R.id.team_two_name);
-        teamOneScore = itemView.findViewById(R.id.team_one_score);
-        teamTwoScore = itemView.findViewById(R.id.team_two_score);
+        homeTeamName = itemView.findViewById(R.id.home_team_name_text);
+        awayTeamName = itemView.findViewById(R.id.away_team_name_text);
+        homeTeamScore = itemView.findViewById(R.id.home_team_score_text);
+        awayTeamScore = itemView.findViewById(R.id.away_team_score_text);
+        homeTeamIV = itemView.findViewById(R.id.home_team_iv);
+        awayTeamIV = itemView.findViewById(R.id.away_team_iv);
         rootLayout = itemView.findViewById(R.id.layout_root);
     }
 
@@ -42,19 +47,27 @@ public class BracketsCellViewHolder extends RecyclerView.ViewHolder {
         rootLayout.startAnimation(animation);
     }
 
-    public TextView getTeamTwoName() {
-        return teamTwoName;
+    public TextView getAwayTeamName() {
+        return awayTeamName;
     }
 
-    public TextView getTeamOneScore() {
-        return teamOneScore;
+    public TextView getHomeTeamScore() {
+        return homeTeamScore;
     }
 
-    public TextView getTeamTwoScore() {
-        return teamTwoScore;
+    public TextView getAwayTeamScore() {
+        return awayTeamScore;
     }
 
-    public TextView getTeamOneName() {
-        return teamOneName;
+    public TextView getHomeTeamName() {
+        return homeTeamName;
+    }
+
+    public ImageView getHomeTeamIV() {
+        return homeTeamIV;
+    }
+
+    public ImageView getAwayTeamIV() {
+        return awayTeamIV;
     }
 }

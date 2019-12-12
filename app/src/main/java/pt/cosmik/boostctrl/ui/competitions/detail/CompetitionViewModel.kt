@@ -1,22 +1,17 @@
 package pt.cosmik.boostctrl.ui.competitions.detail
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 import pt.cosmik.boostctrl.R
-import pt.cosmik.boostctrl.external.fragment.BracketsViewModel
-import pt.cosmik.boostctrl.external.model.ColumnData
 import pt.cosmik.boostctrl.models.Competition
 import pt.cosmik.boostctrl.models.CompetitionType
 import pt.cosmik.boostctrl.models.Team
 import pt.cosmik.boostctrl.repositories.BoostCtrlRepository
 import pt.cosmik.boostctrl.ui.common.KeyValueListItemDescriptor
-import pt.cosmik.boostctrl.utils.Constants
 import pt.cosmik.boostctrl.utils.SingleLiveEvent
-import java.util.ArrayList
 
 class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository): ViewModel() {
 
@@ -42,7 +37,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                         competitionImage = event.competition.image,
                         competitionDescription = event.competition.description,
                         competitionGeneralDetailItems = generateCompetitionGeneralDetailItemDescriptors(event.competition),
-                        competitionStandingItems = generateStandingItemDescriptors(event.competition)
+                        competitionStandingItems = generateStandingItemDescriptors(event.competition),
+                        hasBrackets = if (event.competition.bracketsTitleHTMLSelectors != null && event.competition.bracketsTitleHTMLSelectors.isNotEmpty()) true else null
                     )
                 }
             }
@@ -60,23 +56,7 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
                     }))
                 }
             }
-            CompetitionFragmentEvent.SelectedBracketsMenuItem -> {
-                disposables.add(boostCtrlRepository.getCompetitionBrackets(competition!!.id).subscribe({
-                    viewState.value = viewState.value?.copy(isLoading = false)
-                    it?.let { bracketContainers ->
-                        if (bracketContainers.isNotEmpty()) {
-                            viewEffect.value = CompetitionFragmentViewEffect.PresentBracketsFragment(competition!!.id)
-                        }
-                        else {
-                            viewEffect.value = CompetitionFragmentViewEffect.ShowError("There are no brackets available for this competition.")
-                        }
-                    }
-                }, {
-                    Crashlytics.logException(it)
-                    viewState.value = viewState.value?.copy(isLoading = false)
-                    viewEffect.value = CompetitionFragmentViewEffect.ShowError("Something went wrong trying to obtain the brackets.")
-                }))
-            }
+            CompetitionFragmentEvent.SelectedBracketsMenuItem -> viewEffect.value = CompetitionFragmentViewEffect.PresentBracketsFragment(competition!!.id)
         }
     }
 
@@ -133,7 +113,8 @@ class CompetitionViewModel(private val boostCtrlRepository: BoostCtrlRepository)
         val competitionGeneralDetailItems: List<KeyValueListItemDescriptor>? = null,
         val competitionStandingItems: List<StandingItemDescriptor>? = null,
         val competitionImage: String? = null,
-        val competitionDescription: String? = null
+        val competitionDescription: String? = null,
+        val hasBrackets: Boolean? = null
     )
 
     sealed class CompetitionFragmentViewEffect {
