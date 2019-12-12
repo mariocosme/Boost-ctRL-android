@@ -53,12 +53,28 @@ public class BracketsCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.setAnimation(list.get(position).getHeight());
             }
         }, 100);
-        viewHolder.getHomeTeamName().setText(list.get(position).getCompetitorOne().getName());
-        viewHolder.getAwayTeamName().setText(list.get(position).getCompetitorTwo().getName());
-        viewHolder.getHomeTeamScore().setText(list.get(position).getCompetitorOne().getScore());
-        viewHolder.getAwayTeamScore().setText(list.get(position).getCompetitorTwo().getScore());
-        Glide.with(context).load(list.get(position).getCompetitorOne().getImage()).into(viewHolder.getHomeTeamIV());
-        Glide.with(context).load(list.get(position).getCompetitorTwo().getImage()).into(viewHolder.getAwayTeamIV());
+
+        viewHolder.getAwayTeamName().setVisibility(View.VISIBLE);
+        viewHolder.getAwayTeamScore().setVisibility(View.VISIBLE);
+        viewHolder.getAwayTeamIV().setVisibility(View.VISIBLE);
+
+        if (list.get(position).getCompetitorTwo() == null) {
+            viewHolder.getHomeTeamName().setText(list.get(position).getCompetitorOne().getName());
+            viewHolder.getHomeTeamScore().setText(list.get(position).getCompetitorOne().getScore());
+            Glide.with(context).load(list.get(position).getCompetitorOne().getImage()).into(viewHolder.getHomeTeamIV());
+
+            viewHolder.getAwayTeamName().setVisibility(View.GONE);
+            viewHolder.getAwayTeamScore().setVisibility(View.GONE);
+            viewHolder.getAwayTeamIV().setVisibility(View.GONE);
+        }
+        else {
+            viewHolder.getHomeTeamName().setText(list.get(position).getCompetitorOne().getName());
+            viewHolder.getAwayTeamName().setText(list.get(position).getCompetitorTwo().getName());
+            viewHolder.getHomeTeamScore().setText(list.get(position).getCompetitorOne().getScore());
+            viewHolder.getAwayTeamScore().setText(list.get(position).getCompetitorTwo().getScore());
+            Glide.with(context).load(list.get(position).getCompetitorOne().getImage()).into(viewHolder.getHomeTeamIV());
+            Glide.with(context).load(list.get(position).getCompetitorTwo().getImage()).into(viewHolder.getAwayTeamIV());
+        }
     }
 
     @Override

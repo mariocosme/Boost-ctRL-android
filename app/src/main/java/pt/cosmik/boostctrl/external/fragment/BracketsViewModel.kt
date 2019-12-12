@@ -82,12 +82,16 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
             section.phases?.forEach { bracketPhase ->
                 val matchData = ArrayList<MatchData>()
                 bracketPhase.brackets?.forEach { bracket ->
-                    val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore, bracket.homeTeamIcon)
-                    val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore, bracket.awayTeamIcon)
-                    val match = MatchData(homeTeam, awayTeam)
-                    matchData.add(match)
+                    if (bracket.middleTeam != null && bracket.middleTeam.isNotEmpty()) {
+                        val middleTeam = CompetitorData(bracket.middleTeam, bracket.middleTeamScore, bracket.middleTeamIcon)
+                        matchData.add(MatchData(middleTeam, null))
+                    }
+                    else {
+                        val homeTeam = CompetitorData(bracket.homeTeam, bracket.homeTeamScore, bracket.homeTeamIcon)
+                        val awayTeam = CompetitorData(bracket.awayTeam, bracket.awayTeamScore, bracket.awayTeamIcon)
+                        matchData.add(MatchData(homeTeam, awayTeam))
+                    }
                 }
-
                 columns.add(ColumnData(matchData))
             }
 

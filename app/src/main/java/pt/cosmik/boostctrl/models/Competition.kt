@@ -70,5 +70,8 @@ data class Bracket(
     @SerializedName("homeTeamIcon") val homeTeamIcon: String?,
     @SerializedName("awayTeam") val awayTeam: String?,
     @SerializedName("awayTeamScore") val awayTeamScore: String?,
-    @SerializedName("awayTeamIcon") val awayTeamIcon: String?
+    @SerializedName("awayTeamIcon") val awayTeamIcon: String?,
+    @SerializedName("middleTeam") val middleTeam: String?,
+    @SerializedName("middleTeamScore") val middleTeamScore: String?,
+    @SerializedName("middleTeamIcon") val middleTeamIcon: String?
 ): Serializable
