@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import org.koin.android.viewmodel.ext.android.viewModel
 import pt.cosmik.boostctrl.BoostCtrlApplication
@@ -49,6 +50,10 @@ class BracketsFragment: BaseFragment(), ViewPager.OnPageChangeListener {
                 is BracketsViewModel.BracketsFragmentViewEffect.ShowBrackets -> {
                     sectionList.addAll(it.brackets)
                     initialiseViewPagerAdapter()
+                }
+                BracketsViewModel.BracketsFragmentViewEffect.ShowNoBracketsAvailable -> {
+                    showErrorMessage("There are no brackets available for this competition")
+                    findNavController().popBackStack()
                 }
             }
         })

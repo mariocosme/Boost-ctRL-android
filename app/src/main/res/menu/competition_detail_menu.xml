@@ -6,7 +6,6 @@
         android:id="@+id/brackets_item"
         android:icon="@drawable/ic_tournament_bracket"
         android:title="@string/competition_brackets"
-        android:visible="false"
         app:showAsAction="always" />
 
 </menu>

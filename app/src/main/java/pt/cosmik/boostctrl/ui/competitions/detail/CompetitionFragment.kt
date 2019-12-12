@@ -52,15 +52,6 @@ class CompetitionFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        vm.viewState.value?.let {
-            it.competitionHasBrackets?.let { hasBrackets ->
-                menu.findItem(R.id.brackets_item).isVisible = hasBrackets
-            }
-        }
-        super.onPrepareOptionsMenu(menu)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?  ): View? {
         return inflater.inflate(R.layout.fragment_competition_detail, container, false)
     }
@@ -100,9 +91,6 @@ class CompetitionFragment : BaseFragment() {
 
         vm.viewState.observe(this, Observer {
             loadingBar?.visibility = if (it.isLoading) View.VISIBLE else View.GONE
-            it.competitionHasBrackets?.let { hasBrackets ->
-                if (hasBrackets) activity?.invalidateOptionsMenu()
-            }
 
             it.barTitle?.let { barTitle -> (activity as MainActivity).setActionBarTitle(barTitle) }
             it.competitionGeneralDetailItems?.let { items -> competitionGeneralDetailsListAdapter.setItems(items) }

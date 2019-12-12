@@ -25,8 +25,12 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
                     viewState.value = viewState.value?.copy(isLoading = true)
                     disposables.add(boostCtrlRepository.getCompetitionBrackets(competitionId).subscribe({
                         viewState.value = viewState.value?.copy(isLoading = false)
-
-                        val columns = ArrayList<ColumnData>()
+                        it?.let { bracketContainers ->
+                            if (bracketContainers.isEmpty()) {
+                                viewEffect.value = BracketsFragmentViewEffect.ShowNoBracketsAvailable
+                            }
+                            else {
+                                val columns = ArrayList<ColumnData>()
 
 //                        TODO: implementation
 //                        it?.let { bracketContainers ->
@@ -45,7 +49,9 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
 //                            }
 //                        }
 
-                        viewEffect.value = BracketsFragmentViewEffect.ShowBrackets(columns)
+                                viewEffect.value = BracketsFragmentViewEffect.ShowBrackets(columns)
+                            }
+                        }
                     }, {
                         Crashlytics.logException(it)
                         viewState.value = viewState.value?.copy(isLoading = false)
@@ -69,6 +75,7 @@ class BracketsViewModel(private val boostCtrlRepository: BoostCtrlRepository): V
     sealed class BracketsFragmentViewEffect {
         data class ShowError(val error: String): BracketsFragmentViewEffect()
         data class ShowBrackets(val brackets: ArrayList<ColumnData>): BracketsFragmentViewEffect()
+        object ShowNoBracketsAvailable: BracketsFragmentViewEffect()
     }
 
     sealed class BracketsFragmentEvent {
