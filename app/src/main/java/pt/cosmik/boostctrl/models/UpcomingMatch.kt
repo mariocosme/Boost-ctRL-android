@@ -11,5 +11,6 @@ data class UpcomingMatch(
     @SerializedName("tournamentName") val tournamentName: String?,
     @SerializedName("tournamentImage") val tournamentImage: String?,
     @SerializedName("homeTeam") val homeTeam: Team?,
-    @SerializedName("awayTeam") val awayTeam: Team?
+    @SerializedName("awayTeam") val awayTeam: Team?,
+    @SerializedName("versus") val versus: String?
 ): Serializable

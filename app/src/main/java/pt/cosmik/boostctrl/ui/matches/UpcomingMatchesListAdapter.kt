@@ -29,11 +29,14 @@ class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Ada
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.versusText.text = context?.getString(R.string.versus)
+
         val item = items[position]
         holder.itemView.setOnClickListener { itemClickSubject.onNext(item) }
         holder.homeTeamText.text = item.homeTeam?.name
         holder.awayTeamText.text = item.awayTeam?.name
         holder.tournamentText.text = item.tournamentName
+        item.versus?.let { holder.versusText.text = it }
         context?.let {
             Glide.with(it).load(item.homeTeam?.mainImage).into(holder.homeTeamImg)
             Glide.with(it).load(item.awayTeam?.mainImage).into(holder.awayTeamImg)
@@ -69,6 +72,7 @@ class UpcomingMatchesListAdapter(var context: Context? = null): RecyclerView.Ada
         val liveText: TextView = itemView.findViewById(R.id.text_live)
         val tournamentImg: ImageView = itemView.findViewById(R.id.image_view_tournament)
         val tournamentText: TextView = itemView.findViewById(R.id.text_tournament_name)
+        val versusText: TextView = itemView.findViewById(R.id.text_versus)
     }
 
 }

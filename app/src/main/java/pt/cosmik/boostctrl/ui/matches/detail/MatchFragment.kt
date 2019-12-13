@@ -37,6 +37,7 @@ class MatchFragment : BaseFragment() {
     private var awayTeamText: TextView? = null
     private var liveText: TextView? = null
     private var rostersText: TextView? = null
+    private var versusText: TextView? = null
 
     private var swipeRefresh: SwipeRefreshLayout? = null
 
@@ -64,6 +65,7 @@ class MatchFragment : BaseFragment() {
         awayTeamText = view.findViewById(R.id.text_away_team)
         liveText = view.findViewById(R.id.text_live)
         rostersText = view.findViewById(R.id.match_roster_title)
+        versusText = view.findViewById(R.id.text_versus)
 
         dividerItemDeco = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         context?.let { context ->
@@ -124,6 +126,7 @@ class MatchFragment : BaseFragment() {
                 if (items.isEmpty()) rostersText?.visibility = View.GONE
                 teamRostersListAdapter.setItems(items)
             }
+            it.versus?.let { versus -> versusText?.text = versus }
             it.matchActions?.let { items -> matchDetailActionsListAdapter.setItems(items) }
         })
 

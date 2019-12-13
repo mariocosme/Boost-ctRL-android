@@ -68,10 +68,6 @@ class MatchesFragment : BaseFragment() {
         })
 
         vm.processEvent(MatchesViewModel.MatchesFragmentEvent.ViewCreated)
-
-        // TODO: add a list below to to add to calendar and add a push when game starts
-        // TODO: add a list below with the roster from both teams
-        // TODO: add a list below with previous results from both teams
     }
 
     override fun showErrorMessage(message: String) {
