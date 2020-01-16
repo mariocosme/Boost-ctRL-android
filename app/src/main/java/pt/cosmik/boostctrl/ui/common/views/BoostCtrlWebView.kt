@@ -66,6 +66,7 @@ class BoostCtrlWebView @JvmOverloads constructor(
 
     private fun addCSS(content: String?): String? {
         var html = content?.replace("<blockquote class=\"twitter-tweet\">", "<blockquote class=\"twitter-tweet\" data-theme=\"dark\" data-dnt\"true\">")
+        html = html?.replace("https://octane.gg", "")
         html = html?.replace("/flags/", "https://octane.gg/flags/")
         html = html?.replace("/team-icons/", "https://octane.gg/team-icons/")
         return "<head><style>body { background-color: #283149; } *:not(a) { color: #DBEDF3; } a:link, a:visited, a:hover { color: #F73859 } a:active { color: #670415 }</style></head><body>$html</body>"
